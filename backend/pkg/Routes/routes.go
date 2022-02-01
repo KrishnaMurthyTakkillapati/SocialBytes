@@ -5,10 +5,7 @@ import (
 	"socialbytes.com/main/pkg/Controllers"
 )
 
-var createEventRoutes = func(router *mux.Router) {
-	router.HandleFunc("/createEvent/", Controllers.CreateEvent).Methods("GET")
-}
-
-var getEventRoutes = func(router *mux.Router) {
-	router.HandleFunc("/createEvent/", Controllers.GetEvent).Methods("GET")
+var RegisterEventRoutes = func(router *mux.Router) {
+	router.HandleFunc("/api/createEvent", Controllers.CreateEvent).Methods("POST")
+	router.HandleFunc("/api/getEvent/{id}", Controllers.GetEvent).Methods("GET")
 }
