@@ -9,7 +9,7 @@ import {
 import { createEvent } from '@testing-library/react';
 
 import { Home } from '../pages/Home';
-import {CreateEvent } from '../pages/CreateEvent';
+import {Event } from '../pages/CreateEvent';
 
 import { Route } from '../types/Route';
 
@@ -28,7 +28,7 @@ const routes: Array<Route> = [
     key: 'router-start-event',
     title: 'Start-Event',
     description: 'Create a new event',
-    component: CreateEvent,
+    component: Event,
     path: '/start-event',
     isEnabled: true,
     icon: EventIcon,
