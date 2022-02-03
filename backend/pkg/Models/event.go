@@ -24,7 +24,6 @@ func init() {
 }
 
 func CreateEventstable(e *Event) {
-	db.AutoMigrate(&Event{})
 	db.Create(&e)
 }
 func GetAllEvents() []Event {
