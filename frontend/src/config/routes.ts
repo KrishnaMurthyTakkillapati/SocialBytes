@@ -6,8 +6,10 @@ import {
   ListAlt as ListIcon,
   SearchRounded as SearchIcon,
 } from '@mui/icons-material';
+import { createEvent } from '@testing-library/react';
 
 import { Home } from '../pages/Home';
+import {Event } from '../pages/CreateEvent';
 
 import { Route } from '../types/Route';
 
@@ -26,6 +28,7 @@ const routes: Array<Route> = [
     key: 'router-start-event',
     title: 'Start-Event',
     description: 'Create a new event',
+    component: Event,
     path: '/start-event',
     isEnabled: true,
     icon: EventIcon,
