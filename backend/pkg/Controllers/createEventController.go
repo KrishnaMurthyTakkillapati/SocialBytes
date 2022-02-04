@@ -2,22 +2,30 @@ package Controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	models "socialbytes.com/main/pkg/Models"
+	"socialbytes.com/main/pkg/Utils"
 )
 
+var NewEvent models.Event
+
 func CreateEvent(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("reached create event endpoint!!")
+
+	Utils.AddCorsHeaders(w, r)
+
+	CreateEvent := &models.Event{}
+	Utils.ParseBody(r, CreateEvent)
+	event := CreateEvent.CreateEventstable()
+	response, _ := json.Marshal(event)
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
+
 }
 
-func GetEvent(w http.ResponseWriter, r *http.Request) {
-	//Mock Data
-	var events []models.Event
-	events = append(events, models.Event{Name: "Virtual Career Fair CISE", Description: "Place to meet companies", Details: "Happens on 5th March"})
-	events = append(events, models.Event{Name: "Virtual Career Fair ECE", Description: "Place to meet companies", Details: "Happens on 6th March"})
+func GetEvents(w http.ResponseWriter, r *http.Request) {
 
-	w.Header().Set("Content-Type", "application/json")
+	Utils.AddCorsHeaders(w, r)
+	events := models.GetAllEvents()
 	json.NewEncoder(w).Encode(events)
 }

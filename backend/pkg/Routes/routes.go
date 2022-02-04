@@ -6,6 +6,6 @@ import (
 )
 
 var RegisterEventRoutes = func(router *mux.Router) {
-	router.HandleFunc("/api/createEvent", Controllers.CreateEvent).Methods("POST")
-	router.HandleFunc("/api/getEvent/{id}", Controllers.GetEvent).Methods("GET")
+	router.HandleFunc("/api/createEvent", Controllers.CreateEvent).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/getEvents", Controllers.GetEvents).Methods("GET", "OPTIONS")
 }
