@@ -1,7 +1,7 @@
 // APP TEXT
 export const APP_TITLE = 'SocialBytes';
 export const APP_DESCRIPTION = 'React TypeScript Material-UI boilerplate by Welcome, Developer.';
-export const FOOTER_TEXT = `Copyright ${new Date().getFullYear()}  SocialBytes. All Rights Reserved`;
+export const FOOTER_TEXT = ``;
 // PAGES TITLE
 export const PAGE_TITLE_HOME = 'Home';
 export const PAGE_TITLE_DASHBOARD = 'Dashboard';

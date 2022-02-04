@@ -1,6 +1,7 @@
 import { styled, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
+import Tweet from '../utils/Tweet';
 
 import logo from '../logo.svg';
 
@@ -18,30 +19,19 @@ export const Home = () => {
         </title>
       </Helmet>
       <Typography variant="h4">{`Hello, ${context.user.name} `}</Typography>
-      <LogoWrapper>
-        <StyledLogo src={logo} alt="logo" />
-      </LogoWrapper>
+      
+      <div style={{ display: "flex" }}>
+        <Tweet name="Gator night" type="Casual" />
+        <Tweet name="Football match" type="Sports event" />
+        <Tweet name="Grad ceremony" type="Academic"/>
+        <Tweet name="Basketball match" type="Sports event"/>
+
+      </div>
     </>
+    
   );
 };
 
-const LogoWrapper = styled('div')`
-  text-align: center;
-  margin-top: 6rem;
-`;
 
-const StyledLogo = styled('img')`
-  height: 40vmin;
-  pointer-events: none;
-  @media (prefers-reduced-motion: no-preference) {
-    animation: App-logo-spin infinite 15s linear;
-  }
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-`;
+
+
