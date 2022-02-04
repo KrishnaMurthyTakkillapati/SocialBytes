@@ -5,9 +5,7 @@ import (
 	Config "socialbytes.com/main/pkg/Config"
 )
 
-var (
-	db *gorm.DB
-)
+var db *gorm.DB
 
 type Event struct {
 	gorm.Model
@@ -19,12 +17,13 @@ type Event struct {
 
 func init() {
 	Config.Connect()
-	db := Config.GetDB()
+	db = Config.GetDB()
 	db.AutoMigrate(&Event{})
 }
 
-func CreateEventstable(e *Event) {
+func (e *Event) CreateEventstable() *Event {
 	db.Create(&e)
+	return e
 }
 func GetAllEvents() []Event {
 	var events []Event
