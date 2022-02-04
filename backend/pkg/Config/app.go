@@ -2,19 +2,22 @@ package Config
 
 /* database functions */
 import (
-	"database/sql"
-
 	_ "github.com/mattn/go-sqlite3"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
-func createEventstable() {
-	db, _ := sql.Open("sqlite3", "./Socialbytes.db")
-	query := `CREATE TABLE IF NOT EXISTS "Socialbytes" (
-		"ID"	INTEGER NOT NULL UNIQUE,
-		"NAME"	TEXT NOT NULL,
-		"LOCATION"	TEXT NOT NULL,
-		PRIMARY KEY("ID" AUTOINCREMENT)
-	)`
-	st, _ := db.Prepare(query)
-	st.Exec()
+var (
+	db *gorm.DB
+)
+
+func Connect() {
+	d, err := gorm.Open(sqlite.Open("Socialbytes.db"), &gorm.Config{})
+	if err != nil {
+		panic("Can't connect to DB")
+	}
+	db = d
+}
+func GetDB() *gorm.DB {
+	return db
 }
