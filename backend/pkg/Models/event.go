@@ -9,7 +9,7 @@ var db *gorm.DB
 
 type Event struct {
 	gorm.Model
-	Id          uint   `gorm:"primaryKey","AUTO_INCREMENT" `
+	ID          uint   `gorm:"primaryKey","AUTO_INCREMENT"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Details     string `json:"details"`
