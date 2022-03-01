@@ -54,9 +54,9 @@ export function Event() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ location: data.location, interest: data.interest, groupName: data.groupName, description: data.description })
     };
-    fetch('http://localhost:9010/api/sendEvent', requestOptions);
-      // .then(response => response.json())
-      // .then(data => this.setState({ postId: data.id }));
+
+    // fetch('http://localhost:9010/api/sendEvent', requestOptions)
+    //   .then(response => setJson(response.json));
   };
 
   return (
