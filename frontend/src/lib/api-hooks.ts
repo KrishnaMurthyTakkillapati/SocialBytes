@@ -3,9 +3,10 @@ import { FetchState, PostData } from "../types/post";
 import { IFormInput } from "../pages/CreateEvent";
 import axios from "axios";
 export function useGetPosts(){
+
     const [fetchState,setFetchState]=useState(FetchState.DEFAULT);
 
-    const [posts,setPosts]=useState("banana");
+    const [posts,setPosts]=useState<Array<PostData>>([]);
 
     const uploadPosts= async(data:IFormInput) =>{
         try{
@@ -34,9 +35,7 @@ export function useGetPosts(){
             const res=await axios.get('http://localhost:9010/api/getEvents')
             const resData=res.data as Array<PostData>;
             console.log(resData);
-            useEffect(() => {
-            setPosts("orange");
-            },[posts]);
+            setPosts(resData)
             console.log(posts)
         }catch(err){
             setFetchState(FetchState.ERROR);

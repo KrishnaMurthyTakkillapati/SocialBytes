@@ -127,9 +127,9 @@ export function Event() {
             <Typography variant="body2">{json}</Typography>
           </>
         )}
-        {
-          // fetchState===FetchState.SUCCESS && (<><p>{posts[0].ID}</p></>)
-        }
+        {/* {
+          fetchState===FetchState.SUCCESS && (<><p>{posts.length==0?"":posts[0].ID}</p></>)
+        } */}
       </form>
     </Container>
   );

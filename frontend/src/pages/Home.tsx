@@ -1,10 +1,6 @@
 import { Box, Grid, Paper, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import Tweet from '../utils/Tweet';
-
-import logo from '../logo.svg';
-
 import { AppContext } from '../contexts';
 import { APP_TITLE, PAGE_TITLE_HOME } from '../utils/constants';
 import { useGetPosts } from '../lib/api-hooks';
