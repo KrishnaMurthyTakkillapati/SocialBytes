@@ -1,0 +1,26 @@
+[
+    {
+        "id":1,
+        "title":"Make new friends",
+        "description":"When we do things together, it’s that much more fun. Meetup is the most powerful tool for growing your community and connecting with friends.",
+        "image":"https://v.fastcdn.co/u/f91f856b/60141140-0-happyhour.jpg"
+    },
+    {
+        "id":2,
+        "title":"Invest in a better you",
+        "description":"Join millions of others who have built their yoga or meditation practice, formed fitness groups, or aligned on common interests related to wellness and spirituality. ",
+        "image":"https://v.fastcdn.co/u/f91f856b/60142425-0-yoga.jpg"
+    },
+    {
+        "id":3,
+        "title":"Raise your profile",
+        "description":"It’s the perfect time to hone your skills or meet your next business partner. Connect with people who can help you launch your startup, small business, or tech venture. Create the group you’ve always wanted to join.",
+        "image":"https://v.fastcdn.co/u/f91f856b/60142600-0-slide-3.jpg"
+    },
+    {
+        "id":4,
+        "title":"Share your gift",
+        "description":"What lights you up the most? Join millions of others around the world who are starting and joining groups devoted to their favorite activities like photography, music, writing, art, and more. You never know where it might lead. ",
+        "image":"https://v.fastcdn.co/u/f91f856b/60138290-0-music-1.jpg"
+    }
+]
