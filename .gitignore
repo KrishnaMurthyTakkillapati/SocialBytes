@@ -1,6 +1,4 @@
 node_modules/
 .vscode/
 *.db
-main
 *.exe
-socialbytes.code-workspace
