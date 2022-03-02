@@ -5,8 +5,11 @@ export enum FetchState{
     ERROR='error',
 }
 export type PostData={
-    userId: number;
-    id:number;
-    title:string;
-    body:string;
+    CreatedAt:string,
+    DeletedAt:string,
+    UpdatedAt:string,
+    ID:number;
+    name:string;
+    description:string;
+    details:string;
 }

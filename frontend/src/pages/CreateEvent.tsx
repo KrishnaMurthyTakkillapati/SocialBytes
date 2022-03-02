@@ -9,8 +9,10 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
+import { useGetPosts } from '../lib/api-hooks';
+import { FetchState } from '../types/post';
 
-interface IFormInput {
+export interface IFormInput {
   location: string;
   interest: string;
   groupName: string;
@@ -42,6 +44,8 @@ export function Event() {
   } = useForm<IFormInput>({
     resolver: yupResolver(schema),
   });
+  
+  const [posts, fetchState, uploadPosts,getPosts] = useGetPosts();
 
   const { heading, submitButton } = useStyles();
 
@@ -54,9 +58,9 @@ export function Event() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ location: data.location, interest: data.interest, groupName: data.groupName, description: data.description })
     };
-
-    // fetch('http://localhost:9010/api/sendEvent', requestOptions)
-    //   .then(response => setJson(response.json));
+    uploadPosts(data)
+    // fetch('http://localhost:9010/api/createEvent', requestOptions);
+      // .then(response => setJson(response.json));
   };
 
   return (
@@ -123,6 +127,9 @@ export function Event() {
             <Typography variant="body2">{json}</Typography>
           </>
         )}
+        {
+          // fetchState===FetchState.SUCCESS && (<><p>{posts[0].ID}</p></>)
+        }
       </form>
     </Container>
   );
