@@ -22,6 +22,13 @@ func init() {
 }
 
 func (e *Event) CreateEventstable() *Event {
+	if e == nil {
+		return e
+	}
+	if e.Description == "" || e.Name == "" || e.Details == "" {
+		e = nil
+		return e
+	}
 	db.Create(&e)
 	return e
 }
