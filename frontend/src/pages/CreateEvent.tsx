@@ -118,18 +118,9 @@ export function Event() {
         >
           Create Event
         </Button>
-        {json && (
-          <>
-            <Typography variant="body1">
-              Below is the JSON that would normally get passed to the server
-              when a form gets submitted
-            </Typography>
-            <Typography variant="body2">{json}</Typography>
-          </>
-        )}
-        {/* {
-          fetchState===FetchState.SUCCESS && (<><p>{posts.length==0?"":posts[0].ID}</p></>)
-        } */}
+        {
+          fetchState===FetchState.SUCCESS && (<><p>Event has been created.</p></>)
+        }
       </form>
     </Container>
   );
