@@ -24,11 +24,6 @@ export const Home = () => {
         </title>
       </Helmet>
       <Typography variant="h4">{`Hello, ${context.user.name} `}</Typography>
-      <div className="jumbotron">
-        <h1>{"Hellow"}</h1>
-        <p>{"this.props.subText"}</p>
-        {/* <PrimaryButton buttonText='Learn more'/> */}
-      </div>
       <Box p={5}>
         <Grid container spacing={5}>
           {
