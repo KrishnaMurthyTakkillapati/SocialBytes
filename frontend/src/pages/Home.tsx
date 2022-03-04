@@ -1,16 +1,16 @@
-import { styled, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { Box, Grid, Paper, Typography } from '@mui/material';
+import { useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import Tweet from '../utils/Tweet';
-
-import logo from '../logo.svg';
-
 import { AppContext } from '../contexts';
 import { APP_TITLE, PAGE_TITLE_HOME } from '../utils/constants';
+import { useGetPosts } from '../lib/api-hooks';
+import { FetchState } from '../types/post';
+import { styled } from '@mui/material/styles';
+import MediaCard from '../utils/MediaCard';
+import dataList from '../lib/data.json'
 
 export const Home = () => {
   const context = useContext(AppContext);
-
   return (
     <>
       <Helmet>
@@ -19,16 +19,22 @@ export const Home = () => {
         </title>
       </Helmet>
       <Typography variant="h4">{`Hello, ${context.user.name} `}</Typography>
-      
-      <div style={{ display: "flex" }}>
-        <Tweet name="Gator night" type="Casual" />
-        <Tweet name="Football match" type="Sports event" />
-        <Tweet name="Grad ceremony" type="Academic"/>
-        <Tweet name="Basketball match" type="Sports event"/>
+      <Box p={5}>
+        <Grid container spacing={5}>
+          {
+            dataList.map((post, i) => {
+              return (
+                <Grid key={i} item>
+                  <MediaCard {...post} />
+                </Grid>
+              );
+            })
+          }
+        </Grid>
+      </Box>
 
-      </div>
     </>
-    
+
   );
 };
 

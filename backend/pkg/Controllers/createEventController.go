@@ -10,6 +10,12 @@ import (
 
 var NewEvent models.Event
 
+// @Summary Create Event
+// @Description Endpoint used to create an entry of the event in db.
+// @Tags Events
+// @Success 200 {object} models.Event
+// @Failure 404 {object} object
+// @Router / [post]
 func CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
@@ -23,6 +29,12 @@ func CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// @Summary Get Event
+// @Description Endpoint used to get all events from db.
+// @Tags Events
+// @Success 200 {object} models.Event
+// @Failure 404 {object} object
+// @Router / [get]
 func GetEvents(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
