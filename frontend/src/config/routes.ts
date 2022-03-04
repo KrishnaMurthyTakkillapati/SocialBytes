@@ -5,6 +5,7 @@ import {
   SettingsOutlined as SettingsIcon,
   ListAlt as ListIcon,
   SearchRounded as SearchIcon,
+  LightbulbRounded as LightbulbRounded
 } from '@mui/icons-material';
 import { createEvent } from '@testing-library/react';
 
@@ -12,6 +13,7 @@ import { Home } from '../pages/Home';
 import {Event } from '../pages/CreateEvent';
 
 import { Route } from '../types/Route';
+import { EventPage } from '../pages/event';
 
 const routes: Array<Route> = [
   {
@@ -41,6 +43,16 @@ const routes: Array<Route> = [
     isEnabled: false,
     icon: SearchIcon,
     appendDivider: true,
+  },
+  {
+    key: 'eventpage',
+    title: 'show events page',
+    description: 'Events page',
+    path: '/eventpage/:id',
+    isEnabled: true,
+    appendDivider: true,
+    icon: LightbulbRounded,
+    component:EventPage
   },
   {
     key: 'router-my-account',
