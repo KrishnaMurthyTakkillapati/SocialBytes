@@ -12,21 +12,56 @@
 // https://on.cypress.io/introduction-to-cypress
 
 describe('Social Bytes', () => {
-  beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
-    cy.visit('http://localhost:3000/')
-  })
 
-  it('Checks if toggle theme button is clicked', function() {
+
+  it('Visits website', function() {
+    
+    cy.visit('http://localhost:3000')
+    
+    
+
+    
+  })
+    
+    
+
+    
+  
+  
+
+  it('Checks if create a new event tab is clicked', function() {
+
     cy.get('a[href*="/start-event"]').click();
-    cy.get('button').contains('Create Event').click();
+    
+    
     
 
     
   })
+
+  it('Checks if text required is entered in the fields to create an event', function() {
+    cy.get('label').contains('Location').click({force: true}).type('Gainesville');
+    cy.get('label').contains('Interest').click({force: true}).type('Univerity of florida');
+    cy.get('label').contains('Group Name').click({force: true}).type('Software Engineering');
+    cy.get('label').contains('Description').click({force: true}).type('SE is so cool.!');
+
+
+    
+    
+
+    
+
+    
+  })
+
+  it('Checks if Create event button is clicked', function() {
+    
+    
+    cy.get('button').contains('Create Event').click();
+  })
+
+  
+  
 
   /*it('displays two todo items by default', () => {
     // We use the `cy.get()` command to get all elements that match the selector.
