@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useGetPosts } from '../lib/api-hooks';
 import { FetchState } from '../types/post';
+import { Redirect, Route, useParams } from "react-router-dom";
 
 export interface IFormInput {
   location: string;
@@ -18,6 +19,7 @@ export interface IFormInput {
   groupName: string;
   description: string;
 }
+
 
 const schema = yup.object().shape({
   location: yup.string().required(),
@@ -49,20 +51,17 @@ export function Event() {
 
   const { heading, submitButton } = useStyles();
 
-  const [json, setJson] = useState<string>();
-
-  const onSubmit = (data: IFormInput) => {
-    setJson(JSON.stringify(data));
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ location: data.location, interest: data.interest, groupName: data.groupName, description: data.description })
-    };
-    uploadPosts(data)
-    // fetch('http://localhost:9010/api/createEvent', requestOptions);
-      // .then(response => setJson(response.json));
+  const [toEvent,setToEvent] =useState(false)
+    const onSubmit = (data: IFormInput) => {
+      uploadPosts(data).then((info)=>
+      {
+      setToEvent(true)
+      })
   };
 
+  if(toEvent===true){
+    return  <Route exact path="/event/:id"  />
+  }
   return (
     <Container maxWidth="xs">
       <Typography className={heading} variant="h3">
@@ -119,7 +118,10 @@ export function Event() {
           Create Event
         </Button>
         {
-          fetchState===FetchState.SUCCESS && (<><p>Event has been created.</p></>)
+          fetchState===FetchState.SUCCESS && (<>
+
+          
+          </>)
         }
       </form>
     </Container>
