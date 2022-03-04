@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"gorm.io/gorm"
 	Config "socialbytes.com/main/pkg/Config"
 )
@@ -21,19 +23,22 @@ func init() {
 	db.AutoMigrate(&Event{})
 }
 
-func (e *Event) CreateEventstable() *Event {
+func (e *Event) CreateEventstable() (*Event, error) {
 	if e == nil {
-		return e
+		error := errors.New("Event is Empty")
+		return e, error
 	}
 	if e.Description == "" || e.Name == "" || e.Details == "" {
-		e = nil
-		return e
+
+		error := errors.New("Event details incorrect")
+		return e, error
 	}
 	db.Create(&e)
-	return e
+	return e, nil
 }
 func GetAllEvents() []Event {
 	var events []Event
 	db.Find(&events)
+
 	return events
 }

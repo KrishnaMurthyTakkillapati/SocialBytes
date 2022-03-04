@@ -16,7 +16,7 @@ func CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 	CreateEvent := &models.Event{}
 	Utils.ParseBody(r, CreateEvent)
-	event := CreateEvent.CreateEventstable()
+	event, _ := CreateEvent.CreateEventstable()
 	response, _ := json.Marshal(event)
 	w.WriteHeader(http.StatusOK)
 	w.Write(response)
