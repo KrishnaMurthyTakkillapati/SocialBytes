@@ -1,0 +1,17 @@
+[
+    {
+    "id":1,
+    "location":"Gainesville",
+    "interest":"Cricket, sports",
+    "description":"A group to play cricket in the weekends near recsports",
+    "groupname":"CricStars"
+},
+{
+    "id":2,
+    "location":"Gainesville",
+    "interest":"Volleyball, sports",
+    "description":"A group to play volleyball in recsports",
+    "groupname":"VolleyBall"
+}
+
+]

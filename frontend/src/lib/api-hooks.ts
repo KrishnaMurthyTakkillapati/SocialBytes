@@ -45,5 +45,5 @@ export function useGetPosts(){
 
         }
     }
-    return [posts,fetchState,uploadPosts,getPosts] as const;
+    return [uploadPosts] as const;
 }
