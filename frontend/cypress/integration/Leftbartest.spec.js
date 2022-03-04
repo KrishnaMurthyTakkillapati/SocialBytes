@@ -20,4 +20,15 @@ it('Checks if My Account button is clicked', function() {
     cy.get('a[href*="/account"]').click();
   })
 
+  it('SignOut button ', function() {
+    
+    cy.get('[data-testid="ExitToAppIcon"]').click();
+    
+    
+
+    
+  })
+
+
+
 })
