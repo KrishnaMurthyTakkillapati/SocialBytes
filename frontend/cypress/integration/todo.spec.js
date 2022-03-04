@@ -23,12 +23,6 @@ describe('Social Bytes', () => {
     
   })
     
-    
-
-    
-  
-  
-
   it('Checks if create a new event tab is clicked', function() {
 
     cy.get('a[href*="/start-event"]').click();
@@ -59,6 +53,9 @@ describe('Social Bytes', () => {
     
     cy.get('button').contains('Create Event').click();
   })
+
+  
+
 
   
   
