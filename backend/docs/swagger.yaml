@@ -1,0 +1,63 @@
+basePath: /
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.Event:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      details:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:9010
+info:
+  contact: {}
+  title: User API documentation
+  version: 1.0.0
+paths:
+  /:
+    get:
+      description: Endpoint used to get all events from db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Event
+      tags:
+      - Events
+    post:
+      description: Endpoint used to create an entry of the event in db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Create Event
+      tags:
+      - Events
+swagger: "2.0"
