@@ -6,7 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 	httpSwagger "github.com/swaggo/http-swagger"
-	_ "socialbytes.com/main/cmd/main/docs"
+	_ "socialbytes.com/main/docs"
 	routes "socialbytes.com/main/pkg/Routes"
 )
 
