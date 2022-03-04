@@ -18,7 +18,10 @@ export function useGetPosts(){
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ location: data.location, interest: data.interest, groupName: data.groupName, description: data.description })
             };
-            const res=await fetch('http://localhost:9010/api/createEvent', requestOptions)
+            const res=await fetch('http://localhost:9010/api/createEvent', requestOptions);
+            if(!res.ok) throw new Error(res.statusText);
+            else return res.json();
+        
             // const resData=res.data as Array<PostData>;
             // console.log(res);
             // setPosts(resData);

@@ -11,11 +11,6 @@ import dataList from '../lib/data.json'
 
 export const Home = () => {
   const context = useContext(AppContext);
-  const [posts, fetchState, getPosts] = useGetPosts();
-  const StyledPaper = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-  }));
   return (
     <>
       <Helmet>
