@@ -17,6 +17,32 @@ func TestCreateEvent(t *testing.T) {
 	assert.Equal(t, w.Result().Status, "200 OK")
 
 }
+func TestCreateEventEmptyName(t *testing.T) {
+
+	var jsonstr = []byte(`{"Name":"","Description":"UF","Details":"UF"}`)
+	w := httptest.NewRecorder()
+	response := httptest.NewRequest("POST", "localhost:9010/api/createEvent", bytes.NewBuffer(jsonstr))
+	CreateEvent(w, response)
+	assert.Equal(t, w.Result().Status, "400 Bad Request")
+}
+
+func TestCreateEventEmptyDescp(t *testing.T) {
+
+	var jsonstr = []byte(`{"Name":"UF","Description":"","Details":"UF"}`)
+	w := httptest.NewRecorder()
+	response := httptest.NewRequest("POST", "localhost:9010/api/createEvent", bytes.NewBuffer(jsonstr))
+	CreateEvent(w, response)
+	assert.Equal(t, w.Result().Status, "400 Bad Request")
+}
+
+func TestCreateEventEmptyDetails(t *testing.T) {
+
+	var jsonstr = []byte(`{"Name":"UF","Description":"UF","Details":""}`)
+	w := httptest.NewRecorder()
+	response := httptest.NewRequest("POST", "localhost:9010/api/createEvent", bytes.NewBuffer(jsonstr))
+	CreateEvent(w, response)
+	assert.Equal(t, w.Result().Status, "400 Bad Request")
+}
 func TestCreateEventEmptyEvent(t *testing.T) {
 
 	w := httptest.NewRecorder()
