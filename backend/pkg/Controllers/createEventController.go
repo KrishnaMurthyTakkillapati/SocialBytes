@@ -22,10 +22,17 @@ func CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 	CreateEvent := &models.Event{}
 	Utils.ParseBody(r, CreateEvent)
-	event, _ := CreateEvent.CreateEventstable()
-	response, _ := json.Marshal(event)
-	w.WriteHeader(http.StatusOK)
-	w.Write(response)
+	event, err := CreateEvent.CreateEventstable()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response, _ := json.Marshal(CreateEvent)
+		w.Write(response)
+	} else {
+
+		response, _ := json.Marshal(event)
+		w.WriteHeader(http.StatusOK)
+		w.Write(response)
+	}
 
 }
 
