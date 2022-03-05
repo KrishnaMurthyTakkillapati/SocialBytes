@@ -31,21 +31,7 @@ info:
   title: User API documentation
   version: 1.0.0
 paths:
-  /:
-    get:
-      description: Endpoint used to get all events from db.
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Event'
-        "404":
-          description: Not Found
-          schema:
-            type: object
-      summary: Get Event
-      tags:
-      - Events
+  /api/createEvent:
     post:
       description: Endpoint used to create an entry of the event in db.
       responses:
@@ -58,6 +44,21 @@ paths:
           schema:
             type: object
       summary: Create Event
+      tags:
+      - Events
+  /api/getEvent:
+    get:
+      description: Endpoint used to get all events from db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Event
       tags:
       - Events
 swagger: "2.0"

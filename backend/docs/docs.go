@@ -16,13 +16,13 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/": {
-            "get": {
-                "description": "Endpoint used to get all events from db.",
+        "/api/createEvent": {
+            "post": {
+                "description": "Endpoint used to create an entry of the event in db.",
                 "tags": [
                     "Events"
                 ],
-                "summary": "Get Event",
+                "summary": "Create Event",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -37,13 +37,15 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Endpoint used to create an entry of the event in db.",
+            }
+        },
+        "/api/getEvent": {
+            "get": {
+                "description": "Endpoint used to get all events from db.",
                 "tags": [
                     "Events"
                 ],
-                "summary": "Create Event",
+                "summary": "Get Event",
                 "responses": {
                     "200": {
                         "description": "OK",

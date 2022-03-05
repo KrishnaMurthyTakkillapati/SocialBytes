@@ -15,7 +15,7 @@ var NewEvent models.Event
 // @Tags Events
 // @Success 200 {object} models.Event
 // @Failure 404 {object} object
-// @Router / [post]
+// @Router /api/createEvent [post]
 func CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
@@ -41,7 +41,7 @@ func CreateEvent(w http.ResponseWriter, r *http.Request) {
 // @Tags Events
 // @Success 200 {object} models.Event
 // @Failure 404 {object} object
-// @Router / [get]
+// @Router /api/getEvent [get]
 func GetEvents(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
