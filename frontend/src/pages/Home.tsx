@@ -1,11 +1,8 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
-import { useContext, useEffect } from 'react';
+import { Box, Grid,  Typography } from '@mui/material';
+import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { AppContext } from '../contexts';
 import { APP_TITLE, PAGE_TITLE_HOME } from '../utils/constants';
-import { useGetPosts } from '../lib/api-hooks';
-import { FetchState } from '../types/post';
-import { styled } from '@mui/material/styles';
 import MediaCard from '../utils/MediaCard';
 import dataList from '../lib/data.json'
 

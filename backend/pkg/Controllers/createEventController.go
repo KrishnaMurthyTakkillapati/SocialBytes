@@ -15,17 +15,24 @@ var NewEvent models.Event
 // @Tags Events
 // @Success 200 {object} models.Event
 // @Failure 404 {object} object
-// @Router / [post]
+// @Router /api/createEvent [post]
 func CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
 
 	CreateEvent := &models.Event{}
 	Utils.ParseBody(r, CreateEvent)
-	event := CreateEvent.CreateEventstable()
-	response, _ := json.Marshal(event)
-	w.WriteHeader(http.StatusOK)
-	w.Write(response)
+	event, err := CreateEvent.CreateEventstable()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response, _ := json.Marshal(CreateEvent)
+		w.Write(response)
+	} else {
+
+		response, _ := json.Marshal(event)
+		w.WriteHeader(http.StatusOK)
+		w.Write(response)
+	}
 
 }
 
@@ -34,7 +41,7 @@ func CreateEvent(w http.ResponseWriter, r *http.Request) {
 // @Tags Events
 // @Success 200 {object} models.Event
 // @Failure 404 {object} object
-// @Router / [get]
+// @Router /api/getEvent [get]
 func GetEvents(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
