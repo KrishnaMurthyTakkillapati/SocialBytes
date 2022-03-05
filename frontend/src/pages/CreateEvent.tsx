@@ -11,7 +11,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useGetPosts } from '../lib/api-hooks';
 import { FetchState } from '../types/post';
-import { Redirect, Route, useParams } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { group } from 'd3';
 
 export interface IFormInput {
   location: string;
@@ -47,20 +48,23 @@ export function Event() {
     resolver: yupResolver(schema),
   });
   
-  const [posts, fetchState, uploadPosts,getPosts] = useGetPosts();
+  const [uploadPosts] = useGetPosts();
+  
 
   const { heading, submitButton } = useStyles();
-
-  const [toEvent,setToEvent] =useState(false)
+  const [groupName,setgroupName] =useState("")
     const onSubmit = (data: IFormInput) => {
       uploadPosts(data).then((info)=>
       {
-      setToEvent(true)
+        setgroupName(data.groupName)
       })
   };
 
-  if(toEvent===true){
-    return  <Route exact path="/event/:id"  />
+  if(groupName.length!==0){
+    return  (<>
+    {/* <Link to='/cards/${}' */}
+    <Redirect to={`/eventpage/${groupName}`}/>
+    </>)
   }
   return (
     <Container maxWidth="xs">
@@ -117,12 +121,7 @@ export function Event() {
         >
           Create Event
         </Button>
-        {
-          fetchState===FetchState.SUCCESS && (<>
-
-          
-          </>)
-        }
+        
       </form>
     </Container>
   );
