@@ -67,6 +67,7 @@ export function Event() {
     </>)
   }
   return (
+    <div title="App Root">
     <Container maxWidth="xs">
       <Typography className={heading} variant="h3">
         Create Event
@@ -124,6 +125,7 @@ export function Event() {
         
       </form>
     </Container>
+    </div>
   );
 }
 
