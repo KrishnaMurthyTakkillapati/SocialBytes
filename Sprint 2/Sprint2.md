@@ -22,3 +22,10 @@
 ![](../Screenshots/ControllersModuleTestCases.JPG)
 #### Go lang unit tests
 ![](../Screenshots/ModelModuleTestCases.JPG)
+
+## Screenshots for API endpoints
+#### Swagger documentation for createEvent endpoint
+![](../Screenshots/SwaggerPost.png)
+#### Swagger documentation for getEvent endpoint
+![](../Screenshots/SwaggerGet.png)
+
