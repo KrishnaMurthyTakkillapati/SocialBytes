@@ -30,3 +30,9 @@
 #### Swagger documentation for getEvent endpoint
 ![](../Screenshots/SwaggerGet.png)
 
+## Project Demo Link
+https://youtu.be/opOkQX1owYI
+
+## Project Testing Link
+https://youtu.be/Uxim8QTjCK4
+
