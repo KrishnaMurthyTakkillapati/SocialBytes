@@ -36,15 +36,8 @@ describe('Social Bytes', () => {
   it('Checks if text required is entered in the fields to create an event', function() {
     cy.get('label').contains('Location').click({force: true}).type('Gainesville');
     cy.get('label').contains('Interest').click({force: true}).type('Univerity of florida');
-    cy.get('label').contains('Group Name').click({force: true}).type('Software Engineering');
+    cy.get('label').contains('Group Name').click({force: true}).type('CricStars');
     cy.get('label').contains('Description').click({force: true}).type('SE is so cool.!');
-
-
-    
-    
-
-    
-
     
   })
 
@@ -52,6 +45,10 @@ describe('Social Bytes', () => {
     
     
     cy.get('button').contains('Create Event').click();
+  })
+
+  it('Checks if Event is created', function(){
+    cy.get('div').contains('CricStars')
   })
 
   
