@@ -19,6 +19,6 @@
 ## Screenshots for unit tests
 
 #### UI Components tests
-![](Screenshots/ControllersModuleTestCases.JPG.png)
+![](../Screenshots/ControllersModuleTestCases.JPG)
 #### Go lang unit tests
-![](Screenshots/ModelModuleTestCases.JPG)
+![](../Screenshots/ModelModuleTestCases.JPG)
