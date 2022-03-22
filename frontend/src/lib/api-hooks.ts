@@ -35,15 +35,31 @@ export function useGetPosts(){
 
     const getPosts= async()=>{
         try{
+            setFetchState(FetchState.LOADING);
             console.log("here");
             const res=await axios.get('http://localhost:9010/api/getEvents')
             const resData=res.data as Array<PostData>;
             console.log(resData);
-            setPosts(resData)
-            console.log(posts)
+            setPosts(resData);
+            console.log(posts);
+            setFetchState(FetchState.SUCCESS);
         }catch(err){
             setFetchState(FetchState.ERROR);
+        }
+    }
 
+    const getPostsById= async(id:number)=>{
+        try{
+            setFetchState(FetchState.LOADING);
+            console.log("here id");
+            const res=await axios.get('http://localhost:9010/api/getEvents?ID='+id)
+            const resData=res.data as Array<PostData>;
+            console.log(resData);
+            setPosts(resData);
+            console.log(posts);
+            setFetchState(FetchState.SUCCESS);
+        }catch(err){
+            setFetchState(FetchState.ERROR);
         }
     }
     return [uploadPosts] as const;
