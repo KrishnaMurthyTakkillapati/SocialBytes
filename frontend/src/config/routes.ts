@@ -46,16 +46,16 @@ const routes: Array<Route> = [
     icon: SearchIcon,
     appendDivider: true,
   },
-  {
-    key: 'eventpage',
-    title: 'show events page',
-    description: 'Events page',
-    path: '/eventpage/:id',
-    isEnabled: true,
-    appendDivider: true,
-    icon: LightbulbRounded,
-    component:EventPage
-  },
+  // {
+  //   key: 'eventpage',
+  //   title: 'show events page',
+  //   description: 'Events page',
+  //   path: '/eventpage/:id',
+  //   isEnabled: true,
+  //   appendDivider: true,
+  //   icon: LightbulbRounded,
+  //   component:EventPage
+  // },
   {
     key: 'router-my-account',
     title: 'My Account',

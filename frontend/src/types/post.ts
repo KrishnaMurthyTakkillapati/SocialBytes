@@ -12,4 +12,5 @@ export type PostData={
     name:string;
     description:string;
     details:string;
+    image?: File;
 }
