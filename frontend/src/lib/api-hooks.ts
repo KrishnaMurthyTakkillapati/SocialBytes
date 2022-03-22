@@ -13,14 +13,15 @@ export function useGetPosts(){
             
             setFetchState(FetchState.LOADING);
             // const res= await axios.get("https://jsonplaceholder.typicode.com/posts");
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ location: data.location, interest: data.interest, groupName: data.groupName, description: data.description })
-            };
-            const res=await fetch('http://localhost:9010/api/createEvent', requestOptions);
-            if(!res.ok) throw new Error(res.statusText);
-            else return res.json();
+            var body = JSON.stringify({ details: data.location, interest: data.interest, name: data.groupName, description: data.description })
+            // const requestOptions = {
+            //     method: 'POST',
+            //     // headers: { 'Content-Type': '*' },
+            //     body: JSON.stringify({ location: data.location, interest: data.interest, groupName: data.groupName, description: data.description })
+            // };
+            const res=await axios.post('http://localhost:9010/api/createEvent', body);
+            if(res.status != 200) throw new Error(res.statusText);
+            else return res;
         
             // const resData=res.data as Array<PostData>;
             // console.log(res);
