@@ -15,7 +15,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useGetPosts } from '../lib/api-hooks';
-import { FetchState } from '../types/post';
 import { Redirect } from "react-router-dom";
 import FileService from '../service/fileService';
 import Card from '@mui/material/Card';
@@ -54,8 +53,6 @@ export function Event() {
     resolver: yupResolver(schema),
   });
 
-  const [uploadPosts] = useGetPosts();
-
   const [open, setOpen] = useState(false);
   const [failure, setFailure] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -67,7 +64,6 @@ export function Event() {
     setOpen(false);
   };
   const { heading, submitButton } = useStyles();
-  const [groupName, setgroupName] = useState("")
   const onSubmit = async (data: IFormInput) => {
     const fileService = new FileService(data.image[0])
     const fileUploadResponse = await fileService.uploadFile()
@@ -85,12 +81,6 @@ export function Event() {
     console.log(url)
   }
 
-  if (groupName.length !== 0) {
-    return (<>
-      {/* <Link to='/cards/${}' */}
-      <Redirect to={`/eventpage/${groupName}`} />
-    </>)
-  }
   return (
     <div title="App Root">
       <Container maxWidth="xs">
@@ -138,6 +128,34 @@ export function Event() {
             fullWidth
             required
           />
+
+          <div className="form-input">
+            <label htmlFor="category">Category:</label><br />
+            <select name="category" value={category} onChange={this.handleInput} required>
+                  <option />
+                  <option value="science">Science & Tech</option>
+                  <option value="business">Business</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="sports">Sports</option>
+                  <option value="fashion">Fashion</option>
+                  <option value="lifestyle">Lifestyle</option>
+                  <option value="volunteering">Volunteering</option>
+                  <option value="agegroups">Age Groups</option>
+                  <option value="health">Health</option>
+                  <option value="career">Career Fairs</option>
+                  <option value="research">Research Groups</option>
+                  <option value="conferences">Conferences</option>
+            </select>
+          </div>
+          {/* <div className="form-input">
+            <label htmlFor="date">Date:</label><br />
+            <input type="date" name="date" value={date} onChange={this.handleInput}/>
+          </div><br /> */}
+          {/* <div className="form-input">
+            <label htmlFor="venue">Venue:</label><br />
+            <LocationSearchInput value={venue} handleVenue={this.handleVenue}/>
+          </div><br /> */}
+
           <TextField
             {...register("image")}
             variant="outlined"
