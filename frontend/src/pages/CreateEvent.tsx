@@ -7,7 +7,16 @@ import {
   Snackbar,
   Alert,
   CardActionArea,
-  CardMedia
+  CardMedia,
+  InputLabel,
+  Select,
+  Box,
+  MenuItem,
+  Chip,
+  OutlinedInput,
+  SelectChangeEvent,
+  useTheme,
+  Theme
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useForm } from "react-hook-form";
@@ -18,13 +27,18 @@ import { useGetPosts } from '../lib/api-hooks';
 import { Redirect } from "react-router-dom";
 import FileService from '../service/fileService';
 import Card from '@mui/material/Card';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 export interface IFormInput {
   location: string;
-  interest: string;
+  interest: string[];
   groupName: string;
   description: string;
   image: FileList;
+  category: string[];
+  dateTime: string;
 }
 
 const schema = yup.object().shape({
@@ -32,6 +46,7 @@ const schema = yup.object().shape({
   interest: yup.string().required().min(2),
   groupName: yup.string().required().min(8).max(120),
   description: yup.string().required().min(10),
+  category: yup.string().required(),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +84,7 @@ export function Event() {
     const fileUploadResponse = await fileService.uploadFile()
     console.log(data.image[0].name);
     setOpen(true);
-    if(!fileUploadResponse.success) {
+    if (!fileUploadResponse.success) {
       setFailure(true);
       setErrorMessage(fileUploadResponse.message)
     }
@@ -80,7 +95,54 @@ export function Event() {
     setFile(url)
     console.log(url)
   }
+  const [date, setDate] = useState<Date | null>();
+  function handleDate(newValue: Date | null) {
+    setDate(newValue);
+  }
 
+  function getStyles(name: string, interestName: readonly string[], theme: Theme) {
+    return {
+      fontWeight:
+        interestName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+  
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+  const interestsList = [
+    'Science & Tech',
+    'Business',
+    'Entertainment',
+    'Sports',
+    'Fashion',
+    'Lifestyle',
+    'Volunteering',
+    'Age Groups',
+    'Health',
+    'Conferences',
+  ];
+    const theme = useTheme();
+    const [interestName, setInterestName] = useState<string[]>([]);
+  
+    const handleSelection = (event: SelectChangeEvent<typeof interestName>) => {
+      const {
+        target: { value },
+      } = event;
+      setInterestName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+      );
+    };
   return (
     <div title="App Root">
       <Container maxWidth="xs">
@@ -98,7 +160,7 @@ export function Event() {
             fullWidth
             required
           />
-          <TextField
+          {/* <TextField
             {...register("interest")}
             variant="outlined"
             margin="normal"
@@ -107,7 +169,7 @@ export function Event() {
             error={!!errors.interest?.message}
             fullWidth
             required
-          />
+          /> */}
           <TextField
             {...register("groupName")}
             variant="outlined"
@@ -128,34 +190,56 @@ export function Event() {
             fullWidth
             required
           />
+        <Select
+        {...register("interest")}
+          multiple
+          displayEmpty
+          fullWidth
+          variant="outlined"
+          value={interestName}
+          onChange={handleSelection}
+          input={<OutlinedInput />}
+          renderValue={(selected) => {
+            if (selected.length === 0) {
+              return <em>Interests</em>;
+            }
 
-          <div className="form-input">
-            <label htmlFor="category">Category:</label><br />
-            <select name="category" value={category} onChange={this.handleInput} required>
-                  <option />
-                  <option value="science">Science & Tech</option>
-                  <option value="business">Business</option>
-                  <option value="entertainment">Entertainment</option>
-                  <option value="sports">Sports</option>
-                  <option value="fashion">Fashion</option>
-                  <option value="lifestyle">Lifestyle</option>
-                  <option value="volunteering">Volunteering</option>
-                  <option value="agegroups">Age Groups</option>
-                  <option value="health">Health</option>
-                  <option value="career">Career Fairs</option>
-                  <option value="research">Research Groups</option>
-                  <option value="conferences">Conferences</option>
-            </select>
-          </div>
-          {/* <div className="form-input">
-            <label htmlFor="date">Date:</label><br />
-            <input type="date" name="date" value={date} onChange={this.handleInput}/>
-          </div><br /> */}
+            return selected.join(', ');
+          }}
+          MenuProps={MenuProps}
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem disabled value="">
+            <em>Interests</em>
+          </MenuItem>
+          {interestsList.map((name) => (
+            <MenuItem
+              key={name}
+              value={name}
+              style={getStyles(name, interestName, theme)}
+            >
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+
           {/* <div className="form-input">
             <label htmlFor="venue">Venue:</label><br />
             <LocationSearchInput value={venue} handleVenue={this.handleVenue}/>
           </div><br /> */}
-
+          <TextField
+            {...register("dateTime")}
+            id="datetime-local"
+            label="Event Date Time"
+            type="datetime-local"
+            variant="outlined"
+            margin="normal"
+            defaultValue="2022-05-24T10:30"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
           <TextField
             {...register("image")}
             variant="outlined"
@@ -168,7 +252,7 @@ export function Event() {
             onChange={handleChange}
             fullWidth
           />
-           {
+          {
             failure && <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                 Event couldn't be created because {errorMessage}
