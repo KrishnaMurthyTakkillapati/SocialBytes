@@ -3,16 +3,12 @@ import {
   Typography,
   TextField,
   Button,
-  Input,
   Snackbar,
   Alert,
   CardActionArea,
   CardMedia,
-  InputLabel,
   Select,
-  Box,
   MenuItem,
-  Chip,
   OutlinedInput,
   SelectChangeEvent,
   useTheme,
@@ -23,13 +19,19 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { useGetPosts } from '../lib/api-hooks';
-import { Redirect } from "react-router-dom";
 import FileService from '../service/fileService';
 import Card from '@mui/material/Card';
-import DateTimePicker from '@mui/lab/DateTimePicker';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { ChangeEvent } from "react";
+import usePlacesAutocomplete from "use-places-autocomplete";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption
+} from "@reach/combobox";
+
+import "@reach/combobox/styles.css";
 
 export interface IFormInput {
   location: string;
@@ -43,10 +45,10 @@ export interface IFormInput {
 
 const schema = yup.object().shape({
   location: yup.string().required(),
-  interest: yup.string().required().min(2),
+  // interest: yup.string().required().min(2),
   groupName: yup.string().required().min(8).max(120),
   description: yup.string().required().min(10),
-  category: yup.string().required(),
+  // category: yup.string().required(),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -79,6 +81,7 @@ export function Event() {
     setOpen(false);
   };
   const { heading, submitButton } = useStyles();
+
   const onSubmit = async (data: IFormInput) => {
     const fileService = new FileService(data.image[0])
     const fileUploadResponse = await fileService.uploadFile()
@@ -88,13 +91,20 @@ export function Event() {
       setFailure(true);
       setErrorMessage(fileUploadResponse.message)
     }
+  var reader = new FileReader();
+  reader.onloadend = function() {
+    console.log('RESULT', reader.result)
+  }
+  reader.readAsDataURL(data.image[0]);
   };
+
   const [file, setFile] = useState("");
   function handleChange(e: any) {
     let url = URL.createObjectURL(e.target.files[0]);
     setFile(url)
     console.log(url)
   }
+  
   const [date, setDate] = useState<Date | null>();
   function handleDate(newValue: Date | null) {
     setDate(newValue);
@@ -108,7 +118,7 @@ export function Event() {
           : theme.typography.fontWeightMedium,
     };
   }
-  
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -131,18 +141,49 @@ export function Event() {
     'Health',
     'Conferences',
   ];
-    const theme = useTheme();
-    const [interestName, setInterestName] = useState<string[]>([]);
-  
-    const handleSelection = (event: SelectChangeEvent<typeof interestName>) => {
-      const {
-        target: { value },
-      } = event;
-      setInterestName(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value,
-      );
-    };
+  const theme = useTheme();
+  const [interestName, setInterestName] = useState<string[]>([]);
+
+  const handleSelection = (event: SelectChangeEvent<typeof interestName>) => {
+    const {
+      target: { value },
+    } = event;
+    setInterestName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+
+  const { ready, value, suggestions: { status, data }, setValue } = usePlacesAutocomplete();
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
+    setValue(e.target.value);
+  };
+
+  const handleSelect = (val: string): void => {
+    setValue(val, false);
+  };
+
+  const renderSuggestions = (): JSX.Element => {
+    const suggestions = data.map(({ place_id, description }: any) => (
+      <ComboboxOption key={place_id} value={description} style={{color: "black"}}
+      />
+    ));
+
+    return (
+      <>
+        {suggestions}
+        {/* <li className="logo">
+          <img
+            src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
+            alt="Powered by Google"
+          />
+        </li> */}
+      </>
+    );
+  };
+
   return (
     <div title="App Root">
       <Container maxWidth="xs">
@@ -190,43 +231,45 @@ export function Event() {
             fullWidth
             required
           />
-        <Select
-        {...register("interest")}
-          multiple
-          displayEmpty
-          fullWidth
-          variant="outlined"
-          value={interestName}
-          onChange={handleSelection}
-          input={<OutlinedInput />}
-          renderValue={(selected) => {
-            if (selected.length === 0) {
-              return <em>Interests</em>;
-            }
+          <Select
+            {...register("interest")}
+            multiple
+            displayEmpty
+            fullWidth
+            variant="outlined"
+            value={interestName}
+            onChange={handleSelection}
+            input={<OutlinedInput />}
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return <em>Interests</em>;
+              }
 
-            return selected.join(', ');
-          }}
-          MenuProps={MenuProps}
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem disabled value="">
-            <em>Interests</em>
-          </MenuItem>
-          {interestsList.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, interestName, theme)}
-            >
-              {name}
+              return selected.join(', ');
+            }}
+            MenuProps={MenuProps}
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem disabled value="">
+              <em>Interests</em>
             </MenuItem>
-          ))}
-        </Select>
+            {interestsList.map((name) => (
+              <MenuItem
+                key={name}
+                value={name}
+                style={getStyles(name, interestName, theme)}
+              >
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
 
           {/* <div className="form-input">
             <label htmlFor="venue">Venue:</label><br />
             <LocationSearchInput value={venue} handleVenue={this.handleVenue}/>
           </div><br /> */}
+
+          
           <TextField
             {...register("dateTime")}
             id="datetime-local"
@@ -252,6 +295,20 @@ export function Event() {
             onChange={handleChange}
             fullWidth
           />
+
+        <Combobox onSelect={handleSelect} aria-labelledby="demo">
+            <ComboboxInput
+              style={{ width: 700, maxWidth: "100%",height:40,margin: "5% 0", color: "black"}}
+              value={value}
+              onChange={handleInput}
+              disabled={!ready}
+               
+            />
+            <ComboboxPopover>
+              <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
+            </ComboboxPopover>
+          </Combobox>
+
           {
             failure && <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
