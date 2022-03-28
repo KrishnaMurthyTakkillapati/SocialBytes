@@ -1,4 +1,7 @@
 import React from 'react';
+import {useHistory} from "react-router-dom";
+
+
 import {
   MoreVert as MoreIcon,
   Mail as MailIcon,
@@ -40,13 +43,16 @@ export const Notifications = ({ total, onClick, disableTooltip = false }: Action
     disableTooltip={disableTooltip}
   />
 );
+let history = useHistory();
 
 export const UserAccount = ({ onClick, disableTooltip = false }: ActionProps) => (
   <ActionItem title="My Account" icon={FingerprintIcon} onClick={onClick} disableTooltip={disableTooltip} />
+
+  
 );
 
 export const SignOut = ({ onClick, disableTooltip = false }: ActionProps) => (
-  <ActionItem title="Sign Out" icon={LogoutIcon} onClick={onClick} disableTooltip={disableTooltip} />
+  <ActionItem title="Sign Out" icon={LogoutIcon} onClick={() => {history.push("/Login")}} disableTooltip={disableTooltip} />
 );
 
 export const Settings = ({ onClick, disableTooltip = false }: ActionProps) => (

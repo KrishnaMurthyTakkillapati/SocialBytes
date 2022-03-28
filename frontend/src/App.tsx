@@ -13,6 +13,7 @@ import { getAppTheme } from './styles/theme';
 import { DARK_MODE_THEME, LIGHT_MODE_THEME } from './utils/constants';
 import { EventPage } from './pages/event';
 import { Home } from './pages/Home';
+import Login from './LoginComponent';
 
 function App() {
   const [mode, setMode] = useState<typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME>(DARK_MODE_THEME);

@@ -15,6 +15,7 @@ import  { SearchEvent }  from '../pages/SearchEvent';
 
 import { Route } from '../types/Route';
 import { EventPage } from '../pages/event';
+import Login from '../LoginComponent';
 
 const routes: Array<Route> = [
   {
@@ -23,6 +24,16 @@ const routes: Array<Route> = [
     description: 'Home',
     component: Home,
     path: '/',
+    isEnabled: true,
+    icon: HomeIcon,
+    appendDivider: true,
+  },
+  {
+    key: 'router-Login',
+    title: 'Login',
+    description: 'Login-Page',
+    component: Login,
+    path: '/Login',
     isEnabled: true,
     icon: HomeIcon,
     appendDivider: true,
