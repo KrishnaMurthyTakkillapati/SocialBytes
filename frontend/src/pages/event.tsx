@@ -15,10 +15,11 @@ import AttendeesList, { AttInfo }from "../components/Attendees";
 
 export const EventPage = () => {
     const { id }: { id: string } = useParams();
-    const title='First';
+    console.log("Id"+id);
+    const title='Event name';
     const hostPhotoURL="https://randomuser.me/api/portraits/med/men/43.jpg";;
     const hostName='krishma';
-    const description='This is description';
+    const description='TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
     const attendees:Array<AttInfo>= [
         {
             "id": "a1",
@@ -314,17 +315,21 @@ export const EventPage = () => {
     .b-view{
         grid-column: 12 / 13;
         font-size: 1rem;
-        margin-right: .2rem;
+        margin-right: .4rem;
     }
     
     .b-edit{
         grid-column: 13 / 14;
         font-size: 1rem;
+        position:relative;
+        bottom: 20px;
     }
     
     .b-delete{
         grid-column: 14 / 15;
         margin-left: .2rem;
+        position:relative;
+        bottom: 20px;
     }
     
     .m-text p{
@@ -513,15 +518,15 @@ export const EventPage = () => {
     
     .m-details-venue{
         grid-column: 1 / span 12;
-        grid-row: 3 / span 1;
+        grid-row: 1 / span 3;
         padding: 3rem;
         display: grid;
         grid-template-rows: 1fr 1fr;
     }
     
     .m-details-location{
-        grid-row: 1 / span 1;
-        background-color: #FFF;
+        grid-row: 3 / span 1;
+        // background-color: #FFF;
         border-top-left-radius: .5rem;
         border-top-right-radius: .5rem;
     }
@@ -693,11 +698,9 @@ export const EventPage = () => {
         <div className="m-details">
                 <div className="m-details-banner">
                     <div className="details-cal-day">
-                        <h4>25</h4>
-                        <h4>AUG</h4>
+                        <h4>25 April</h4>
                     </div>
                     <div className="details-title">
-                        <h5>Tuesday, 25th August, 2018</h5>
                         <h2>{title || ""}</h2>
                     </div>
                     <div className="details-host">
@@ -714,7 +717,9 @@ export const EventPage = () => {
                     <p>{description}</p>
                 </div>
                 <div className="m-details-venue">
-                    <div className="m-details-location"></div>
+                    <div className="m-details-location">
+                    <h1>    The event is hosted above, click for directions </h1>
+                    </div>
                     <div className="m-details-map">
                         <LocationMap venue={"59.95"} venueLatLng={"venueLatLng"} />
                     </div>

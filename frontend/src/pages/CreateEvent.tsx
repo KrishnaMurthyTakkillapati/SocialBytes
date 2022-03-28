@@ -31,17 +31,16 @@ import {
   ComboboxOption
 } from "@reach/combobox";
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
-
+import { v4 as uuid } from 'uuid';
 import "@reach/combobox/styles.css";
 import { useHistory } from "react-router-dom";
-
+import Moment from 'moment';
 export interface IFormInput {
   location: string;
   interest: string[];
   groupName: string;
   description: string;
   image: FileList;
-  category: string[];
   dateTime: string;
 }
 
@@ -85,9 +84,19 @@ export function Event() {
   const { heading, submitButton } = useStyles();
   const history = useHistory();
   const onSubmit = async (data: IFormInput) => {
+    
+    const dateString = data.dateTime
+
+    const formatDate = (dateString:any) => {
+      return new Date(dateString).toLocaleDateString(undefined);
+    }
+    console.log(dateString)
+    console.log(Moment(dateString).format('d MMM'))
+    const unique_id = uuid();
+    console.log(unique_id);
     var reader = new FileReader();
     reader.onloadend = function () {
-      console.log('RESULT', reader.result);
+      // console.log('RESULT', reader.result);
     }
     geocodeByAddress(data.location)
   .then(results => getLatLng(results[0]))
@@ -102,7 +111,7 @@ export function Event() {
       setFailure(true);
       setErrorMessage(fileUploadResponse.message)
     }
-    history.push('/eventpage/1');
+    history.push('/eventpage/'+unique_id);
   };
 
   const [file, setFile] = useState("");

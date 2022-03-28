@@ -35,6 +35,7 @@
     "hamburger-react": "^2.4.1",
     "jest": "^27.5.1",
     "material-ui-places": "^1.1.7",
+    "moment": "^2.29.1",
     "npm-force-resolutions": "^0.0.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -46,6 +47,7 @@
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.5",
     "use-places-autocomplete": "^2.0.0",
+    "uuidv4": "^6.2.13",
     "web-vitals": "^0.2.4",
     "yup": "^0.32.11"
   },
