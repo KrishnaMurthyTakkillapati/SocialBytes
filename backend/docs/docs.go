@@ -61,6 +61,29 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/searchEvent": {
+            "get": {
+                "description": "Endpoint used to get all events based on the filter from db.",
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get Filtered Events",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Event"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
