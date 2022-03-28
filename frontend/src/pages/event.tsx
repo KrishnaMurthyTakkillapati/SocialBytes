@@ -716,7 +716,7 @@ export const EventPage = () => {
                 <div className="m-details-venue">
                     <div className="m-details-location"></div>
                     <div className="m-details-map">
-                        <LocationMap venue={"venue"} venueLatLng={"venueLatLng"} />
+                        <LocationMap venue={"59.95"} venueLatLng={"venueLatLng"} />
                     </div>
                 </div>
                 {attendees &&

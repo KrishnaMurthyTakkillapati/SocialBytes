@@ -7,31 +7,29 @@ const Marker = ({text}:any) => <FontAwesomeIcon icon={faMapPin} />
 
 const LocationMap=(props:any)=>  {
 
-  // static defaultProps = {
-  //   center: {
-  //     lat: 59.95,
-  //     lng: 30.33
-  //   },
-  //   zoom: 14
-  // }
+  const defaultProps = {
+    center: {
+      lat: 59.95,
+      lng: 30.33
+    },
+    zoom: 14
+  }
 
     const { venue, venueLatLng } = props;
     console.log('venueLatLng in LocationMap', venueLatLng);
     console.log('venue in LocationMap', venue);
   return (<>
-      <div style={{ height: '100%', width: '100%' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key:'AIzaSyAzceP9ntf_qwHQq8LUEx10F5v-kIgm77o' }}
-          defaultCenter={props.center}
-          defaultZoom={props.zoom}
+          bootstrapURLKeys={{ key:'AIzaSyCg_54eDB3dlfeqkOY4H15I7uFeYJUgiGw' }}
+          defaultCenter={defaultProps.center}
+          defaultZoom={defaultProps.zoom}
         >
           <Marker 
-            lat={-27.4661299}
-            lng={153.03504650000002}
+            lat={59.95}
+            lng={30.33}
             text="Location"
           />
         </GoogleMapReact>
-      </div>
     </>
   )
 }

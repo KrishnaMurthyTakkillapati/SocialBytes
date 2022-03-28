@@ -30,8 +30,10 @@ import {
   ComboboxList,
   ComboboxOption
 } from "@reach/combobox";
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 
 import "@reach/combobox/styles.css";
+import { useHistory } from "react-router-dom";
 
 export interface IFormInput {
   location: string;
@@ -81,21 +83,26 @@ export function Event() {
     setOpen(false);
   };
   const { heading, submitButton } = useStyles();
-
+  const history = useHistory();
   const onSubmit = async (data: IFormInput) => {
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      console.log('RESULT', reader.result);
+    }
+    geocodeByAddress(data.location)
+  .then(results => getLatLng(results[0]))
+  .then(({ lat, lng }) =>
+    console.log('Successfully got latitude and longitude', { lat, lng })
+  );
+    reader.readAsDataURL(data.image[0]);
     const fileService = new FileService(data.image[0])
     const fileUploadResponse = await fileService.uploadFile()
-    console.log(data.image[0].name);
     setOpen(true);
     if (!fileUploadResponse.success) {
       setFailure(true);
       setErrorMessage(fileUploadResponse.message)
     }
-  var reader = new FileReader();
-  reader.onloadend = function() {
-    console.log('RESULT', reader.result)
-  }
-  reader.readAsDataURL(data.image[0]);
+    history.push('/eventpage/1');
   };
 
   const [file, setFile] = useState("");
@@ -104,7 +111,7 @@ export function Event() {
     setFile(url)
     console.log(url)
   }
-  
+
   const [date, setDate] = useState<Date | null>();
   function handleDate(newValue: Date | null) {
     setDate(newValue);
@@ -167,7 +174,7 @@ export function Event() {
 
   const renderSuggestions = (): JSX.Element => {
     const suggestions = data.map(({ place_id, description }: any) => (
-      <ComboboxOption key={place_id} value={description} style={{color: "black"}}
+      <ComboboxOption key={place_id} value={description} style={{ color: "black" }}
       />
     ));
 
@@ -191,7 +198,7 @@ export function Event() {
           Create Event
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <TextField
+          {/* <TextField
             {...register("location")}
             variant="outlined"
             margin="normal"
@@ -200,7 +207,7 @@ export function Event() {
             error={!!errors.location?.message}
             fullWidth
             required
-          />
+          /> */}
           {/* <TextField
             {...register("interest")}
             variant="outlined"
@@ -218,16 +225,6 @@ export function Event() {
             label="Group Name"
             helperText={errors.groupName?.message}
             error={!!errors.groupName?.message}
-            fullWidth
-            required
-          />
-          <TextField
-            {...register("description")}
-            variant="outlined"
-            margin="normal"
-            label="Description"
-            helperText={errors.description?.message}
-            error={!!errors.description?.message}
             fullWidth
             required
           />
@@ -264,12 +261,6 @@ export function Event() {
             ))}
           </Select>
 
-          {/* <div className="form-input">
-            <label htmlFor="venue">Venue:</label><br />
-            <LocationSearchInput value={venue} handleVenue={this.handleVenue}/>
-          </div><br /> */}
-
-          
           <TextField
             {...register("dateTime")}
             id="datetime-local"
@@ -283,6 +274,18 @@ export function Event() {
               shrink: true,
             }}
           />
+
+          <TextField
+            {...register("description")}
+            variant="outlined"
+            margin="normal"
+            label="Description"
+            helperText={errors.description?.message}
+            error={!!errors.description?.message}
+            fullWidth
+            required
+          />
+          
           <TextField
             {...register("image")}
             variant="outlined"
@@ -296,13 +299,13 @@ export function Event() {
             fullWidth
           />
 
-        <Combobox onSelect={handleSelect} aria-labelledby="demo">
+          <Combobox onSelect={handleSelect} aria-labelledby="demo">
             <ComboboxInput
-              style={{ width: 700, maxWidth: "100%",height:40,margin: "5% 0", color: "black"}}
+              style={{ width: 700, maxWidth: "100%", height: 40, margin: "5% 0", color: "black" }}
+              {...register("location")}
               value={value}
               onChange={handleInput}
               disabled={!ready}
-               
             />
             <ComboboxPopover>
               <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
