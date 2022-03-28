@@ -61,4 +61,19 @@ paths:
       summary: Get Event
       tags:
       - Events
+  /api/searchEvent:
+    get:
+      description: Endpoint used to get all events based on the filter from db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Filtered Events
+      tags:
+      - Events
 swagger: "2.0"

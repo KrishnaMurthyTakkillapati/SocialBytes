@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 
 	"gorm.io/gorm"
 	Config "socialbytes.com/main/pkg/Config"
@@ -40,5 +41,21 @@ func GetAllEvents() []Event {
 	var events []Event
 	db.Find(&events)
 
+	return events
+}
+
+func SearchEvent(name string, location string) []Event {
+	var events []Event
+	if name != "" && location != "" {
+		name = fmt.Sprintf("%%%s%%", name)
+		location = fmt.Sprintf("%%%s%%", location)
+		db.Where("name LIKE ? AND details LIKE ?", name, location).Find(&events)
+	} else if name != "" {
+		name = fmt.Sprintf("%%%s%%", name)
+		db.Where("name LIKE ?", name).Find(&events)
+	} else if location != "" {
+		location = fmt.Sprintf("%%%s%%", location)
+		db.Where("details LIKE ?", location).Find(&events)
+	}
 	return events
 }
