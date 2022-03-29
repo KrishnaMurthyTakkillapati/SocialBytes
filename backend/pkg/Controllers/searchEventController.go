@@ -18,19 +18,18 @@ func GetFilteredEvents(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
 	var events []models.Event
+	SearchEvents := &models.SearchEventStruct{}
 	if r.URL.Query().Has("location") && r.URL.Query().Has("name") {
-		location := r.URL.Query()["location"]
-		name := r.URL.Query()["name"]
-
-		events = models.SearchEvent(name[0], location[0])
+		SearchEvents.Location = r.URL.Query()["location"][0]
+		SearchEvents.Name = r.URL.Query()["name"][0]
 	} else if r.URL.Query().Has("name") {
-		name := r.URL.Query()["name"]
-
-		events = models.SearchEvent(name[0], "")
+		SearchEvents.Name = r.URL.Query()["name"][0]
 	} else if r.URL.Query().Has("location") {
-		location := r.URL.Query()["location"]
-
-		events = models.SearchEvent("", location[0])
+		SearchEvents.Location = r.URL.Query()["location"][0]
+	} else if r.URL.Query().Has("startDate") && r.URL.Query().Has("endDate") {
+		SearchEvents.StartDate = r.URL.Query()["startDate"][0]
+		SearchEvents.EndDate = r.URL.Query()["endDate"][0]
 	}
+	events = SearchEvents.SearchEvent()
 	json.NewEncoder(w).Encode(events)
 }
