@@ -36,19 +36,25 @@ import "@reach/combobox/styles.css";
 import { useHistory } from "react-router-dom";
 import Moment from 'moment';
 export interface IFormInput {
-  location: string;
-  interest: string[];
-  groupName: string;
-  description: string;
-  image: FileList;
-  dateTime: string;
+  CreatedAt:string;
+  DeleteAt:string;
+  UpdatedAt:string;
+  Location: string;
+  Interests: string[];
+  Name: string;
+  Description: string;
+  Image: string;
+  Date: string;
+  ID:string;
 }
+import { useParams } from "react-router-dom";
+import { eventService } from '../service/eventService';
 
 const schema = yup.object().shape({
-  location: yup.string().required(),
+  Location: yup.string().required(),
   // interest: yup.string().required().min(2),
-  groupName: yup.string().required().min(8).max(120),
-  description: yup.string().required().min(10),
+  Name: yup.string().required().min(8).max(120),
+  Description: yup.string().required().min(10),
   // category: yup.string().required(),
 });
 
@@ -63,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Event() {
+  const { id }: { id: string } = useParams();
+  const editMode = !id;
+
   const {
     register,
     handleSubmit,
@@ -84,41 +93,66 @@ export function Event() {
   const { heading, submitButton } = useStyles();
   const history = useHistory();
   const onSubmit = async (data: IFormInput) => {
+    return createUser(data)
+            // : updateUser(id, data);
     
-    const dateString = data.dateTime
-
-    const formatDate = (dateString:any) => {
-      return new Date(dateString).toLocaleDateString(undefined);
-    }
-    console.log(dateString)
-    console.log(Moment(dateString).format('d MMM'))
-    const unique_id = uuid();
-    console.log(unique_id);
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      // console.log('RESULT', reader.result);
-    }
-    geocodeByAddress(data.location)
-  .then(results => getLatLng(results[0]))
-  .then(({ lat, lng }) =>
-    console.log('Successfully got latitude and longitude', { lat, lng })
-  );
-    reader.readAsDataURL(data.image[0]);
-    const fileService = new FileService(data.image[0])
-    const fileUploadResponse = await fileService.uploadFile()
-    setOpen(true);
-    if (!fileUploadResponse.success) {
-      setFailure(true);
-      setErrorMessage(fileUploadResponse.message)
-    }
-    history.push('/eventpage/'+unique_id);
   };
 
+  async function createUser(info: IFormInput) {
+    const dateString = info.Date
+    info.Date=Moment(dateString).format("yyyy-MM-DDTHH:mm:ss")+"Z"
+    console.log(info.Date)
+    const unique_id = uuid();
+    info.ID=(unique_id);
+  //   geocodeByAddress(info.Location)
+  // .then(results => getLatLng(results[0]))
+  // .then(({ lat, lng }) =>
+  //   console.log('Successfully got latitude and longitude', { lat, lng })
+  // );
+    // var reader = new FileReader();
+    // reader.onloadend = function () {
+    //     // console.log('RESULT', reader.result);
+    //     info.Image=reader.result;
+    //   }
+    //   reader.readAsDataURL(info.Image[0]);
+    //   const fileService = new FileService(info.Image[0])
+    //   const fileUploadResponse = await fileService.uploadFile()
+    //   setOpen(true);
+    //   if (!fileUploadResponse.success) {
+    //     setFailure(true);
+    //     setErrorMessage(fileUploadResponse.message)
+    //   }
+    info.Image=imageData
+    console.log(info)
+    // eventService.getAll().then(res=>{console.log(res)});
+      return eventService.create(info).then(()=>{
+        history.push('/eventpage/'+unique_id);
+      }).catch(err=>{
+        console.log(err)
+      });
+  }
+
+
+function updateUser(idOfUser:string,info: IFormInput) {
+  return eventService.update(idOfUser,info).then(()=>{
+    history.push('/eventpage/'+idOfUser);
+  });
+}
+  
+
   const [file, setFile] = useState("");
+  const [imageData,setImageData]=useState("")
   function handleChange(e: any) {
     let url = URL.createObjectURL(e.target.files[0]);
     setFile(url)
     console.log(url)
+
+    var reader = new FileReader();
+    reader.onloadend = function () {
+        // console.log('RESULT', reader.result);
+        setImageData(""+reader.result);
+      }
+      reader.readAsDataURL(e.target.files[0]);
   }
 
   const [date, setDate] = useState<Date | null>();
@@ -190,12 +224,12 @@ export function Event() {
     return (
       <>
         {suggestions}
-        {/* <li className="logo">
+        <li className="logo">
           <img
             src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
             alt="Powered by Google"
           />
-        </li> */}
+        </li>
       </>
     );
   };
@@ -228,17 +262,17 @@ export function Event() {
             required
           /> */}
           <TextField
-            {...register("groupName")}
+            {...register("Name")}
             variant="outlined"
             margin="normal"
             label="Group Name"
-            helperText={errors.groupName?.message}
-            error={!!errors.groupName?.message}
+            helperText={errors.Name?.message}
+            error={!!errors.Name?.message}
             fullWidth
             required
           />
           <Select
-            {...register("interest")}
+            {...register("Interests")}
             multiple
             displayEmpty
             fullWidth
@@ -271,7 +305,7 @@ export function Event() {
           </Select>
 
           <TextField
-            {...register("dateTime")}
+            {...register("Date")}
             id="datetime-local"
             label="Event Date Time"
             type="datetime-local"
@@ -285,18 +319,18 @@ export function Event() {
           />
 
           <TextField
-            {...register("description")}
+            {...register("Description")}
             variant="outlined"
             margin="normal"
             label="Description"
-            helperText={errors.description?.message}
-            error={!!errors.description?.message}
+            helperText={errors.Description?.message}
+            error={!!errors.Description?.message}
             fullWidth
             required
           />
           
           <TextField
-            {...register("image")}
+            {...register("Image")}
             variant="outlined"
             type="file"
             label="Image Upload"
@@ -311,7 +345,7 @@ export function Event() {
           <Combobox onSelect={handleSelect} aria-labelledby="demo">
             <ComboboxInput
               style={{ width: 700, maxWidth: "100%", height: 40, margin: "5% 0", color: "black" }}
-              {...register("location")}
+              {...register("Location")}
               value={value}
               onChange={handleInput}
               disabled={!ready}

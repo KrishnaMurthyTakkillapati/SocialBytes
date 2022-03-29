@@ -38,6 +38,7 @@
     "moment": "^2.29.1",
     "npm-force-resolutions": "^0.0.10",
     "react": "^17.0.1",
+    "react-confirm-alert": "^2.8.0",
     "react-dom": "^17.0.1",
     "react-google-places-autocomplete": "^3.3.4",
     "react-helmet": "^6.1.0",

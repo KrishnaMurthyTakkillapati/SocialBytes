@@ -12,14 +12,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import LocationMap from "../components/LocationMap";
 import AttendeesList, { AttInfo }from "../components/Attendees";
-
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { eventService } from "../service/eventService";
+import { IFormInput } from "./CreateEvent";
+import { useState } from "react";
 export const EventPage = () => {
     const { id }: { id: string } = useParams();
     console.log("Id"+id);
-    const title='Event name';
-    const hostPhotoURL="https://randomuser.me/api/portraits/med/men/43.jpg";;
+    const [thisEvent,setThisEvent]=useState<IFormInput>();//TODO:change to useEffect & add hostname
+    eventService.getAll().then(response=>{
+        console.log("INside response")
+        const resData=response as Array<IFormInput>;
+        setThisEvent(resData.filter(points=>points.ID===id)[0]);
+        console.log(thisEvent);
+    })
+    const title=thisEvent?.Name;
+    const hostPhotoURL=thisEvent?.Image;
     const hostName='krishma';
-    const description='TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
+    const description=thisEvent?.Description
+    //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
     const attendees:Array<AttInfo>= [
         {
             "id": "a1",
@@ -681,6 +693,26 @@ export const EventPage = () => {
     /* Large devices (laptops/desktops, 992px and up)
     @media screen and (min-width: 992px) {...} */
     `
+    const handleDelete = () => {
+
+        confirmAlert({
+          title: 'Confirm to delete',
+          message: 'Are you sure to do this.',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => {//send request
+            }
+            },
+            {
+              label: 'No',
+              onClick: () => {}
+            }
+          ]
+        });
+      }
+    
+
     return (<>
         {/* <Grid container spacing={5}>
             {
@@ -709,7 +741,7 @@ export const EventPage = () => {
                     </div>
                     <section className="m-text">
                         <span className="b-edit"><FontAwesomeIcon icon={faPencilAlt} /></span>
-                        <span className="b-delete"><FontAwesomeIcon icon={faTrash} /></span>
+                        <span className="b-delete"><FontAwesomeIcon icon={faTrash} onClick={handleDelete}/></span>
                     </section>
                 </div>
                 <div className="m-details-description">
