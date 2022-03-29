@@ -11,7 +11,7 @@ var event *Event
 func TestCreateEventsTable(t *testing.T) {
 	var e Event
 	e.Name = "ABC"
-	e.Details = "UF"
+	e.Location = "UF"
 	e.Description = "UF"
 	res, _ := e.CreateEventstable()
 	assert.NotEqual(t, res, nil)
@@ -26,7 +26,7 @@ func TestCreateEventsTableEmpty(t *testing.T) {
 func TestCreateEventsTableEmptyDescription(t *testing.T) {
 	var e Event
 	e.Name = "ABC"
-	e.Details = "UF"
+	e.Location = "UF"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -34,7 +34,7 @@ func TestCreateEventsTableEmptyDescription(t *testing.T) {
 func TestCreateEventsTableEmptyName(t *testing.T) {
 	var e Event
 	e.Description = "ABC"
-	e.Details = "UF"
+	e.Location = "UF"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }

@@ -3,7 +3,9 @@ package models
 import (
 	"errors"
 	"fmt"
+	"time"
 
+	"github.com/lib/pq"
 	"gorm.io/gorm"
 	Config "socialbytes.com/main/pkg/Config"
 )
@@ -12,10 +14,20 @@ var db *gorm.DB
 
 type Event struct {
 	gorm.Model
-	ID          uint   `gorm:"primaryKey","AUTO_INCREMENT"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Details     string `json:"details"`
+	ID          string `gorm:"primaryKey"`
+	Name        string
+	Description string
+	Location    string
+	Interests   pq.StringArray `gorm:"type:text[]"`
+	Image       string
+	Date        time.Time
+}
+
+type SearchEventStruct struct {
+	Name      string
+	Location  string
+	StartDate string
+	EndDate   string
 }
 
 func init() {
@@ -29,7 +41,7 @@ func (e *Event) CreateEventstable() (*Event, error) {
 		error := errors.New("Event is Empty")
 		return e, error
 	}
-	if e.Description == "" || e.Name == "" || e.Details == "" {
+	if e.Description == "" || e.Name == "" || e.Location == "" {
 
 		error := errors.New("Event details incorrect")
 		return e, error
@@ -44,18 +56,20 @@ func GetAllEvents() []Event {
 	return events
 }
 
-func SearchEvent(name string, location string) []Event {
+func (se *SearchEventStruct) SearchEvent() []Event {
 	var events []Event
-	if name != "" && location != "" {
-		name = fmt.Sprintf("%%%s%%", name)
-		location = fmt.Sprintf("%%%s%%", location)
-		db.Where("name LIKE ? AND details LIKE ?", name, location).Find(&events)
-	} else if name != "" {
-		name = fmt.Sprintf("%%%s%%", name)
-		db.Where("name LIKE ?", name).Find(&events)
-	} else if location != "" {
-		location = fmt.Sprintf("%%%s%%", location)
-		db.Where("details LIKE ?", location).Find(&events)
+	if se.Name != "" && se.Location != "" {
+		name := fmt.Sprintf("%%%s%%", se.Name)
+		location := fmt.Sprintf("%%%s%%", se.Location)
+		db.Where("Name LIKE ? AND Location LIKE ?", name, location).Find(&events)
+	} else if se.Name != "" {
+		name := fmt.Sprintf("%%%s%%", se.Name)
+		db.Where("Name LIKE ?", name).Find(&events)
+	} else if se.Location != "" {
+		location := fmt.Sprintf("%%%s%%", se.Location)
+		db.Where("Location LIKE ?", location).Find(&events)
+	} else if se.StartDate != "" && se.EndDate != "" {
+		db.Where("Date BETWEEN ? AND ?", se.StartDate, se.EndDate).Find(&events)
 	}
 	return events
 }
