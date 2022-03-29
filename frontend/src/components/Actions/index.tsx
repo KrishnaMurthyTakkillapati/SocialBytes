@@ -43,7 +43,8 @@ export const Notifications = ({ total, onClick, disableTooltip = false }: Action
     disableTooltip={disableTooltip}
   />
 );
-let history = useHistory();
+
+//const history = useHistory();
 
 export const UserAccount = ({ onClick, disableTooltip = false }: ActionProps) => (
   <ActionItem title="My Account" icon={FingerprintIcon} onClick={onClick} disableTooltip={disableTooltip} />
@@ -52,7 +53,7 @@ export const UserAccount = ({ onClick, disableTooltip = false }: ActionProps) =>
 );
 
 export const SignOut = ({ onClick, disableTooltip = false }: ActionProps) => (
-  <ActionItem title="Sign Out" icon={LogoutIcon} onClick={() => {history.push("/Login")}} disableTooltip={disableTooltip} />
+  <ActionItem title="Sign Out" icon={LogoutIcon} onClick={onClick} disableTooltip={disableTooltip} />
 );
 
 export const Settings = ({ onClick, disableTooltip = false }: ActionProps) => (
