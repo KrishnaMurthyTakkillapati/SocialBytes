@@ -39,6 +39,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/deleteEvent": {
+            "delete": {
+                "description": "Endpoint used to delete an event from db based on id.",
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Delete Event",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Event"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/api/getEvent": {
             "get": {
                 "description": "Endpoint used to get an events from db based on id.",

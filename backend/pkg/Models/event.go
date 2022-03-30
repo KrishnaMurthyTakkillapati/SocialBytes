@@ -61,6 +61,12 @@ func GetEventByID(id string) Event {
 	return event
 }
 
+func DeleteEventByID(id string) Event {
+	var event Event
+	db.Delete(&event, "ID = ?", id)
+	return event
+}
+
 func (se *SearchEventStruct) SearchEvent() []Event {
 	var events []Event
 	if se.Name != "" && se.Location != "" {
