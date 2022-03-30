@@ -14,13 +14,13 @@ var db *gorm.DB
 
 type Event struct {
 	gorm.Model
-	ID          string `gorm:"primaryKey"`
-	Name        string
-	Description string
-	Location    string
-	Interests   pq.StringArray `gorm:"type:text[]"`
-	Image       string
-	Date        time.Time
+	ID            string `gorm:"primaryKey"`
+	Name          string
+	Description   string
+	Location      string
+	Interests     pq.StringArray `gorm:"type:text[]"`
+	Date          time.Time
+	ImageasBase64 string
 }
 
 type SearchEventStruct struct {
@@ -34,6 +34,7 @@ func init() {
 	Config.Connect()
 	db = Config.GetDB()
 	db.AutoMigrate(&Event{})
+
 }
 
 func (e *Event) CreateEventstable() (*Event, error) {
@@ -41,7 +42,7 @@ func (e *Event) CreateEventstable() (*Event, error) {
 		error := errors.New("Event is Empty")
 		return e, error
 	}
-	if e.Description == "" || e.Name == "" || e.Location == "" {
+	if e.Description == "" || e.Name == "" || e.Location == "" || e.ImageasBase64 == "" || len(e.Interests) <= 0 || e.Date.IsZero() {
 
 		error := errors.New("Event details incorrect")
 		return e, error

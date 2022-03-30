@@ -2,6 +2,7 @@ package models
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -13,6 +14,9 @@ func TestCreateEventsTable(t *testing.T) {
 	e.Name = "ABC"
 	e.Location = "UF"
 	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
 	res, _ := e.CreateEventstable()
 	assert.NotEqual(t, res, nil)
 }
@@ -27,26 +31,66 @@ func TestCreateEventsTableEmptyDescription(t *testing.T) {
 	var e Event
 	e.Name = "ABC"
 	e.Location = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
 
 func TestCreateEventsTableEmptyName(t *testing.T) {
 	var e Event
-	e.Description = "ABC"
 	e.Location = "UF"
+	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
 
-func TestCreateEventsTableEmptyDetails(t *testing.T) {
+func TestCreateEventsTableEmptyInterests(t *testing.T) {
+	var e Event
+	e.Name = "ABC"
+	e.Location = "UF"
+	e.Description = "UF"
+	e.Date = time.Now()
+	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	_, err := e.CreateEventstable()
+	assert.Equal(t, err.Error(), "Event details incorrect")
+}
+
+func TestCreateEventsTableEmptyLocation(t *testing.T) {
 	var e Event
 	e.Name = "ABC"
 	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
 
+func TestCreateEventsTableEmptyDate(t *testing.T) {
+	var e Event
+	e.Name = "ABC"
+	e.Location = "UF"
+	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	_, err := e.CreateEventstable()
+	assert.Equal(t, err.Error(), "Event details incorrect")
+}
+func TestCreateEventsTableEmptyImageasBase64(t *testing.T) {
+	var e Event
+	e.Name = "ABC"
+	e.Location = "UF"
+	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	_, err := e.CreateEventstable()
+	assert.Equal(t, err.Error(), "Event details incorrect")
+}
 func TestGetEventsTable(t *testing.T) {
 	res := GetAllEvents()
 	assert.NotEqual(t, len(res), 0)
