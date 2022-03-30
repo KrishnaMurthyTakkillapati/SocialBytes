@@ -11,28 +11,33 @@ import {
     faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import LocationMap from "../components/LocationMap";
-import AttendeesList, { AttInfo }from "../components/Attendees";
+import AttendeesList, { AttInfo } from "../components/Attendees";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { eventService } from "../service/eventService";
 import { IFormInput } from "./CreateEvent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from 'material-ui-image'
+
 export const EventPage = () => {
-    const { id }: { id: string } = useParams();
-    console.log("Id"+id);
-    const [thisEvent,setThisEvent]=useState<IFormInput>();//TODO:change to useEffect & add hostname
-    eventService.getAll().then(response=>{
-        console.log("INside response")
-        const resData=response as Array<IFormInput>;
-        setThisEvent(resData.filter(points=>points.ID===id)[0]);
-        console.log(thisEvent);
-    })
-    const title=thisEvent?.Name;
-    const hostPhotoURL=thisEvent?.Image;
-    const hostName='krishma';
-    const description=thisEvent?.Description
+    const { id }: { id: string } = useParams();//TODO:change to useEffect & add hostname
+    const [thisEvent, setThisEvent] = useState<IFormInput>();
+    useEffect(() => {
+        eventService.getAll().then(response => {
+            console.log("INside response")
+            const resData = response as Array<IFormInput>;
+            setThisEvent(resData.filter(points => points.ID === id)[0]);
+            console.log(thisEvent);
+        })
+
+    }, [])
+    console.log("Id" + id);
+    const title = thisEvent?.Name;
+    const hostPhotoURL = thisEvent?.Image;
+    const hostName = 'krishma';
+    const description = thisEvent?.Description
     //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
-    const attendees:Array<AttInfo>= [
+    const attendees: Array<AttInfo> = [
         {
             "id": "a1",
             "name": "John Doe",
@@ -50,7 +55,7 @@ export const EventPage = () => {
         }
 
     ];
-    const css=`/* ======General====== */
+    const css = `/* ======General====== */
     .App{
         height: 100vh;
         display: grid;
@@ -522,6 +527,12 @@ export const EventPage = () => {
         grid-row: 2 / span 1;
         margin-top: 1rem;
     }
+
+    .m-details-image{
+        grid-column: 2/ span 5;
+        grid-row: 3 / span 4;
+        margin-top: 1rem;
+    }
     
     .m-details-description p{
         text-align: justify;
@@ -530,14 +541,14 @@ export const EventPage = () => {
     
     .m-details-venue{
         grid-column: 1 / span 12;
-        grid-row: 1 / span 3;
+        grid-row: 3 / span 3;
         padding: 3rem;
         display: grid;
         grid-template-rows: 1fr 1fr;
     }
     
     .m-details-location{
-        grid-row: 3 / span 1;
+        grid-row: 5 / span 1;
         // background-color: #FFF;
         border-top-left-radius: .5rem;
         border-top-right-radius: .5rem;
@@ -696,22 +707,22 @@ export const EventPage = () => {
     const handleDelete = () => {
 
         confirmAlert({
-          title: 'Confirm to delete',
-          message: 'Are you sure to do this.',
-          buttons: [
-            {
-              label: 'Yes',
-              onClick: () => {//send request
-            }
-            },
-            {
-              label: 'No',
-              onClick: () => {}
-            }
-          ]
+            title: 'Confirm to delete',
+            message: 'Are you sure to do this.',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {//send request
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
         });
-      }
-    
+    }
+
 
     return (<>
         {/* <Grid container spacing={5}>
@@ -728,39 +739,42 @@ export const EventPage = () => {
         </Grid> */}
         <style>{css}</style>
         <div className="m-details">
-                <div className="m-details-banner">
-                    <div className="details-cal-day">
-                        <h4>25 April</h4>
-                    </div>
-                    <div className="details-title">
-                        <h2>{title || ""}</h2>
-                    </div>
-                    <div className="details-host">
-                        <img src={hostPhotoURL} alt="host"  />
-                        <p>Hosted by: <strong>{hostName}</strong></p>
-                    </div>
-                    <section className="m-text">
-                        <span className="b-edit"><FontAwesomeIcon icon={faPencilAlt} /></span>
-                        <span className="b-delete"><FontAwesomeIcon icon={faTrash} onClick={handleDelete}/></span>
-                    </section>
+            <div className="m-details-banner">
+                <div className="details-cal-day">
+                    <h4>25 April</h4>
                 </div>
-                <div className="m-details-description">
-                    <h4>What is it about?</h4>
-                    <p>{description}</p>
+                <div className="details-title">
+                    <h2>{title || ""}</h2>
                 </div>
-                <div className="m-details-venue">
-                    <div className="m-details-location">
-                    <h1>    The event is hosted above, click for directions </h1>
-                    </div>
-                    <div className="m-details-map">
-                        <LocationMap venue={"59.95"} venueLatLng={"venueLatLng"} />
-                    </div>
+                <div className="details-host">
+                    {/* <img src={hostPhotoURL} alt="host" /> */}
+                    <p>Hosted by: <strong>{hostName}</strong></p>
                 </div>
-                {attendees &&
-                    <div className="m-details-attendees">
-                    <AttendeesList props={attendees}/>
-                    </div>
-                }
+                <section className="m-text">
+                    <span className="b-edit"><FontAwesomeIcon icon={faPencilAlt} /></span>
+                    <span className="b-delete"><FontAwesomeIcon icon={faTrash} onClick={handleDelete} /></span>
+                </section>
             </div>
+            <img className="m-details-image"
+                src={hostPhotoURL}
+            />
+            <div className="m-details-description">
+                <h4>What is it about?</h4>
+                <p>{description}</p>
+            </div>
+            <div className="m-details-venue">
+                <div className="m-details-location">
+                    <h1>    The event is hosted above, click for directions </h1>
+                </div>
+                <div className="m-details-map">
+                    <LocationMap venue={"59.95"} venueLatLng={"venueLatLng"} />
+                </div>
+            </div>
+            {attendees &&
+                <div className="m-details-attendees">
+                    <AttendeesList props={attendees} />
+                </div>
+            }
+        </div>
     </>)
 }

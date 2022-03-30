@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IFormInput } from "../pages/CreateEvent";
 
 const baseUrl = 'http://localhost:9010/api';
 
@@ -14,7 +15,7 @@ function getAll() {
     return get(`${baseUrl}/getEvents`);
 }
 
-function getById(id: any) {
+function getById(id: any):Promise<IFormInput> {
     return get(`${baseUrl}/${id}`);
 }
 

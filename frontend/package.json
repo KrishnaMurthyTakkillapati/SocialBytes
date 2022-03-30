@@ -34,6 +34,7 @@
     "google-map-react": "^2.1.10",
     "hamburger-react": "^2.4.1",
     "jest": "^27.5.1",
+    "material-ui-image": "^3.3.2",
     "material-ui-places": "^1.1.7",
     "moment": "^2.29.1",
     "npm-force-resolutions": "^0.0.10",

@@ -1,54 +1,36 @@
 import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Snackbar,
-  Alert,
-  CardActionArea,
-  CardMedia,
-  Select,
-  MenuItem,
-  OutlinedInput,
-  SelectChangeEvent,
-  useTheme,
-  Theme
+  Container, Typography, TextField, Button, Snackbar, Alert, CardActionArea, CardMedia, Select, MenuItem, OutlinedInput, SelectChangeEvent, useTheme, Theme
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState,ChangeEvent } from "react";
 import FileService from '../service/fileService';
 import Card from '@mui/material/Card';
-import { ChangeEvent } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption
+  Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption
 } from "@reach/combobox";
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 import { v4 as uuid } from 'uuid';
 import "@reach/combobox/styles.css";
-import { useHistory } from "react-router-dom";
 import Moment from 'moment';
+import { useParams,useHistory} from "react-router-dom";
+import { eventService } from '../service/eventService';
+
 export interface IFormInput {
-  CreatedAt:string;
-  DeleteAt:string;
-  UpdatedAt:string;
+  CreatedAt: string;
+  DeleteAt: string;
+  UpdatedAt: string;
   Location: string;
   Interests: string[];
   Name: string;
   Description: string;
   Image: string;
   Date: string;
-  ID:string;
+  ID: string;
 }
-import { useParams } from "react-router-dom";
-import { eventService } from '../service/eventService';
 
 const schema = yup.object().shape({
   Location: yup.string().required(),
@@ -70,15 +52,20 @@ const useStyles = makeStyles((theme) => ({
 
 export function Event() {
   const { id }: { id: string } = useParams();
-  const editMode = !id;
+  const editMode = id;
 
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
+    getValues,
     formState: { errors },
   } = useForm<IFormInput>({
     resolver: yupResolver(schema),
   });
+
+
 
   const [open, setOpen] = useState(false);
   const [failure, setFailure] = useState(false);
@@ -92,23 +79,23 @@ export function Event() {
   };
   const { heading, submitButton } = useStyles();
   const history = useHistory();
-  const onSubmit = async (data: IFormInput) => {
-    return createUser(data)
-            // : updateUser(id, data);
-    
+  const onSubmit = async (inputData: IFormInput) => {
+    return !editMode ? createUser(inputData)
+      : updateUser(id, inputData);
+
   };
 
   async function createUser(info: IFormInput) {
     const dateString = info.Date
-    info.Date=Moment(dateString).format("yyyy-MM-DDTHH:mm:ss")+"Z"
+    info.Date = Moment(dateString).format("yyyy-MM-DDTHH:mm:ss") + "Z"
     console.log(info.Date)
     const unique_id = uuid();
-    info.ID=(unique_id);
-  //   geocodeByAddress(info.Location)
-  // .then(results => getLatLng(results[0]))
-  // .then(({ lat, lng }) =>
-  //   console.log('Successfully got latitude and longitude', { lat, lng })
-  // );
+    info.ID = (unique_id);
+    //   geocodeByAddress(info.Location)
+    // .then(results => getLatLng(results[0]))
+    // .then(({ lat, lng }) =>
+    //   console.log('Successfully got latitude and longitude', { lat, lng })
+    // );
     // var reader = new FileReader();
     // reader.onloadend = function () {
     //     // console.log('RESULT', reader.result);
@@ -122,26 +109,53 @@ export function Event() {
     //     setFailure(true);
     //     setErrorMessage(fileUploadResponse.message)
     //   }
-    info.Image=imageData
+    info.Image = imageData
     console.log(info)
     // eventService.getAll().then(res=>{console.log(res)});
-      return eventService.create(info).then(()=>{
-        history.push('/eventpage/'+unique_id);
-      }).catch(err=>{
-        console.log(err)
-      });
+    return eventService.create(info).then(() => {
+      history.push('/eventpage/' + unique_id);
+    }).catch(err => {
+      console.log(err)
+    });
   }
 
 
-function updateUser(idOfUser:string,info: IFormInput) {
-  return eventService.update(idOfUser,info).then(()=>{
-    history.push('/eventpage/'+idOfUser);
-  });
-}
+  function updateUser(idOfUser: string, info: IFormInput) {
+    return eventService.update(idOfUser, info).then(() => {
+      history.push('/eventpage/' + idOfUser);
+    });
+  }
+  const { ready, value, suggestions: { status, data },setValue } = usePlacesAutocomplete();
   
+  const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
+    setValue(e.target.value);
+    };
+  
+    const handleSelect = (val: string): void => {
+      setValue(val, false);
+    };
+  
+    const renderSuggestions = (): JSX.Element => {
+      const suggestions = data.map(({ place_id, description }: any) => (
+        <ComboboxOption key={place_id} value={description} style={{ color: "black" }}
+        />
+      ));
+  
+      return (
+        <>
+          {suggestions}
+          <li className="logo">
+            <img
+              src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
+              alt="Powered by Google"
+            />
+          </li>
+        </>
+      );
+    };
 
   const [file, setFile] = useState("");
-  const [imageData,setImageData]=useState("")
+  const [imageData, setImageData] = useState("")
   function handleChange(e: any) {
     let url = URL.createObjectURL(e.target.files[0]);
     setFile(url)
@@ -149,10 +163,10 @@ function updateUser(idOfUser:string,info: IFormInput) {
 
     var reader = new FileReader();
     reader.onloadend = function () {
-        // console.log('RESULT', reader.result);
-        setImageData(""+reader.result);
-      }
-      reader.readAsDataURL(e.target.files[0]);
+      // console.log('RESULT', reader.result);
+      setImageData("" + reader.result);
+    }
+    reader.readAsDataURL(e.target.files[0]);
   }
 
   const [date, setDate] = useState<Date | null>();
@@ -205,35 +219,8 @@ function updateUser(idOfUser:string,info: IFormInput) {
   };
 
 
-  const { ready, value, suggestions: { status, data }, setValue } = usePlacesAutocomplete();
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    setValue(e.target.value);
-  };
-
-  const handleSelect = (val: string): void => {
-    setValue(val, false);
-  };
-
-  const renderSuggestions = (): JSX.Element => {
-    const suggestions = data.map(({ place_id, description }: any) => (
-      <ComboboxOption key={place_id} value={description} style={{ color: "black" }}
-      />
-    ));
-
-    return (
-      <>
-        {suggestions}
-        <li className="logo">
-          <img
-            src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
-            alt="Powered by Google"
-          />
-        </li>
-      </>
-    );
-  };
-
+ 
   return (
     <div title="App Root">
       <Container maxWidth="xs">
@@ -328,7 +315,7 @@ function updateUser(idOfUser:string,info: IFormInput) {
             fullWidth
             required
           />
-          
+
           <TextField
             {...register("Image")}
             variant="outlined"
@@ -342,7 +329,7 @@ function updateUser(idOfUser:string,info: IFormInput) {
             fullWidth
           />
 
-          <Combobox onSelect={handleSelect} aria-labelledby="demo">
+          <Combobox onSelect= {handleSelect} aria-labelledby="demo">
             <ComboboxInput
               style={{ width: 700, maxWidth: "100%", height: 40, margin: "5% 0", color: "black" }}
               {...register("Location")}
