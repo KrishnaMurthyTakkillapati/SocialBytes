@@ -21,6 +21,7 @@ type Event struct {
 	Interests     pq.StringArray `gorm:"type:text[]"`
 	Date          time.Time
 	ImageasBase64 string
+	UserId        string
 }
 
 type SearchEventStruct struct {
@@ -29,12 +30,18 @@ type SearchEventStruct struct {
 	StartDate string
 	EndDate   string
 }
+type Users struct {
+	UserID   string `gorm:"primaryKey"`
+	UserName string
+	EmailId  string
+	Password string
+}
 
 func init() {
 	Config.Connect()
 	db = Config.GetDB()
 	db.AutoMigrate(&Event{})
-
+	db.AutoMigrate(&Users{})
 }
 
 func (e *Event) CreateEventstable() (*Event, error) {
