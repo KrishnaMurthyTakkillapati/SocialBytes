@@ -54,6 +54,21 @@ paths:
       summary: Create Event
       tags:
       - Events
+  /api/deleteEvent:
+    delete:
+      description: Endpoint used to delete an event from db based on id.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Delete Event
+      tags:
+      - Events
   /api/getEvent:
     get:
       description: Endpoint used to get an events from db based on id.
