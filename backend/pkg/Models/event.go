@@ -21,7 +21,6 @@ type Event struct {
 	Interests     pq.StringArray `gorm:"type:text[]"`
 	Date          time.Time
 	ImageasBase64 string
-	UserId        string
 }
 
 type SearchEventStruct struct {
