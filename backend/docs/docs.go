@@ -41,11 +41,34 @@ const docTemplate = `{
         },
         "/api/getEvent": {
             "get": {
-                "description": "Endpoint used to get all events from db.",
+                "description": "Endpoint used to get an events from db based on id.",
                 "tags": [
                     "Events"
                 ],
                 "summary": "Get Event",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Event"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getEvents": {
+            "get": {
+                "description": "Endpoint used to get all events from db.",
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get Events",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -105,17 +128,29 @@ const docTemplate = `{
                 "createdAt": {
                     "type": "string"
                 },
+                "date": {
+                    "type": "string"
+                },
                 "deletedAt": {
                     "$ref": "#/definitions/gorm.DeletedAt"
                 },
                 "description": {
                     "type": "string"
                 },
-                "details": {
+                "id": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "image": {
+                    "type": "string"
+                },
+                "interests": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "location": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
