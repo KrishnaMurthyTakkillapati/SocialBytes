@@ -12,14 +12,22 @@ definitions:
     properties:
       createdAt:
         type: string
+      date:
+        type: string
       deletedAt:
         $ref: '#/definitions/gorm.DeletedAt'
       description:
         type: string
-      details:
-        type: string
       id:
-        type: integer
+        type: string
+      image:
+        type: string
+      interests:
+        items:
+          type: string
+        type: array
+      location:
+        type: string
       name:
         type: string
       updatedAt:
@@ -46,7 +54,37 @@ paths:
       summary: Create Event
       tags:
       - Events
+  /api/deleteEvent:
+    delete:
+      description: Endpoint used to delete an event from db based on id.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Delete Event
+      tags:
+      - Events
   /api/getEvent:
+    get:
+      description: Endpoint used to get an events from db based on id.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Event
+      tags:
+      - Events
+  /api/getEvents:
     get:
       description: Endpoint used to get all events from db.
       responses:
@@ -58,7 +96,7 @@ paths:
           description: Not Found
           schema:
             type: object
-      summary: Get Event
+      summary: Get Events
       tags:
       - Events
   /api/searchEvent:

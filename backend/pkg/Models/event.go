@@ -55,6 +55,17 @@ func GetAllEvents() []Event {
 
 	return events
 }
+func GetEventByID(id string) Event {
+	var event Event
+	db.Find(&event, "ID = ?", id)
+	return event
+}
+
+func DeleteEventByID(id string) Event {
+	var event Event
+	db.Delete(&event, "ID = ?", id)
+	return event
+}
 
 func (se *SearchEventStruct) SearchEvent() []Event {
 	var events []Event
