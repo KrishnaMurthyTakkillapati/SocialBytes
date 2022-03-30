@@ -155,6 +155,27 @@ const Register = () => {
         <CardHeader className={classes.header} title="Register" />
         <CardContent>
           <div>
+          <TextField
+              error={state.isError}
+              fullWidth
+              id="firstName"
+              type="firstName"
+              label="First Name"
+              placeholder="Type your FirstName"
+              margin="normal"
+              onChange={handleUsernameChange}
+              onKeyPress={handleKeyPress}
+            /><TextField
+            error={state.isError}
+            fullWidth
+            id="lastName"
+            type="lastName"
+            label="Last Name"
+            placeholder="Type your Last Name"
+            margin="normal"
+            onChange={handleUsernameChange}
+            onKeyPress={handleKeyPress}
+          />
             <TextField
               error={state.isError}
               fullWidth
