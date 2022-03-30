@@ -16,7 +16,7 @@ function getAll() {
 }
 
 function getById(id: any):Promise<IFormInput> {
-    return get(`${baseUrl}/${id}`);
+    return get(`${baseUrl}/getEvent?id=${id}`);
 }
 
 function create(params: any) {
@@ -47,7 +47,7 @@ function _delete(id: any) {
     const requestOptions = {
         method: 'DELETE'
     };
-    return fetch(`${baseUrl}/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${baseUrl}/deleteEvent?id=${id}`, requestOptions).then(handleResponse);
 }
 
 function get(url: any) {

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Grid } from '@mui/material';
 import eventInfo from '../lib/eventpage.json'
 import EventCard from "../utils/EventCard";
@@ -22,19 +22,21 @@ import Image from 'material-ui-image'
 export const EventPage = () => {
     const { id }: { id: string } = useParams();//TODO:change to useEffect & add hostname
     const [thisEvent, setThisEvent] = useState<IFormInput>();
+   
     useEffect(() => {
-        eventService.getAll().then(response => {
+        eventService.getById(id).then(response => {
             console.log("INside response")
-            const resData = response as Array<IFormInput>;
-            setThisEvent(resData.filter(points => points.ID === id)[0]);
+            const valIn = response as IFormInput;
+            setThisEvent(valIn);
             console.log(thisEvent);
+            
         })
 
     }, [])
     console.log("Id" + id);
     const title = thisEvent?.Name;
     const hostPhotoURL = thisEvent?.Image;
-    const hostName = 'krishma';
+    const hostName = 'krishna';
     const description = thisEvent?.Description
     //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
     const attendees: Array<AttInfo> = [
@@ -461,14 +463,14 @@ export const EventPage = () => {
     
     /* ====== Meeting Details View ====== */
     .m-details {
-        grid-column: 4 / span 12;
+        grid-column: 1 / span 9;
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: 12rem 20rem 35rem 22rem auto;
     }
     
     .m-details-banner{
-        grid-column: 1 / span 12;
+        grid-column: 1 / span 8;
         grid-row: 1 / span 1;
         padding: 1.5rem .5rem .5rem .5rem;
         margin-top: .3rem;
@@ -521,52 +523,53 @@ export const EventPage = () => {
     .details-host p{
         grid-column: 4 / -1;
     }
-    
-    .m-details-description{
-        grid-column: 1 / span 12;
-        grid-row: 2 / span 1;
+    .m-details-image{
+        grid-column: 2/ span 3;
+        grid-row: 2/ span 1;
         margin-top: 1rem;
     }
 
-    .m-details-image{
-        grid-column: 2/ span 5;
-        grid-row: 3 / span 4;
+    .m-details-description{
+        grid-column:1 / span 8;
+        grid-row: 1/ span 1;
         margin-top: 1rem;
     }
+   
     
-    .m-details-description p{
-        text-align: justify;
-        line-height: 1.2rem;
-    }
+    // .m-details-description p{
+    //     text-align: justify;
+    //     line-height: 1.2rem;
+    // }
     
     .m-details-venue{
-        grid-column: 1 / span 12;
-        grid-row: 3 / span 3;
+        grid-column: 1 / span 8;
+        grid-row: 3/ span 5;
         padding: 3rem;
         display: grid;
         grid-template-rows: 1fr 1fr;
     }
     
     .m-details-location{
-        grid-row: 5 / span 1;
+        grid-row: 3 / span 1;
         // background-color: #FFF;
         border-top-left-radius: .5rem;
         border-top-right-radius: .5rem;
     }
     
     .m-details-map{
-        grid-row: 2 / span 1;
+        grid-column: 1 / span 8;
+        grid-row: 2/ span 1;
     }
     
     .m-details-attendees{
-        grid-column: 1 / span 12;
-        grid-row: 4 / span 1;
+        grid-column: 1 / span 8;
+        // grid-row: 4 / span 1;
     }
     
-    .m-details-comments{
-        grid-column: 1 / span 12;
-        grid-row: 5 / span 1;
-    }
+    // .m-details-comments{
+    //     grid-column: 1 / span 8;
+    //     grid-row: 7/ span 1;
+    // }
     
     /* ====== Comments ====== */
     .comments-list{
@@ -704,6 +707,9 @@ export const EventPage = () => {
     /* Large devices (laptops/desktops, 992px and up)
     @media screen and (min-width: 992px) {...} */
     `
+
+    const history = useHistory();
+
     const handleDelete = () => {
 
         confirmAlert({
@@ -712,8 +718,8 @@ export const EventPage = () => {
             buttons: [
                 {
                     label: 'Yes',
-                    onClick: () => {//send request
-                    }
+                    onClick: () => {eventService.delete(id);
+                        history.replace("/");                    }
                 },
                 {
                     label: 'No',
@@ -755,19 +761,19 @@ export const EventPage = () => {
                     <span className="b-delete"><FontAwesomeIcon icon={faTrash} onClick={handleDelete} /></span>
                 </section>
             </div>
-            <img className="m-details-image"
-                src={hostPhotoURL}
-            />
-            <div className="m-details-description">
-                <h4>What is it about?</h4>
-                <p>{description}</p>
+            <div className="m-details-image">
+                <img src={hostPhotoURL} />
             </div>
             <div className="m-details-venue">
-                <div className="m-details-location">
-                    <h1>    The event is hosted above, click for directions </h1>
+                <div className="m-details-description">
+                    <h4>What is it about?</h4>
+                    <p>{description}</p>
                 </div>
+                {/* <div className="m-details-location">
+                    <h1>    The event is hosted above, click for directions </h1>
+                </div> */}
                 <div className="m-details-map">
-                    <LocationMap venue={"59.95"} venueLatLng={"venueLatLng"} />
+                    <LocationMap venue={thisEvent?.Location} />
                 </div>
             </div>
             {attendees &&

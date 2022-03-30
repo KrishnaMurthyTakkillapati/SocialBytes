@@ -12,7 +12,6 @@ import usePlacesAutocomplete from "use-places-autocomplete";
 import {
   Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption
 } from "@reach/combobox";
-import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 import { v4 as uuid } from 'uuid';
 import "@reach/combobox/styles.css";
 import Moment from 'moment';
@@ -52,18 +51,17 @@ const useStyles = makeStyles((theme) => ({
 
 export function Event() {
   const { id }: { id: string } = useParams();
+  
+    const {
+      register,
+      handleSubmit,
+      reset,
+      getValues,
+      formState: { errors },
+    } = useForm<IFormInput>({
+      resolver: yupResolver(schema),
+    });
   const editMode = id;
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    getValues,
-    formState: { errors },
-  } = useForm<IFormInput>({
-    resolver: yupResolver(schema),
-  });
 
 
 
