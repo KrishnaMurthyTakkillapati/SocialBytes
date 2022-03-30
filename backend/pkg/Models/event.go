@@ -80,3 +80,8 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 	}
 	return events
 }
+
+func (e *Users) CreateUsers() (*Users, error) {
+
+	return e, nil
+}
