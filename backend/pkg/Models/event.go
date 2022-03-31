@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"fmt"
+
 	"time"
 
 	"github.com/lib/pq"
@@ -30,17 +31,20 @@ type SearchEventStruct struct {
 	EndDate   string
 }
 type Users struct {
-	UserID   string `gorm:"primaryKey"`
-	UserName string
-	EmailId  string
-	Password string
+	gorm.Model
+	ID        uint `gorm:"primaryKey;not null"`
+	FirstName string
+	LastName  string
+	EmailId   string
+	Password  string
 }
 
 func init() {
 	Config.Connect()
 	db = Config.GetDB()
-	db.AutoMigrate(&Event{})
 	db.AutoMigrate(&Users{})
+	db.AutoMigrate(&Event{})
+
 }
 
 func (e *Event) CreateEventstable() (*Event, error) {
@@ -92,7 +96,17 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 	return events
 }
 
-func (e *Users) CreateUsers() (*Users, error) {
+func (u *Users) CreateUsers() (*Users, error) {
+	if u == nil {
+		error := errors.New("Event is Empty")
+		return u, error
+	}
+	if u.FirstName == "" || u.LastName == "" || u.EmailId == "" || u.Password == "" {
 
-	return e, nil
+		error := errors.New("User details incorrect")
+		return u, error
+	}
+
+	db.Create(&u)
+	return u, nil
 }

@@ -2,6 +2,8 @@ package Controllers
 
 import (
 	"encoding/json"
+	"fmt"
+
 	"net/http"
 
 	models "socialbytes.com/main/pkg/Models"
@@ -11,10 +13,10 @@ import (
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
-
 	CreateUser := &models.Users{}
 	Utils.ParseBody(r, CreateUser)
 	user, err := CreateUser.CreateUsers()
+	fmt.Println(err)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		response, _ := json.Marshal(CreateUser)
