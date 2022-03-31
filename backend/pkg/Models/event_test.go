@@ -16,7 +16,7 @@ func TestCreateEventsTable(t *testing.T) {
 	e.Description = "UF"
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
-	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	e.Image = "adsfghjrehjhgrrtfg"
 	res, _ := e.CreateEventstable()
 	assert.NotEqual(t, res, nil)
 }
@@ -33,7 +33,7 @@ func TestCreateEventsTableEmptyDescription(t *testing.T) {
 	e.Location = "UF"
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
-	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	e.Image = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -44,7 +44,7 @@ func TestCreateEventsTableEmptyName(t *testing.T) {
 	e.Description = "UF"
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
-	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	e.Image = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -55,7 +55,7 @@ func TestCreateEventsTableEmptyInterests(t *testing.T) {
 	e.Location = "UF"
 	e.Description = "UF"
 	e.Date = time.Now()
-	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	e.Image = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -66,7 +66,7 @@ func TestCreateEventsTableEmptyLocation(t *testing.T) {
 	e.Description = "UF"
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
-	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	e.Image = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -77,11 +77,11 @@ func TestCreateEventsTableEmptyDate(t *testing.T) {
 	e.Location = "UF"
 	e.Description = "UF"
 	e.Interests = []string{"X", "Y", "Z"}
-	e.ImageasBase64 = "adsfghjrehjhgrrtfg"
+	e.Image = "adsfghjrehjhgrrtfg"
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
-func TestCreateEventsTableEmptyImageasBase64(t *testing.T) {
+func TestCreateEventsTableEmptyImage(t *testing.T) {
 	var e Event
 	e.Name = "ABC"
 	e.Location = "UF"

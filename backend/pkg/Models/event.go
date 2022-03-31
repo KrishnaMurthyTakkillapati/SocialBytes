@@ -14,13 +14,13 @@ var db *gorm.DB
 
 type Event struct {
 	gorm.Model
-	ID            string `gorm:"primaryKey"`
-	Name          string
-	Description   string
-	Location      string
-	Interests     pq.StringArray `gorm:"type:text[]"`
-	Date          time.Time
-	ImageasBase64 string
+	ID          string `gorm:"primaryKey"`
+	Name        string
+	Description string
+	Location    string
+	Interests   pq.StringArray `gorm:"type:text[]"`
+	Date        time.Time
+	Image       string
 }
 
 type SearchEventStruct struct {
@@ -48,7 +48,7 @@ func (e *Event) CreateEventstable() (*Event, error) {
 		error := errors.New("Event is Empty")
 		return e, error
 	}
-	if e.Description == "" || e.Name == "" || e.Location == "" || e.ImageasBase64 == "" || len(e.Interests) <= 0 || e.Date.IsZero() {
+	if e.Description == "" || e.Name == "" || e.Location == "" || e.Image == "" || len(e.Interests) <= 0 || e.Date.IsZero() {
 
 		error := errors.New("Event details incorrect")
 		return e, error
@@ -61,6 +61,17 @@ func GetAllEvents() []Event {
 	db.Find(&events)
 
 	return events
+}
+func GetEventByID(id string) Event {
+	var event Event
+	db.Find(&event, "ID = ?", id)
+	return event
+}
+
+func DeleteEventByID(id string) Event {
+	var event Event
+	db.Delete(&event, "ID = ?", id)
+	return event
 }
 
 func (se *SearchEventStruct) SearchEvent() []Event {
