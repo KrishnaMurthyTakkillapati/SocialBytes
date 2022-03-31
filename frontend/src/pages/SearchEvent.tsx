@@ -7,7 +7,6 @@ import { useGetPosts } from '../lib/api-hooks';
 import { FetchState, PostData } from '../types/post';
 import { styled } from '@mui/material/styles';
 import MediaCard from '../utils/MediaCard';
-import dataList from '../lib/data.json';
 import axios from "axios";
 
 export const SearchEvent = () => {
@@ -17,6 +16,8 @@ export const SearchEvent = () => {
 
   const getPostsData = useCallback(async () => {
     let res = await axios.get('http://localhost:9010/api/getEvents')
+        // let res = await axios.get('http://localhost:9010/api/searchEvent?location=32608')
+
     var data = res.data
     for(var i=0; i<data.length;i++){
         data[i].title = data[i].name
