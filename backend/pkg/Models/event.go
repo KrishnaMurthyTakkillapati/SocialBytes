@@ -19,8 +19,8 @@ type Event struct {
 	Description string
 	Location    string
 	Interests   pq.StringArray `gorm:"type:text[]"`
-	Image       string
 	Date        time.Time
+	Image       string
 }
 
 type SearchEventStruct struct {
@@ -29,11 +29,18 @@ type SearchEventStruct struct {
 	StartDate string
 	EndDate   string
 }
+type Users struct {
+	UserID   string `gorm:"primaryKey"`
+	UserName string
+	EmailId  string
+	Password string
+}
 
 func init() {
 	Config.Connect()
 	db = Config.GetDB()
 	db.AutoMigrate(&Event{})
+	db.AutoMigrate(&Users{})
 }
 
 func (e *Event) CreateEventstable() (*Event, error) {
@@ -41,7 +48,7 @@ func (e *Event) CreateEventstable() (*Event, error) {
 		error := errors.New("Event is Empty")
 		return e, error
 	}
-	if e.Description == "" || e.Name == "" || e.Location == "" {
+	if e.Description == "" || e.Name == "" || e.Location == "" || e.Image == "" || len(e.Interests) <= 0 || e.Date.IsZero() {
 
 		error := errors.New("Event details incorrect")
 		return e, error
@@ -83,4 +90,9 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 		db.Where("Date BETWEEN ? AND ?", se.StartDate, se.EndDate).Find(&events)
 	}
 	return events
+}
+
+func (e *Users) CreateUsers() (*Users, error) {
+
+	return e, nil
 }
