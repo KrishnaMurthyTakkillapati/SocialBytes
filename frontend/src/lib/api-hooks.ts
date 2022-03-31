@@ -13,7 +13,7 @@ export function useGetPosts(){
             
             setFetchState(FetchState.LOADING);
             // const res= await axios.get("https://jsonplaceholder.typicode.com/posts");
-            var body = JSON.stringify({ details: data.location, interest: data.interest, name: data.groupName, description: data.description })
+            var body = JSON.stringify({ Location: data.Location, Interests: data.Interests, Name: data.Name, Description: data.Description })
             // const requestOptions = {
             //     method: 'POST',
             //     // headers: { 'Content-Type': '*' },

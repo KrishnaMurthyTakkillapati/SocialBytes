@@ -36,7 +36,7 @@ class FileService
         // }
         console.log("successful")
         return {
-            success: false,
+            success: true,
             message: 'Uploaded Successfully'
         }
     }
