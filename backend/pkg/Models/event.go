@@ -121,3 +121,17 @@ func (u *Users) CreateUsers() (*Users, error) {
 	db.Create(&u)
 	return u, nil
 }
+func (u *Users) Login() (*Users, error) {
+	var user *Users
+	if db.Find(&user, "Email = ?", u.Email).RowsAffected == 0 {
+		error := errors.New("User don't have a account")
+		return user, error
+	}
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password))
+	if err != nil {
+		error := errors.New("Failed to compare the hashed passwords")
+		return nil, error
+	}
+	user.Password = ""
+	return user, nil
+}
