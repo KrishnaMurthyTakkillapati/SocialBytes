@@ -244,7 +244,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:9010",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "User API documentation",
+	Title:            "SocialBytes API documentation",
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

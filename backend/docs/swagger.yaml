@@ -55,7 +55,7 @@ definitions:
 host: localhost:9010
 info:
   contact: {}
-  title: User API documentation
+  title: SocialBytes API documentation
   version: 1.0.0
 paths:
   /api/createEvent:
