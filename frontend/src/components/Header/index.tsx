@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Box, Toolbar } from '@mui/material';
 
 import { Hamburger } from './Hamburger';
-import { Search } from './Search';
+import  Search  from './Search';
 import { AppTitle } from './AppTitle';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { Messages, More, Notifications, UserAccount } from '../Actions';

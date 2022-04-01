@@ -1,9 +1,15 @@
 import { ListItemButton, ListItemIcon, ListItemText, IconButton, styled } from '@mui/material';
 import ExitToApp from '@mui/icons-material/ExitToApp';
+import { useHistory } from "react-router-dom";
+
+
 
 export const SignOutRoute = () => {
+  const history = useHistory();
   const handleSignOutClick = () => {
     alert('Signing Out...');
+    
+    history.push("/home");
   };
 
   return (
