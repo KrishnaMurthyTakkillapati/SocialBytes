@@ -99,7 +99,7 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 
 func (u *Users) CreateUsers() (*Users, error) {
 	if u == nil {
-		error := errors.New("Event is Empty")
+		error := errors.New("User is Empty")
 		return u, error
 	}
 	if u.FirstName == "" || u.LastName == "" || u.Email == "" || u.Password == "" {

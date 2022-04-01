@@ -95,3 +95,55 @@ func TestGetEventsTable(t *testing.T) {
 	res := GetAllEvents()
 	assert.NotEqual(t, len(res), 0)
 }
+
+func TestCreateUsersTable(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = "ABC"
+	u.Email = "socialbytes@gmail.com"
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	res, _ := u.CreateUsers()
+	assert.NotEqual(t, res, nil)
+}
+
+func TestCreateUserwithEmptyFirstName(t *testing.T) {
+	var u Users
+	u.FirstName = ""
+	u.LastName = "ABC"
+	u.Email = "socialbytes@gmail.com"
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyLastName(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = ""
+	u.Email = "socialbytes@gmail.com"
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyEmail(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = "ABC"
+	u.Email = ""
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyPassword(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = "ABC"
+	u.Email = ""
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyUser(t *testing.T) {
+	var u *Users
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User is Empty")
+}
