@@ -39,6 +39,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/createUser": {
+            "post": {
+                "description": "Endpoint used to create an user in db.",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create User",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Users"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/api/deleteEvent": {
             "delete": {
                 "description": "Endpoint used to delete an event from db based on id.",
@@ -182,6 +205,35 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "models.Users": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
         }
     }
 }`
@@ -192,7 +244,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:9010",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "User API documentation",
+	Title:            "SocialBytes API documentation",
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
