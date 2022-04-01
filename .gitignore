@@ -4,3 +4,4 @@ node_modules/
 *.exe
 socialbytes.code-workspace
 main
+.env
