@@ -20,7 +20,11 @@ jobs:
       run: |
         cd backend
         go build -v ./...
-    - name: Test
+    - name: Test 1
       run: |
         cd backend/pkg/Controllers
+        go test -v ./...
+    - name: Test 2
+      run: |
+        cd backend/pkg/Models
         go test -v ./...

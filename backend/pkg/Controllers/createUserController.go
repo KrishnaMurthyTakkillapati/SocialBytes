@@ -17,6 +17,12 @@ const (
 	SecretKey = "socialbytes"
 )
 
+// @Summary Create User
+// @Description Endpoint used to create an user in db.
+// @Tags User
+// @Success 200 {object} models.Users
+// @Failure 404 {object} object
+// @Router /api/createUser [post]
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)

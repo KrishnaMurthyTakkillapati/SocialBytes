@@ -10,7 +10,7 @@ import (
 	routes "socialbytes.com/main/pkg/Routes"
 )
 
-// @title User API documentation
+// @title SocialBytes API documentation
 // @version 1.0.0
 // @host localhost:9010
 // @BasePath /

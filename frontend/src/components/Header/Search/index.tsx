@@ -1,16 +1,33 @@
 import { alpha, InputBase, styled, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-export const Search = () => (
-  <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-    <SearchWrapper>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-    </SearchWrapper>
-  </Box>
-);
+
+export default function Search(){
+  const history = useHistory();
+  const [searchString, setSearchString] = useState("");
+  // export const Search = () => (
+  return (
+    <>
+      <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+        <SearchWrapper>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }}
+            onChange={event => { setSearchString(event.target.value) }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                history.push(`/search-event/${searchString}`)
+              }
+            }} />
+        </SearchWrapper>
+      </Box>
+    </>
+  )
+}
+// );
 
 const SearchWrapper = styled('div')(({ theme }) => ({
   position: 'relative',
