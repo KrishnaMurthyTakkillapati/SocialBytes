@@ -13,4 +13,5 @@ var RegisterEventRoutes = func(router *mux.Router) {
 	router.HandleFunc("/api/searchEvent", Controllers.GetFilteredEvents).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/createUser", Controllers.CreateUser).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/login", Controllers.Login).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/logout", Controllers.Logout).Methods("GET", "OPTIONS")
 }
