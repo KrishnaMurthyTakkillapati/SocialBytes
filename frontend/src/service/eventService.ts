@@ -8,6 +8,7 @@ export const eventService = {
     getById,
     create,
     update,
+    searchOp,
     delete: _delete
 };
 
@@ -17,6 +18,10 @@ function getAll() {
 
 function getById(id: any):Promise<IFormInput> {
     return get(`${baseUrl}/getEvent?id=${id}`);
+}
+
+function searchOp(name:any){
+    return get(`${baseUrl}/searchEvent?name=${name}`);
 }
 
 function create(params: any) {

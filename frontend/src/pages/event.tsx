@@ -534,7 +534,16 @@ export const EventPage = () => {
         grid-row: 1/ span 1;
         margin-top: 1rem;
     }
-   
+    .hostpic {
+        border-radius: 50%;
+        width: 3em;
+        height: 3em;
+        vertical-align: middle;
+        -o-object-fit: cover;
+        object-fit: cover;
+        margin-bottom: 0.5em;
+        margin-right: 1em;
+      }
     
     // .m-details-description p{
     //     text-align: justify;
@@ -753,7 +762,7 @@ export const EventPage = () => {
                     <h2>{title || ""}</h2>
                 </div>
                 <div className="details-host">
-                    {/* <img src={hostPhotoURL} alt="host" /> */}
+                    <img src={hostPhotoURL} alt="host" className="hostpic"/>
                     <p>Hosted by: <strong>{hostName}</strong></p>
                 </div>
                 <section className="m-text">
