@@ -2,7 +2,6 @@ package Controllers
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"net/http"
 
@@ -16,10 +15,9 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	CreateUser := &models.Users{}
 	Utils.ParseBody(r, CreateUser)
 	user, err := CreateUser.CreateUsers()
-	fmt.Println(err)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		response, _ := json.Marshal(CreateUser)
+		response, _ := json.Marshal(map[string]string{"message": err.Error()})
 		w.Write(response)
 	} else {
 

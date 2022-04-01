@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/lib/pq"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	Config "socialbytes.com/main/pkg/Config"
 )
@@ -35,7 +36,7 @@ type Users struct {
 	ID        uint `gorm:"primaryKey;not null"`
 	FirstName string
 	LastName  string
-	EmailId   string
+	Email     string
 	Password  string
 }
 
@@ -101,12 +102,22 @@ func (u *Users) CreateUsers() (*Users, error) {
 		error := errors.New("Event is Empty")
 		return u, error
 	}
-	if u.FirstName == "" || u.LastName == "" || u.EmailId == "" || u.Password == "" {
+	if u.FirstName == "" || u.LastName == "" || u.Email == "" || u.Password == "" {
 
 		error := errors.New("User details incorrect")
 		return u, error
 	}
+	pwslice, err := bcrypt.GenerateFromPassword([]byte(u.Password), 14)
+	if err != nil {
+		error := errors.New("Failed to encrypt the password")
+		return u, error
+	}
+	u.Password = string(pwslice[:])
 
+	if db.Find(&u, "Email=?", u.Email).RowsAffected > 0 {
+		error := errors.New("User already exists!")
+		return u, error
+	}
 	db.Create(&u)
 	return u, nil
 }

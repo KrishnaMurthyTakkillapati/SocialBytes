@@ -30,6 +30,7 @@ require (
 	github.com/swaggo/http-swagger v1.2.5 // indirect
 	github.com/swaggo/swag v1.8.0 // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
+	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 	golang.org/x/text v0.3.7 // indirect
