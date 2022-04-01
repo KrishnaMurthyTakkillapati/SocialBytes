@@ -33,6 +33,25 @@ definitions:
       updatedAt:
         type: string
     type: object
+  models.Users:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        type: string
+    type: object
 host: localhost:9010
 info:
   contact: {}
@@ -54,6 +73,21 @@ paths:
       summary: Create Event
       tags:
       - Events
+  /api/createUser:
+    post:
+      description: Endpoint used to create an user in db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Users'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Create User
+      tags:
+      - User
   /api/deleteEvent:
     delete:
       description: Endpoint used to delete an event from db based on id.
