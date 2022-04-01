@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, SyntheticEvent } from 'react';
 import { createStyles, makeStyles, } from '@mui/styles';
 import {useHistory} from "react-router-dom";
 
@@ -114,23 +114,18 @@ const Login = () => {
     }
   }, [state.username, state.password]);
 
-  const handleLogin = () => {
-    if (state.username === 'abc@email.com' && state.password === 'password') {
-      dispatch({
-        type: 'loginSuccess',
-        payload: 'Login Successfully'
-      });
-    } else {
-      dispatch({
-        type: 'loginFailed',
-        payload: 'Incorrect username or password'
-      });
-    }
+  
+    const handleLogin = async(event: SyntheticEvent ) => {
+      event.preventDefault()
+      await fetch('http://localhost:9010/api/Login',
+      {method:'POST', headers: {'Content-type': 'application/json'},
+      body: JSON.stringify({"status" : "OK"})
+    });
   };
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.keyCode === 13 || event.which === 13) {
-      state.isButtonDisabled || handleLogin();
+      state.isButtonDisabled || handleLogin(event);
     }
   };
 

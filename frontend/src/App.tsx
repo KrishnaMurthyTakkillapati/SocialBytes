@@ -13,8 +13,7 @@ import { getAppTheme } from './styles/theme';
 import { DARK_MODE_THEME, LIGHT_MODE_THEME } from './utils/constants';
 import { EventPage } from './pages/event';
 import { Home } from './pages/Home';
-import Login from './LoginComponent';
-import Register from './Register';
+import { SearchEvent } from './pages/SearchEvent';
 
 function App() {
   const [mode, setMode] = useState<typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME>(DARK_MODE_THEME);
@@ -47,6 +46,7 @@ function App() {
                   route.subRoutes ? route.subRoutes.map((item: AppRoute) => addRoute(item)) : addRoute(route)
                 )}
                  <Route key='eventpage' path='/eventpage/:id' component={EventPage}  />
+                 <Route key='searchpage' path='/search-event/:query' component={SearchEvent}  />
               </Layout>
             </Switch>
           </Router>

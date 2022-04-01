@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, SyntheticEvent } from 'react';
 import { createStyles, makeStyles, } from '@mui/styles';
 import {useHistory} from "react-router-dom";
 
@@ -10,6 +10,11 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
+import axios from "axios";
+
+
+
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -114,23 +119,34 @@ const Register = () => {
     }
   }, [state.username, state.password]);
 
-  const handleLogin = () => {
-    if (state.username === 'abc@email.com' && state.password === 'password') {
-      dispatch({
-        type: 'loginSuccess',
-        payload: 'Login Successfully'
-      });
-    } else {
-      dispatch({
-        type: 'loginFailed',
-        payload: 'Incorrect username or password'
-      });
-    }
-  };
+  
+
+  const handleRegister = async(event: SyntheticEvent) => {
+        event.preventDefault()
+
+        //interact with the backend
+            
+            return JSON.stringify({"status" : "OK"})
+  }
+  
+
+
+    // if (state.username === 'abc@email.com' && state.password === 'password') {
+    //   dispatch({
+    //     type: 'loginSuccess',
+    //     payload: 'Login Successfully'
+    //   });
+    // } else {
+    //   dispatch({
+    //     type: 'loginFailed',
+    //     payload: 'Incorrect username or password'
+    //   });
+    // }
+  
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.keyCode === 13 || event.which === 13) {
-      state.isButtonDisabled || handleLogin();
+      state.isButtonDisabled || handleRegister(event);
     }
   };
 
@@ -219,7 +235,7 @@ const Register = () => {
             size="large"
             color="secondary"
             className={classes.loginBtn}
-            onClick={handleLogin}
+            onClick={handleRegister}
             disabled={state.isButtonDisabled}>
             Register
           </Button>
