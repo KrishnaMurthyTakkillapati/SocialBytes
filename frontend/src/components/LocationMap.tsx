@@ -27,7 +27,6 @@ const LocationMap = (props: any) => {
     );
   return (<>
     {lattitude && longitude && <GoogleMapReact
-      bootstrapURLKeys={{ key: 'AIzaSyCg_54eDB3dlfeqkOY4H15I7uFeYJUgiGw' }}
       defaultCenter={{ lat: lattitude, lng: longitude }}
       defaultZoom={defaultProps.zoom}
     >
