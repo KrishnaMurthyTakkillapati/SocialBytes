@@ -22,7 +22,19 @@ describe('Social Bytes', () => {
 
     
   })
-    
+
+  it('Check if we can route to login page', function() {
+    cy.get('a[href*="/Login"]').click();
+    cy.get('label').contains('Username').click({force: true}).type('Krishna');
+    cy.get('label').contains('Password').click({force: true}).type('Univerityofflorida');
+  })
+
+  it('Checks if Login button is clicked', function() {
+    cy.get('button').contains('Login').click();
+    cy.wait(2000)
+  })
+
+
   it('Checks if create a new event tab is clicked', function() {
 
     cy.get('a[href*="/start-event"]').click();
@@ -34,22 +46,20 @@ describe('Social Bytes', () => {
   })
 
   it('Checks if text required is entered in the fields to create an event', function() {
-    cy.get('label').contains('Location').click({force: true}).type('Gainesville');
-    cy.get('label').contains('Interest').click({force: true}).type('Univerity of florida');
-    cy.get('label').contains('Group Name').click({force: true}).type('CricStars');
+    cy.get('label').contains('Group Name').click({force: true}).type('Computer Science');
+    cy.get('div').contains('Interests').click({force: true});
+    cy.get('li').contains('Business').click({force: true});
+    cy.get('body').type('{esc}');
     cy.get('label').contains('Description').click({force: true}).type('SE is so cool.!');
-    
+    cy.get('input[name="Image"]').attachFile('IPL.png');
+    cy.get('input[name="Location"]').type('4000 SW 47th St, Gainesville, FL, USA')
   })
 
   it('Checks if Create event button is clicked', function() {
-    
-    
     cy.get('button').contains('Create Event').click();
   })
 
-  it('Checks if Event is created', function(){
-    cy.get('div').contains('CricStars')
-  })
+
 
   
 

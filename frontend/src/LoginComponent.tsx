@@ -121,7 +121,7 @@ const Login = () => {
   // const handleSignOutClick = () => {
     alert('Rerouting ');
     
-    history.push("/start-event");
+    history.push("/search-event");
       // await fetch('http://localhost:9010/api/Login',
       // {method:'POST', headers: {'Content-type': 'application/json'},
       // body: JSON.stringify({"status" : "OK"})
