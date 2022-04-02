@@ -114,13 +114,19 @@ const Login = () => {
     }
   }, [state.username, state.password]);
 
-  
+  const history = useHistory();
     const handleLogin = async(event: SyntheticEvent ) => {
       event.preventDefault()
-      await fetch('http://localhost:9010/api/Login',
-      {method:'POST', headers: {'Content-type': 'application/json'},
-      body: JSON.stringify({"status" : "OK"})
-    });
+      
+  // const handleSignOutClick = () => {
+    alert('Rerouting ');
+    
+    history.push("/search-event");
+      // await fetch('http://localhost:9010/api/Login',
+      // {method:'POST', headers: {'Content-type': 'application/json'},
+      // body: JSON.stringify({"status" : "OK"})
+    // });
+    
   };
 
   const handleKeyPress = (event: React.KeyboardEvent) => {

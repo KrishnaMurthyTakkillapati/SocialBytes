@@ -120,13 +120,18 @@ const Register = () => {
   }, [state.username, state.password]);
 
   
-
+  const history = useHistory();
   const handleRegister = async(event: SyntheticEvent) => {
         event.preventDefault()
 
+        alert('Rerouting ');
+    
+        history.push("/Login");
+
         //interact with the backend
             
-            return JSON.stringify({"status" : "OK"})
+            // return JSON.stringify({"status" : "OK"})
+            
   }
   
 
