@@ -17,16 +17,14 @@
 ## Screenshots for unit tests
 
 #### UI Components tests
-![](../Screenshots/UiUnitTests.png)
+![](../Screenshots/FE-UnitTest-1-Sprint3.png)
+![](../Screenshots/FE-UnitTest-2-Sprint3.png)
 #### Go lang unit tests
-![](../Screenshots/ControllersModuleTestCases.JPG)
-![](../Screenshots/ModelModuleTestCases.JPG)
+![](../Screenshots/BE-UnitTest-1-Sprint3.png)
+![](../Screenshots/BE-UnitTest-2-Sprint3.png)
 
-## Screenshots for API endpoints
-#### Swagger documentation for createEvent endpoint
-![](../Screenshots/SwaggerPost.png)
-#### Swagger documentation for getEvent endpoint
-![](../Screenshots/SwaggerGet.png)
+## Screenshots for API endpoints Documentation
+![](../Screenshots/API documentation-Sprint3.jpeg)
 
 ## Project Demo Link
 https://youtu.be/opOkQX1owYI
