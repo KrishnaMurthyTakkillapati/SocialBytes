@@ -95,3 +95,74 @@ func TestGetEventsTable(t *testing.T) {
 	res := GetAllEvents()
 	assert.NotEqual(t, len(res), 0)
 }
+
+func TestCreateUsersTable(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = "ABC"
+	u.Email = "socialbytes@gmail.com"
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	res, _ := u.CreateUsers()
+	assert.NotEqual(t, res, nil)
+}
+
+func TestCreateUserwithEmptyFirstName(t *testing.T) {
+	var u Users
+	u.FirstName = ""
+	u.LastName = "ABC"
+	u.Email = "socialbytes@gmail.com"
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyLastName(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = ""
+	u.Email = "socialbytes@gmail.com"
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyEmail(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = "ABC"
+	u.Email = ""
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyPassword(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = "ABC"
+	u.Email = ""
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User details incorrect")
+}
+func TestCreateUserwithEmptyUser(t *testing.T) {
+	var u *Users
+	_, err := u.CreateUsers()
+	assert.Equal(t, err.Error(), "User is Empty")
+}
+
+func TestLoginwithEmptyUserNameandPassword(t *testing.T) {
+	var u Users
+	_, err := u.Login()
+	assert.Equal(t, err.Error(), "Enter the correct UserName and Password")
+}
+func TestLoginwithIncorrectPassword(t *testing.T) {
+	var u Users
+	u.FirstName = "ABC"
+	u.LastName = "ABC"
+	u.Email = "socialbytes@gmail.com"
+	u.Password = "cfvghjkloiejufhbdemkmfvg"
+	u.CreateUsers()
+	var us Users
+	us.Email = "socialbytes@gmail.com"
+	us.Password = "edfdgbnhgbdfsdaf"
+	_, err := us.Login()
+	assert.Equal(t, err.Error(), "Password is incorrect")
+}

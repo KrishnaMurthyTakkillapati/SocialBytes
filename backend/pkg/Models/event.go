@@ -3,9 +3,11 @@ package models
 import (
 	"errors"
 	"fmt"
+
 	"time"
 
 	"github.com/lib/pq"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	Config "socialbytes.com/main/pkg/Config"
 )
@@ -30,17 +32,20 @@ type SearchEventStruct struct {
 	EndDate   string
 }
 type Users struct {
-	UserID   string `gorm:"primaryKey"`
-	UserName string
-	EmailId  string
-	Password string
+	gorm.Model
+	ID        uint `gorm:"primaryKey;not null"`
+	FirstName string
+	LastName  string
+	Email     string
+	Password  string
 }
 
 func init() {
 	Config.Connect()
 	db = Config.GetDB()
-	db.AutoMigrate(&Event{})
 	db.AutoMigrate(&Users{})
+	db.AutoMigrate(&Event{})
+
 }
 
 func (e *Event) CreateEventstable() (*Event, error) {
@@ -92,7 +97,45 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 	return events
 }
 
-func (e *Users) CreateUsers() (*Users, error) {
+func (u *Users) CreateUsers() (*Users, error) {
+	if u == nil {
+		error := errors.New("User is Empty")
+		return u, error
+	}
+	if u.FirstName == "" || u.LastName == "" || u.Email == "" || u.Password == "" {
 
-	return e, nil
+		error := errors.New("User details incorrect")
+		return u, error
+	}
+	pwslice, err := bcrypt.GenerateFromPassword([]byte(u.Password), 14)
+	if err != nil {
+		error := errors.New("Failed to encrypt the password")
+		return u, error
+	}
+	u.Password = string(pwslice[:])
+
+	if db.Find(&u, "Email=?", u.Email).RowsAffected > 0 {
+		error := errors.New("User already exists!")
+		return u, error
+	}
+	db.Create(&u)
+	return u, nil
+}
+func (u *Users) Login() (*Users, error) {
+	var user *Users
+	if u.Email == "" || u.Password == "" {
+		error := errors.New("Enter the correct UserName and Password")
+		return user, error
+	}
+	if db.Find(&user, "Email = ?", u.Email).RowsAffected == 0 {
+		error := errors.New("User don't have a account")
+		return user, error
+	}
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password))
+	if err != nil {
+		error := errors.New("Password is incorrect")
+		return nil, error
+	}
+	user.Password = ""
+	return user, nil
 }

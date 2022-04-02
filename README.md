@@ -6,10 +6,9 @@ Front End - ReactJS
 <br> Back End - Go
 
 # Team Members
-Chinmai Sai Eshwar Reddy Kasi- Backend Developer
-<br>Sohith Raja Buggaveeti- Backend Developer
-<br>Venkata Vynatheya Jangal- Frontend Developer
-<br>Krishna Murthy Takkillapti- Frontend Developer
-
-# UserName Mapping
-krish0307- Krishna Murthy Takkillapti
+SNO | Name                          | Github username| Type of development|
+--- | -------------                 |:-------------: | :------------------:
+1   | Chinmai Sai Eshwar Reddy Kasi   | ChinmaiSaiEshwarReddyKasi       | Backend (Go lang)  |
+2   | Sohith Raja Buggaveeti                   | SohithRajaBuggaveeti    | Backend (Go lang)    |
+3   | Venkata Vynatheya Jangal                  | VenkataVynatheya         | Frontend(React)    |
+4   | Krishna Murthy Takkillapti               | krish0307 | Frontend (React)
