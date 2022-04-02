@@ -24,7 +24,7 @@
 ![](../Screenshots/BE-UnitTest-2-Sprint3.png)
 
 ## Screenshots for API endpoints Documentation
-![](../Screenshots/API documentation-Sprint3.jpeg)
+![](../Screenshots/API%20documentation-Sprint3.jpeg)
 
 ## Project Demo Link
 https://youtu.be/opOkQX1owYI
