@@ -11,6 +11,7 @@
 - Added swagger API documentation for User Profile.
 - Implemented error handling for User API endpoints.
 - Created APIs to add user profile into the database.
+- Created API to get Event by ID and to Delete an Event.
 - Updated event tests to test the APIs that read, create, delete, edit events as per new structure.
 - Covered all the cases to test valid and invalid cases.
 
