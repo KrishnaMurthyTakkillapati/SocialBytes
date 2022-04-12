@@ -131,6 +131,7 @@ const Login = () => {
       }
       context.user.email=state.username
       context.user.name=state.password
+      context.user.isActive=true
       history.push('/')
       return (response.status);
   });
