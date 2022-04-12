@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, SyntheticEvent } from 'react';
+import React, { useReducer, useEffect, SyntheticEvent, useContext } from 'react';
 import { createStyles, makeStyles, } from '@mui/styles';
 import { useHistory } from "react-router-dom";
 
@@ -11,6 +11,7 @@ import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
 import axios from "axios";
+import { AppContext } from './contexts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -115,6 +116,8 @@ const reducer = (state: State, action: Action): State => {
 
 const Register = () => {
   const classes = useStyles();
+  const context = useContext(AppContext);
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -144,18 +147,11 @@ console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName'
         // const error = (data && data.message) || response.statusText;
         return Promise.reject(response.statusText);
       }
+      // context.user.isActive=true
+      // context.user.name=state.username
       return (response.status);
     });
 
-
-
-    // alert('Rerouting ');
-
-    // history.push("/Login");
-
-    //interact with the backend
-
-    // return JSON.stringify({"status" : "OK"})
 
   }
 

@@ -5,7 +5,7 @@ import { Hamburger } from './Hamburger';
 import  Search  from './Search';
 import { AppTitle } from './AppTitle';
 import { ThemeSwitcher } from './ThemeSwitcher';
-import { Messages, More, Notifications, UserAccount } from '../Actions';
+import { More, UserAccount } from '../Actions';
 import { DefaultMenu, MobileMenu } from './Menu';
 
 interface HeaderProps {
@@ -38,8 +38,6 @@ export const Header = ({ toggleNavigation }: HeaderProps) => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: 'center' } }}>
             <ThemeSwitcher />
-            {/* <Messages total={0} /> */}
-            <Notifications total={0} />
             <UserAccount onClick={handleProfileMenuOpen} />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

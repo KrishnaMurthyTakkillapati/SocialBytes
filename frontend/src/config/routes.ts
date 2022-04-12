@@ -15,8 +15,7 @@ import  { SearchEvent }  from '../pages/SearchEvent';
 
 import { Route } from '../types/Route';
 import { EventPage } from '../pages/event';
-import Login from '../LoginComponent';
-import Register from '../Register';
+
 
 const routes: Array<Route> = [
   {
@@ -27,26 +26,6 @@ const routes: Array<Route> = [
     path: '/',
     isEnabled: true,
     icon: HomeIcon,
-    appendDivider: true,
-  },
-  {
-    key: 'router-Login',
-    title: 'Login',
-    description: 'Login-Page',
-    component: Login,
-    path: '/Login',
-    isEnabled: true,
-    icon: HomeIcon,
-    appendDivider: true,
-  },
-  {
-    key: 'router-Register',
-    title: 'Register',
-    description: 'Register-Page',
-    component: Register,
-    path: '/Register',
-    isEnabled: true,
-    icon: EventIcon,
     appendDivider: true,
   },
   {
@@ -68,16 +47,6 @@ const routes: Array<Route> = [
     icon: SearchIcon,
     appendDivider: true,
   },
-  // {
-  //   key: 'eventpage',
-  //   title: 'show events page',
-  //   description: 'Events page',
-  //   path: '/eventpage/:id',
-  //   isEnabled: true,
-  //   appendDivider: true,
-  //   icon: LightbulbRounded,
-  //   component:EventPage
-  // },
   {
     key: 'router-my-account',
     title: 'My Account',

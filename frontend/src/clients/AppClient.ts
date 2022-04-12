@@ -12,12 +12,12 @@ class AppClient implements IAppContext {
   constructor() {
     this.user = {
       id: '5e8d8hg8h8h8q8faf8g8f8f',
-      name: 'Krishna',
+      name: 'Guest',
       email: 'Krishna@gmail.com',
       createdAt: new Date(),
       updatedAt: new Date(),
       isAdmin: true,
-      isActive: true,
+      isActive: false,
       isVerified: true,
     };
   }

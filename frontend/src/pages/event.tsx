@@ -31,7 +31,6 @@ export const EventPage = () => {
             const valIn = response as IFormInput;
             setThisEvent(valIn);
             console.log(thisEvent);
-            
         })
 
     }, [])
@@ -39,9 +38,10 @@ export const EventPage = () => {
     const title = thisEvent?.Name;
     const hostPhotoURL = thisEvent?.Image;
     const hostName = 'krishna';
-    const date=moment(thisEvent?.Date).format("MMM-DD")
+    const date=moment(thisEvent?.Date).format("MMM-DD-yyyy")
     const description = thisEvent?.Description
     //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
+
     const attendees: Array<AttInfo> = [
         {
             "id": "a1",
@@ -750,11 +750,11 @@ export const EventPage = () => {
                     <h4>{date}</h4>
                 </div>
                 <div className="details-title">
-                    <h2>{title || ""}</h2>
+                    <h1>{title || ""}</h1>
                 </div>
                 <div className="details-host">
                     <img src={hostPhotoURL} alt="host" className="hostpic"/>
-                    <p>Hosted by: <strong>{hostName}</strong></p>
+                    <h4>Hosted by: <strong>{hostName}</strong></h4>
                 </div>
                 <section className="m-text">
                     <span className="b-edit"><FontAwesomeIcon icon={faPencilAlt} /></span>
