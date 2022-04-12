@@ -3,10 +3,9 @@ package Controllers
 import (
 	"encoding/json"
 	"errors"
+	"net/http"
 	"strconv"
 	"time"
-
-	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
 	models "socialbytes.com/main/pkg/Models"
@@ -17,13 +16,13 @@ const (
 	SecretKey = "socialbytes"
 )
 
-// @Summary Create User
+// @Summary Register User
 // @Description Endpoint used to create an user in db.
 // @Tags User
 // @Success 200 {object} models.Users
 // @Failure 404 {object} object
-// @Router /api/createUser [post]
-func CreateUser(w http.ResponseWriter, r *http.Request) {
+// @Router /api/register [post]
+func Register(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
 	CreateUser := &models.Users{}
@@ -79,6 +78,38 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		w.Write(response)
 
 	}
+}
+
+func GetUser(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("jwt")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response, _ := json.Marshal(map[string]string{"message": err.Error()})
+		w.Write(response)
+	}
+	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(*jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response, _ := json.Marshal(map[string]string{"message": err.Error()})
+		w.Write(response)
+	}
+
+	claims := token.Claims.(*jwt.StandardClaims)
+	issuer64, err := strconv.ParseInt(claims.Issuer, 10, 64)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response, _ := json.Marshal(map[string]string{"message": err.Error()})
+		w.Write(response)
+	}
+	issuer := strconv.FormatInt(issuer64, 10)
+	result := models.GetUserByID(issuer)
+	response, _ := json.Marshal(result)
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
