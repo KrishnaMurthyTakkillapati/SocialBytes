@@ -88,8 +88,8 @@ func TestCreateUser(t *testing.T) {
 
 	var jsonstr = []byte(`{"FirstName":"hello","LastName":"brother","Email":"hellobrother@gmail.com","Password":"hello@brother123"}`)
 	w := httptest.NewRecorder()
-	response := httptest.NewRequest("POST", "localhost:9010/api/createUser", bytes.NewBuffer(jsonstr))
-	CreateUser(w, response)
+	response := httptest.NewRequest("POST", "localhost:9010/api/register", bytes.NewBuffer(jsonstr))
+	Register(w, response)
 	assert.Equal(t, "200 OK", w.Result().Status)
 }
 
@@ -97,8 +97,8 @@ func TestUserAlreadyExists(t *testing.T) {
 
 	var jsonstr = []byte(`{"FirstName":"hello","LastName":"brother","Email":"hellobrother@gmail.com","Password":"hello@brother123"}`)
 	w := httptest.NewRecorder()
-	response := httptest.NewRequest("POST", "localhost:9010/api/createUser", bytes.NewBuffer(jsonstr))
-	CreateUser(w, response)
+	response := httptest.NewRequest("POST", "localhost:9010/api/register", bytes.NewBuffer(jsonstr))
+	Register(w, response)
 	assert.Equal(t, "400 Bad Request", w.Result().Status)
 
 }
@@ -133,8 +133,8 @@ func TestLoginWithEmptyPassword(t *testing.T) {
 func TestLoginWithIncorrectPassword(t *testing.T) {
 	var jsonstr = []byte(`{"FirstName":"hello","LastName":"brother","Email":"socialbytes@gmail.com","Password":"hello@brother123"}`)
 	w := httptest.NewRecorder()
-	response := httptest.NewRequest("POST", "localhost:9010/api/createUser", bytes.NewBuffer(jsonstr))
-	CreateUser(w, response)
+	response := httptest.NewRequest("POST", "localhost:9010/api/register", bytes.NewBuffer(jsonstr))
+	Register(w, response)
 	var jsonstr1 = []byte(`{"FirstName":"","LastName":"","Email":"socialbytes@gmail.com","Password":"xdcfgbhjkmljhgf"}`)
 	w1 := httptest.NewRecorder()
 	response1 := httptest.NewRequest("POST", "localhost:9010/api/login", bytes.NewBuffer(jsonstr1))
