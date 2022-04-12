@@ -16,13 +16,15 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { eventService } from "../service/eventService";
 import { IFormInput } from "./CreateEvent";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import Image from 'material-ui-image'
+import { AppContext } from "../contexts";
+import moment from "moment";
 
 export const EventPage = () => {
     const { id }: { id: string } = useParams();//TODO:change to useEffect & add hostname
     const [thisEvent, setThisEvent] = useState<IFormInput>();
-   
+   const context = useContext(AppContext)
     useEffect(() => {
         eventService.getById(id).then(response => {
             console.log("INside response")
@@ -37,6 +39,7 @@ export const EventPage = () => {
     const title = thisEvent?.Name;
     const hostPhotoURL = thisEvent?.Image;
     const hostName = 'krishna';
+    const date=moment(thisEvent?.Date).format("MMM-DD")
     const description = thisEvent?.Description
     //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
     const attendees: Array<AttInfo> = [
@@ -740,23 +743,11 @@ export const EventPage = () => {
 
 
     return (<>
-        {/* <Grid container spacing={5}>
-            {
-                eventInfo.filter((event) =>
-                    event.groupname.includes(id)).map((filteredEvent) => {
-                        return (
-                            <Grid key={id} item>
-                                <EventCard {...filteredEvent} />
-                            </Grid>
-                        );
-                    })
-            }
-        </Grid> */}
         <style>{css}</style>
         <div className="m-details">
             <div className="m-details-banner">
                 <div className="details-cal-day">
-                    <h4>25 April</h4>
+                    <h4>{date}</h4>
                 </div>
                 <div className="details-title">
                     <h2>{title || ""}</h2>
