@@ -1,7 +1,9 @@
-export interface AttInfo{
-  id:string,
-  name:string,
-  photoURL:string
+import { Button } from "@mui/material";
+
+export interface AttInfo {
+  id: string,
+  name: string,
+  photoURL: string
 }
 
 
@@ -26,7 +28,9 @@ const AttendeesList = ({ props }: { props: Array<AttInfo> }) => {
         {renderAttendees()}
       </ul>
     </div>
-    </>
+    <Button variant="outlined" color="secondary"  style={{maxWidth: '30px', maxHeight: '30px', minWidth: '200px', minHeight: '60px'}}>
+      Join Event
+    </Button>    </>
   )
 }
 

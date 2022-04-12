@@ -14,7 +14,7 @@ interface Props{
 
 export default function MediaCard({ description,title,image}:Props) {
   return (
-    <Card sx={{ maxWidth: 275 }}>
+    <Card sx={{ maxWidth: 275, height:440}}>
       <CardMedia
         component="img"
         height="220"
@@ -29,9 +29,6 @@ export default function MediaCard({ description,title,image}:Props) {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 }

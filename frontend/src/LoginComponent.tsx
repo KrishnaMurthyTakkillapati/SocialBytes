@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, SyntheticEvent } from 'react';
+import React, { useReducer, useEffect, SyntheticEvent, useContext } from 'react';
 import { createStyles, makeStyles, } from '@mui/styles';
 import {useHistory} from "react-router-dom";
 
@@ -10,6 +10,10 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
+import axios from 'axios';
+import { AppContext } from './contexts/AppContext';
+import { AppClient } from './clients';
+import { stat } from 'fs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -97,6 +101,7 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const Login = () => {
+  const context = useContext(AppContext);
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -118,14 +123,17 @@ const Login = () => {
     const handleLogin = async(event: SyntheticEvent ) => {
       event.preventDefault()
       
-  // const handleSignOutClick = () => {
-    alert('Rerouting ');
-    
-    history.push("/search-event");
-      // await fetch('http://localhost:9010/api/Login',
-      // {method:'POST', headers: {'Content-type': 'application/json'},
-      // body: JSON.stringify({"status" : "OK"})
-    // });
+      axios.post(`http://localhost:9010/api/login`, JSON.stringify({'Email':state.username,'Password':state.password}),{ withCredentials: true,}).then(response=>{
+      console.log(response)
+      if (response.status!= 200) {
+          // const error = (data && data.message) || response.statusText;
+          return Promise.reject(response.statusText);
+      }
+      context.user.email=state.username
+      context.user.name=state.password
+      history.push('/')
+      return (response.status);
+  });
     
   };
 
