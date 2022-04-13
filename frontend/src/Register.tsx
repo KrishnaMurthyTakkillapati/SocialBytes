@@ -138,17 +138,22 @@ const Register = () => {
   const history = useHistory();
   const handleRegister = async (event: SyntheticEvent) => {
     event.preventDefault()
-console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName': state.lastName, 'Email': state.username, 'Password': state.password }))
-    axios.post(`http://localhost:9010/api/createUser`, 
-    JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.lastName, 'Email': state.username, 'Password': state.password }))
+console.log(JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.lastName, 'Email': state.username, 'Password': state.password }))
+    axios.post(`http://localhost:9010/api/register`,
+    JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.lastName, 'Email': state.username, 'Password': state.password }),{withCredentials:true})
     .then(response => {
-      console.log(response.headers['set-cookie'])
       if (response.status != 200) {
         // const error = (data && data.message) || response.statusText;
         return Promise.reject(response.statusText);
       }
-      // context.user.isActive=true
-      // context.user.name=state.username
+      axios.post(`http://localhost:9010/api/login`, JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.lastName, 'Email': state.username, 'Password': state.password }),{withCredentials:true}).then(res=>{
+        if (res.status != 200) {
+          return Promise.reject(res.statusText);
+        }
+        context.user.isActive=true
+        context.user.name=state.firstName
+        history.push("/")
+      })
       return (response.status);
     });
 
@@ -284,6 +289,10 @@ console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName'
         </CardActions>
       </Card>
     </form>
+    <div style={{position:'relative',top:'3%',display: 'flex',textAlign: 'center',justifyContent: 'center' }}>
+      <span>Already a member? &nbsp; </span>
+      <a href="/Login"  style={{ color: '#00FFFF' }}> Login</a>
+    </div>
   </>
   );
 }
