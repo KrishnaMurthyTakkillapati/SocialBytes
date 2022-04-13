@@ -31,6 +31,7 @@ export const DefaultMenu = ({ isMenuOpen, handleMenuClose, anchorEl }: DefaultMe
   }
   return (
     <Menu anchorEl={anchorEl} id="primary-search-account-menu" keepMounted open={isMenuOpen} onClose={handleMenuClose}>
+      {!context.user.isActive && <>
       <MenuItem onClick={handleSignUp}>
         <SignUp disableTooltip />
         SignUp
@@ -39,6 +40,7 @@ export const DefaultMenu = ({ isMenuOpen, handleMenuClose, anchorEl }: DefaultMe
         <Login disableTooltip />
         Login
       </MenuItem>
+      </>}
       <Divider />
       {context.user.isActive &&
       <MenuItem onClick={handleSignOut}>

@@ -38,14 +38,16 @@ export const MobileMenu = ({ isMenuOpen, handleMenuOpen, handleMenuClose, anchor
           <ThemeSwitcher disableTooltip />
           Toggle Theme
         </MenuItem>
+        {!context.user.isActive && <>
         <MenuItem onClick={handleMenuClose}>
           <SignUp disableTooltip />
           SignUp
         </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
-          <Login disableTooltip />
-          Login
-        </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <Login disableTooltip />
+            Login
+          </MenuItem>
+          </>}
         {context.user.isActive &&
           <MenuItem onClick={handleMenuClose}>
             <SignOut disableTooltip onClick={() => alert('Signing out...')} />

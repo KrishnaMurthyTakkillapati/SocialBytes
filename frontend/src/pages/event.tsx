@@ -16,7 +16,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { eventService } from "../service/eventService";
 import { IFormInput } from "./CreateEvent";
-import { useEffect, useState,useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import Image from 'material-ui-image'
 import { AppContext } from "../contexts";
 import moment from "moment";
@@ -24,7 +24,7 @@ import moment from "moment";
 export const EventPage = () => {
     const { id }: { id: string } = useParams();//TODO:change to useEffect & add hostname
     const [thisEvent, setThisEvent] = useState<IFormInput>();
-   const context = useContext(AppContext)
+    const context = useContext(AppContext)
     useEffect(() => {
         eventService.getById(id).then(response => {
             console.log("INside response")
@@ -38,7 +38,7 @@ export const EventPage = () => {
     const title = thisEvent?.Name;
     const hostPhotoURL = thisEvent?.Image;
     const hostName = 'krishna';
-    const date=moment(thisEvent?.Date).format("MMM-DD-yyyy")
+    const date = moment(thisEvent?.Date).format("MMM-DD-yyyy")
     const description = thisEvent?.Description
     //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
 
@@ -723,15 +723,16 @@ export const EventPage = () => {
     const history = useHistory();
 
     const handleDelete = () => {
-
         confirmAlert({
             title: 'Confirm to delete',
             message: 'Are you sure to do this.',
             buttons: [
                 {
                     label: 'Yes',
-                    onClick: () => {eventService.delete(id);
-                        history.replace("/");                    }
+                    onClick: () => {
+                        eventService.delete(id);
+                        history.replace("/");
+                    }
                 },
                 {
                     label: 'No',
@@ -753,13 +754,13 @@ export const EventPage = () => {
                     <h1>{title || ""}</h1>
                 </div>
                 <div className="details-host">
-                    <img src={hostPhotoURL} alt="host" className="hostpic"/>
+                    <img src={hostPhotoURL} alt="host" className="hostpic" />
                     <h4>Hosted by: <strong>{hostName}</strong></h4>
                 </div>
-                <section className="m-text">
+                {(context.user.name === hostName) && <section className="m-text">
                     <span className="b-edit"><FontAwesomeIcon icon={faPencilAlt} /></span>
                     <span className="b-delete"><FontAwesomeIcon icon={faTrash} onClick={handleDelete} /></span>
-                </section>
+                </section>}
             </div>
             <div className="m-details-image">
                 <img src={hostPhotoURL} />

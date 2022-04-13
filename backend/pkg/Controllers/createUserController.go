@@ -81,6 +81,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
+	Utils.AddCorsHeaders(w, r)
 	cookie, err := r.Cookie("jwt")
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

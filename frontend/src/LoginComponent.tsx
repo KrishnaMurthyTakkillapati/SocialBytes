@@ -12,8 +12,6 @@ import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { AppContext } from './contexts/AppContext';
-import { AppClient } from './clients';
-import { stat } from 'fs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -162,7 +160,7 @@ const Login = () => {
   return (<>
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Login App" />
+        <CardHeader className={classes.header} title="Log in" />
         <CardContent>
           <div>
             <TextField
@@ -203,6 +201,10 @@ const Login = () => {
         </CardActions>
       </Card>
     </form>
+    <div style={{position:'relative',top:'3%',display: 'flex',textAlign: 'center',justifyContent: 'center' }}>
+      <span>Not a member yet? &nbsp; </span>
+      <a href="/Register" style={{ color: '#00FFFF' }}> Register</a>
+    </div>
     </>
   );
 }

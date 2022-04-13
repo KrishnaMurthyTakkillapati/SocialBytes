@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useContext } from 'react';
 import { AppContext } from '../../../../contexts';
 import { AppClient } from '../../../../clients';
+import axios from 'axios';
 
 
 export const SignOutRoute = () => {
@@ -13,6 +14,8 @@ export const SignOutRoute = () => {
   const handleSignOutClick = () => {
     if (context.user.isActive) {
       alert('Signing Out...');
+      axios.get(`http://localhost:9010/api/logout`,{ withCredentials: true}).then(response=>{
+    });
       const client = new AppClient
       context.user = client.user
       history.push("/")
