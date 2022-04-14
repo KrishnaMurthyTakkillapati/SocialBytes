@@ -42,7 +42,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
-	LoginUser := &models.Users{}
+	LoginUser := &models.Login{}
 	Utils.ParseBody(r, LoginUser)
 	user, err := LoginUser.Login()
 	if err != nil {
