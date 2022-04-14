@@ -1,35 +1,185 @@
+import React, { useReducer, useEffect, SyntheticEvent, useContext } from 'react';
 import { Typography, Box } from '@mui/material';
 import { useLocation } from 'react-router';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import CardHeader from '@mui/material/CardHeader';
+import { createStyles, makeStyles, } from '@mui/styles';
+
+import {Theme } from '@mui/system';
+
+
 
 import { PageTitle } from '../PageTitle';
 
+
+
+type State = {
+  username: string
+  password:  string
+  isButtonDisabled: boolean
+  helperText: string
+  isError: boolean
+};
+
+const initialState:State = {
+  username: '',
+  password: '',
+  isButtonDisabled: true,
+  helperText: '',
+  isError: false
+};
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      width: 400,
+      margin: `${theme.spacing(0)} auto`
+    },
+    loginBtn: {
+      marginTop: theme.spacing(2),
+      flexGrow: 1
+    },
+    header: {
+      textAlign: 'center',
+      background: '#212121',
+      color: '#fff'
+    },
+    card: {
+      marginTop: theme.spacing(10)
+    }
+  })
+);
+type Action = { type: 'setUsername', payload: string }
+  | { type: 'setPassword', payload: string }
+  | { type: 'setIsButtonDisabled', payload: boolean }
+  | { type: 'loginSuccess', payload: string }
+  | { type: 'loginFailed', payload: string }
+  | { type: 'setIsError', payload: boolean };
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'setUsername': 
+      return {
+        ...state,
+        username: action.payload
+      };
+    case 'setPassword': 
+      return {
+        ...state,
+        password: action.payload
+      };
+    case 'setIsButtonDisabled': 
+      return {
+        ...state,
+        isButtonDisabled: action.payload
+      };
+    case 'loginSuccess': 
+      return {
+        ...state,
+        helperText: action.payload,
+        isError: false
+      };
+    case 'loginFailed': 
+      return {
+        ...state,
+        helperText: action.payload,
+        isError: true
+      };
+    case 'setIsError': 
+      return {
+        ...state,
+        isError: action.payload
+      };
+  }
+}
+
 export const PageDefault = () => {
   const location = useLocation();
+  
+  const classes = useStyles();
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <>
-      <PageTitle title={location.pathname.replaceAll('/', ' ').trimStart()} />
-      <Box sx={{ p: 3 }}>
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-          velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate eu
-          scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt
-          lobortis feugiat vivamus at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-          ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam
-          dignissim diam. Pulvinar elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus
-          sed viverra tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis sed odio morbi. Euismod
-          lacinia at quis risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-          In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean euismod
-          elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla posuere
-          sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </Box>
-    </>
+    
+
+    <form className={classes.container} noValidate autoComplete="off">
+      <Card className={classes.card}>
+        <CardHeader className={classes.header} title="EDIT PROFILE" />
+        <CardContent>
+          <div>
+            <TextField
+              error={state.isError}
+              fullWidth
+              id="username"
+              type="email"
+              label="Username"
+              placeholder="Username"
+              margin="normal"
+              
+              
+            />
+            <TextField
+              error={state.isError}
+              fullWidth
+              id="password"
+              type="password"
+              label="FullName"
+              placeholder="FullName"
+              margin="normal"
+              helperText={state.helperText}
+              
+            />
+            <TextField
+              error={state.isError}
+              fullWidth
+              id="password"
+              type="password"
+              label="Password"
+              placeholder="Password"
+              margin="normal"
+              helperText={state.helperText}
+              />
+            <TextField
+              error={state.isError}
+              fullWidth
+              id="password"
+              type="password"
+              label="Confirm Password"
+              placeholder="Confirm Password"
+              margin="normal"
+              helperText={state.helperText}
+              
+            />
+            <TextField
+              error={state.isError}
+              fullWidth
+              id="password"
+              type="password"
+              label="Change profile picture"
+              placeholder="Upload profile picture"
+              margin="normal"
+              helperText={state.helperText}
+             /> 
+          </div>
+        </CardContent>
+        <CardActions>
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            className={classes.loginBtn}
+            
+            disabled={state.isButtonDisabled}>
+            Save Changes
+          </Button>
+        </CardActions>
+      </Card>
+    </form>
+    
+    
   );
 };
