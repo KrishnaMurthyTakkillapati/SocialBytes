@@ -114,6 +114,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
+	Utils.AddCorsHeaders(w, r)
 	cookie := &http.Cookie{
 		Name:     "jwt",
 		Value:    "",
