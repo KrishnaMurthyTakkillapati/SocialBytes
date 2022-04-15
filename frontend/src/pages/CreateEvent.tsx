@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState, ChangeEvent } from "react";
-import FileService from '../service/fileService';
 import Card from '@mui/material/Card';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import {

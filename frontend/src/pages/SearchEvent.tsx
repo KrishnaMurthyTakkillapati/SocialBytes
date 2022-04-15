@@ -3,15 +3,11 @@ import { Component, useCallback, useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { AppContext } from '../contexts';
 import { APP_TITLE, PAGE_TITLE_HOME } from '../utils/constants';
-import { useGetPosts } from '../lib/api-hooks';
-import { FetchState, PostData } from '../types/post';
-import { styled } from '@mui/material/styles';
-import MediaCard from '../utils/MediaCard';
-import axios from "axios";
+
 import { eventService } from '../service/eventService';
 import { IFormInput } from './CreateEvent';
 import EventCard from '../utils/EventCard';
-import { Link, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 
 export const SearchEvent = () => {
   const context = useContext(AppContext);

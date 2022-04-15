@@ -11,7 +11,7 @@ import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { AppContext } from './contexts/AppContext';
+import { AppContext } from '../contexts/AppContext';
 import { Alert ,Snackbar} from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) =>

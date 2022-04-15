@@ -1,14 +1,8 @@
 import { useHistory, useParams } from "react-router-dom";
-import { Grid } from '@mui/material';
-import eventInfo from '../lib/eventpage.json'
-import EventCard from "../utils/EventCard";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faClock,
-    faMapMarkerAlt,
     faPencilAlt,
     faTrash,
-    faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import LocationMap from "../components/LocationMap";
 import AttendeesList, { AttInfo } from "../components/Attendees";
@@ -17,7 +11,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { eventService } from "../service/eventService";
 import { IFormInput } from "./CreateEvent";
 import { useEffect, useState, useContext } from "react";
-import Image from 'material-ui-image'
 import { AppContext } from "../contexts";
 import moment from "moment";
 
