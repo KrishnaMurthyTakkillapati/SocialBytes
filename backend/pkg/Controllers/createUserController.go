@@ -40,6 +40,12 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @Summary Login User
+// @Description Endpoint used to login an user by validating credentials and generating JWT cookie for session.
+// @Tags User
+// @Success 200 {object} models.Login
+// @Failure 404 {object} object
+// @Router /api/login [post]
 func Login(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
 	LoginUser := &models.Login{}
@@ -80,6 +86,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @Summary Get User
+// @Description Endpoint used to get an user details from the db.
+// @Tags User
+// @Success 200 {object} models.Users
+// @Failure 404 {object} object
+// @Router /api/getUser [get]
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
 	cookie, err := r.Cookie("jwt")
@@ -113,6 +125,12 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(response)
 }
 
+// @Summary Logout User
+// @Description Endpoint used to logout an user by deleting the JWT cookie used for mainting session.
+// @Tags User
+// @Success 200 {object} object
+// @Failure 404 {object} object
+// @Router /api/logout [get]
 func Logout(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
 	cookie := &http.Cookie{
