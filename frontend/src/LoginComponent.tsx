@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, SyntheticEvent, useContext } from 'react';
+import React, { useReducer, useEffect, SyntheticEvent, useContext, useState } from 'react';
 import { createStyles, makeStyles, } from '@mui/styles';
 import {useHistory} from "react-router-dom";
 
@@ -12,6 +12,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { AppContext } from './contexts/AppContext';
+import { Alert ,Snackbar} from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -102,7 +103,7 @@ const Login = () => {
   const context = useContext(AppContext);
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const [error,setError]=useState("");
   useEffect(() => {
     if (state.username.trim() && state.password.trim()) {
      dispatch({
@@ -116,6 +117,14 @@ const Login = () => {
       });
     }
   }, [state.username, state.password]);
+  
+  const [open, setOpen] = useState(false);
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const history = useHistory();
     const handleLogin = async(event: SyntheticEvent ) => {
@@ -124,14 +133,15 @@ const Login = () => {
       axios.post(`http://localhost:9010/api/login`, JSON.stringify({'Email':state.username,'Password':state.password}),{ withCredentials: true,}).then(response=>{
       console.log(response)
       if (response.status!= 200) {
-          // const error = (data && data.message) || response.statusText;
-          return Promise.reject(response.statusText);
+          setError(response.statusText);
       }
       context.user.email=state.username
       context.user.name=state.password
       context.user.isActive=true
       history.push('/')
-      return (response.status);
+  }).catch(err=>{
+    setOpen(true)
+    setError(err.response['data'].message)
   });
     
   };
@@ -205,6 +215,14 @@ const Login = () => {
       <span>Not a member yet? &nbsp; </span>
       <a href="/Register" style={{ color: '#00FFFF' }}> Register</a>
     </div>
+    {error!=="" && <div>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Login information provided is wrong. {error}
+        </Alert>
+      </Snackbar>
+    </div>
+    }
     </>
   );
 }
