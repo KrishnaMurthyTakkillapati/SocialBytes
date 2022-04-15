@@ -1,14 +1,8 @@
 import { useHistory, useParams } from "react-router-dom";
-import { Grid } from '@mui/material';
-import eventInfo from '../lib/eventpage.json'
-import EventCard from "../utils/EventCard";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faClock,
-    faMapMarkerAlt,
     faPencilAlt,
     faTrash,
-    faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import LocationMap from "../components/LocationMap";
 import AttendeesList, { AttInfo } from "../components/Attendees";
@@ -17,7 +11,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { eventService } from "../service/eventService";
 import { IFormInput } from "./CreateEvent";
 import { useEffect, useState, useContext } from "react";
-import Image from 'material-ui-image'
 import { AppContext } from "../contexts";
 import moment from "moment";
 
@@ -38,7 +31,7 @@ export const EventPage = () => {
     const title = thisEvent?.Name;
     const hostPhotoURL = thisEvent?.Image;
     const hostName = 'krishna';
-    const date = moment(thisEvent?.Date).format("MMM-DD-yyyy")
+    const date = moment(thisEvent?.Date).format("MMM-DD")
     const description = thisEvent?.Description
     //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
 

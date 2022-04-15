@@ -1,9 +1,9 @@
-import React, { useReducer, useEffect, SyntheticEvent, useContext } from 'react';
+import React, { useReducer, useEffect, SyntheticEvent, useContext, useState } from 'react';
 import { createStyles, makeStyles, } from '@mui/styles';
 import { useHistory } from "react-router-dom";
 
 import { Theme } from '@mui/system';
-
+import { Alert ,Snackbar} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -11,7 +11,7 @@ import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
 import axios from "axios";
-import { AppContext } from './contexts';
+import { AppContext } from '../contexts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -133,7 +133,14 @@ const Register = () => {
       });
     }
   }, [state.username, state.password]);
-
+  const [error,setError]=useState("");
+  const [open, setOpen] = useState(false);
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const history = useHistory();
   const handleRegister = async (event: SyntheticEvent) => {
@@ -155,6 +162,9 @@ console.log(JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.las
         history.push("/")
       })
       return (response.status);
+    }).catch(err=>{
+      setOpen(true);
+      setError(err.response['data'].message)
     });
 
 
@@ -293,7 +303,15 @@ console.log(JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.las
       <span>Already a member? &nbsp; </span>
       <a href="/Login"  style={{ color: '#00FFFF' }}> Login</a>
     </div>
-  </>
+  {error!=="" && <div>
+  <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+      Login information provided is wrong. {error}
+    </Alert>
+  </Snackbar>
+</div>
+}
+</>
   );
 }
 
