@@ -128,9 +128,9 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 // @Summary Logout User
 // @Description Endpoint used to logout an user by deleting the JWT cookie used for mainting session.
 // @Tags User
-// @Success 200 {object}
+// @Success 200 {object} object
 // @Failure 404 {object} object
-// @Router /api/login [get]
+// @Router /api/logout [get]
 func Logout(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
 	cookie := &http.Cookie{
