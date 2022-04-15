@@ -86,6 +86,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @Summary Get User
+// @Description Endpoint used to get an user details from the db.
+// @Tags User
+// @Success 200 {object} models.Users
+// @Failure 404 {object} object
+// @Router /api/getUser [get]
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
 	cookie, err := r.Cookie("jwt")
