@@ -40,6 +40,12 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @Summary Login User
+// @Description Endpoint used to login an user by validating credentials.
+// @Tags User
+// @Success 200 {object} models.Login
+// @Failure 404 {object} object
+// @Router /api/login [post]
 func Login(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
 	LoginUser := &models.Login{}
