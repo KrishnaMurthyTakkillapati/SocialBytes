@@ -1,5 +1,5 @@
 # SocialBytes
-An interactive website for finding events/workshops within ones locality.
+Whatever you’re looking to do this year, SocialBytes can help. People have turned to SocialBytes to meet people, make friends, find support, grow a business, and explore their interests. Join new people who share your interests through SocialBytes events. Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking. It’s free to create an account. Thousands of events are happening every day—join the fun.
 
 # Tech Stack
 Front End - ReactJS
@@ -13,8 +13,7 @@ SNO | Name                          | Github username| Type of development|
 3   | Venkata Vynatheya Jangal                  | VenkataVynatheya         | Frontend(React)    |
 4   | Krishna Murthy Takkillapti               | krish0307 | Frontend (React)
 
-# Project Description
-Whatever you’re looking to do this year, SocialBytes can help. People have turned to SocialBytes to meet people, make friends, find support, grow a business, and explore their interests. Join new people who share your interests through SocialBytes events. Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking. It’s free to create an account. Thousands of events are happening every day—join the fun.
+# Project Info
 
 In the final version of this project, the functions we implemented are listed below.
 1. Registeration
@@ -46,6 +45,11 @@ npm install
 npm start
 ```
 2. open a browser and jump to http://127.0.0.1:3000
+
+## Frontend Info
+
+## Backend Info
+
 
 ## References
 
