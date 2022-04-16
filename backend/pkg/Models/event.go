@@ -22,6 +22,7 @@ type Event struct {
 	Interests   pq.StringArray `gorm:"type:text[]"`
 	Date        time.Time
 	Image       string
+	Attendes    string
 }
 
 type SearchEventStruct struct {
@@ -44,7 +45,7 @@ func (e *Event) CreateEventstable() (*Event, error) {
 		error := errors.New("Event is Empty")
 		return e, error
 	}
-	if e.Description == "" || e.Name == "" || e.Location == "" || e.Image == "" || len(e.Interests) <= 0 || e.Date.IsZero() {
+	if e.Description == "" || e.Name == "" || e.Location == "" || e.Image == "" || len(e.Interests) <= 0 || e.Date.IsZero() || e.Attendes == "" {
 
 		error := errors.New("Event details incorrect")
 		return e, error
