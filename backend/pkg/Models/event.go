@@ -88,3 +88,7 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 	}
 	return events
 }
+func (e *Event) JoinEvent() (*Event, error) {
+	var event *Event
+	return event, nil
+}
