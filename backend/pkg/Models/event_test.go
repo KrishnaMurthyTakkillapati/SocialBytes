@@ -149,7 +149,7 @@ func TestCreateUserwithEmptyUser(t *testing.T) {
 }
 
 func TestLoginwithEmptyUserNameandPassword(t *testing.T) {
-	var u Users
+	var u Login
 	_, err := u.Login()
 	assert.Equal(t, err.Error(), "Enter the correct UserName and Password")
 }
@@ -160,7 +160,7 @@ func TestLoginwithIncorrectPassword(t *testing.T) {
 	u.Email = "socialbytes@gmail.com"
 	u.Password = "cfvghjkloiejufhbdemkmfvg"
 	u.CreateUsers()
-	var us Users
+	var us Login
 	us.Email = "socialbytes@gmail.com"
 	us.Password = "edfdgbnhgbdfsdaf"
 	_, err := us.Login()

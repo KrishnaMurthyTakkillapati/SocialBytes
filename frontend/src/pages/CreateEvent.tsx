@@ -5,8 +5,7 @@ import { makeStyles } from '@mui/styles';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState,ChangeEvent } from "react";
-import FileService from '../service/fileService';
+import { useContext, useState, ChangeEvent } from "react";
 import Card from '@mui/material/Card';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import {
@@ -15,8 +14,9 @@ import {
 import { v4 as uuid } from 'uuid';
 import "@reach/combobox/styles.css";
 import Moment from 'moment';
-import { useParams,useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { eventService } from '../service/eventService';
+import { AppContext } from "../contexts";
 
 export interface IFormInput {
   CreatedAt: string;
@@ -51,17 +51,18 @@ const useStyles = makeStyles((theme) => ({
 
 export function Event() {
   const { id }: { id: string } = useParams();
-  
-    const {
-      register,
-      handleSubmit,
-      reset,
-      getValues,
-      formState: { errors },
-    } = useForm<IFormInput>({
-      resolver: yupResolver(schema),
-    });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm<IFormInput>({
+    resolver: yupResolver(schema),
+  });
   const editMode = id;
+  const context = useContext(AppContext)
 
 
 
@@ -123,34 +124,34 @@ export function Event() {
       history.push('/eventpage/' + idOfUser);
     });
   }
-  const { ready, value, suggestions: { status, data },setValue } = usePlacesAutocomplete();
-  
+  const { ready, value, suggestions: { status, data }, setValue } = usePlacesAutocomplete();
+
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
-    };
-  
-    const handleSelect = (val: string): void => {
-      setValue(val, false);
-    };
-  
-    const renderSuggestions = (): JSX.Element => {
-      const suggestions = data.map(({ place_id, description }: any) => (
-        <ComboboxOption key={place_id} value={description} style={{ color: "black" }}
-        />
-      ));
-  
-      return (
-        <>
-          {suggestions}
-          <li className="logo">
-            <img
-              src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
-              alt="Powered by Google"
-            />
-          </li>
-        </>
-      );
-    };
+  };
+
+  const handleSelect = (val: string): void => {
+    setValue(val, false);
+  };
+
+  const renderSuggestions = (): JSX.Element => {
+    const suggestions = data.map(({ place_id, description }: any) => (
+      <ComboboxOption key={place_id} value={description} style={{ color: "black" }}
+      />
+    ));
+
+    return (
+      <>
+        {suggestions}
+        <li className="logo">
+          <img
+            src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
+            alt="Powered by Google"
+          />
+        </li>
+      </>
+    );
+  };
 
   const [file, setFile] = useState("");
   const [imageData, setImageData] = useState("")
@@ -217,35 +218,19 @@ export function Event() {
   };
 
 
+const isLoggedIn=context.user.isActive
+  setTimeout(() => {
+    if (!isLoggedIn)
+      history.push("/Login")
+  }, 5000);
 
- 
-  return (
+  return (<>
     <div title="App Root">
       <Container maxWidth="xs">
         <Typography className={heading} variant="h3">
           Create Event
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          {/* <TextField
-            {...register("location")}
-            variant="outlined"
-            margin="normal"
-            label="Location"
-            helperText={errors.location?.message}
-            error={!!errors.location?.message}
-            fullWidth
-            required
-          /> */}
-          {/* <TextField
-            {...register("interest")}
-            variant="outlined"
-            margin="normal"
-            label="Interest"
-            helperText={errors.interest?.message}
-            error={!!errors.interest?.message}
-            fullWidth
-            required
-          /> */}
           <TextField
             {...register("Name")}
             variant="outlined"
@@ -327,7 +312,7 @@ export function Event() {
             fullWidth
           />
 
-          <Combobox onSelect= {handleSelect} aria-labelledby="demo">
+          <Combobox onSelect={handleSelect} aria-labelledby="demo">
             <ComboboxInput
               style={{ width: 700, maxWidth: "100%", height: 40, margin: "5% 0", color: "black" }}
               {...register("Location")}
@@ -375,6 +360,15 @@ export function Event() {
         </form>
       </Container>
     </div>
+    {!isLoggedIn && <div>
+      <Snackbar open={!isLoggedIn} autoHideDuration={5000} onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Login to create the event. Routing to Login Page
+        </Alert>
+      </Snackbar>
+    </div>
+    }
+  </>
   );
 }
 

@@ -16,6 +16,11 @@ type Users struct {
 	Password  string
 }
 
+type Login struct {
+	Email    string
+	Password string
+}
+
 func (u *Users) CreateUsers() (*Users, error) {
 	if u == nil {
 		error := errors.New("User is Empty")
@@ -41,7 +46,7 @@ func (u *Users) CreateUsers() (*Users, error) {
 	return u, nil
 }
 
-func (u *Users) Login() (*Users, error) {
+func (u *Login) Login() (*Users, error) {
 	var user *Users
 	if u.Email == "" || u.Password == "" {
 		error := errors.New("Enter the correct UserName and Password")
