@@ -3,7 +3,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import { Layout } from './components/Layout';
-import { PageDefault } from './components/PageDefault';
+import  PageDefault  from './components/PageDefault';
 
 import { AppContext, ThemeModeContext } from './contexts';
 import { AppClient } from './clients';
