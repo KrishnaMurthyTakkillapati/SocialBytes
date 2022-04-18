@@ -136,8 +136,10 @@ const Login = () => {
       if (response.status!= 200) {
           setError(response.statusText);
       }
-      context.user.email=state.username
-      context.user.name=state.password
+      context.user.name=response.data.FirstName + " " +response.data.LastName
+      context.user.firstName = response.data.FirstName
+      context.user.lastName = response.data.LastName
+      context.user.email=response.data.Email
       context.user.isActive=true
       history.push('/')
   }).catch(err=>{
