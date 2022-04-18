@@ -12,16 +12,6 @@
 
   <body>
     <div id="swagger-ui"></div>
-    <script defer>
-      window.onload = function () {
-        const ui = SwaggerUIBundle({
-          url: "swagger.yaml",
-          dom_id: "#swagger-ui",
-          deepLinking: true
-        });
-        window.ui = ui;
-      };
-    </script>
     <script src="dist/swagger-ui-bundle.js" charset="UTF-8"> </script>
     <script src="dist/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
     <script src="dist/swagger-initializer.js" charset="UTF-8"> </script>
