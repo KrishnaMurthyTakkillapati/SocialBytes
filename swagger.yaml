@@ -1,0 +1,205 @@
+basePath: /
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.Event:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      interests:
+        items:
+          type: string
+        type: array
+      location:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.Login:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.Users:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:9010
+info:
+  contact: {}
+  title: SocialBytes API documentation
+  version: 1.0.0
+paths:
+  /api/createEvent:
+    post:
+      description: Endpoint used to create an entry of the event in db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Create Event
+      tags:
+      - Events
+  /api/deleteEvent:
+    delete:
+      description: Endpoint used to delete an event from db based on id.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Delete Event
+      tags:
+      - Events
+  /api/getEvent:
+    get:
+      description: Endpoint used to get an events from db based on id.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Event
+      tags:
+      - Events
+  /api/getEvents:
+    get:
+      description: Endpoint used to get all events from db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Events
+      tags:
+      - Events
+  /api/getUser:
+    get:
+      description: Endpoint used to get an user details from the db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Users'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get User
+      tags:
+      - User
+  /api/login:
+    post:
+      description: Endpoint used to login an user by validating credentials and generating
+        JWT cookie for session.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Login'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Login User
+      tags:
+      - User
+  /api/logout:
+    get:
+      description: Endpoint used to logout an user by deleting the JWT cookie used
+        for mainting session.
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Logout User
+      tags:
+      - User
+  /api/register:
+    post:
+      description: Endpoint used to create an user in db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Users'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Register User
+      tags:
+      - User
+  /api/searchEvent:
+    get:
+      description: Endpoint used to get all events based on the filter from db.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Filtered Events
+      tags:
+      - Events
+swagger: "2.0"
