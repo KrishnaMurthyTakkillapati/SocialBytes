@@ -66,7 +66,7 @@ npm start
 
 ### Link to API Documentation:
 ```
-
+https://krish0307.github.io/SocialBytes/#/
 ```
 
 ### Link to Project board:
