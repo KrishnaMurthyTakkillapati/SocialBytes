@@ -12,6 +12,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
 import axios from "axios";
 import {AppContext}  from '../../contexts/AppContext';
+import { eventService } from '../../service/eventService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -136,6 +137,8 @@ const PageDefault = () => {
 
 
   const history = useHistory();
+  eventService.getUser("http://localhost:9010/api/getUser").then(response=>console.log(response));
+
   const handleRegister = async (event: SyntheticEvent) => {
     event.preventDefault()
 console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName': state.lastName, 'Email': state.username, 'Password': state.password }))
@@ -154,6 +157,9 @@ console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName'
 
 
   }
+
+
+  
 
 
 
@@ -210,7 +216,7 @@ console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName'
   return (<>
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Register" />
+        <CardHeader className={classes.header} title="EDIT PROFILE" />
         <CardContent>
           <div>
             <TextField
@@ -223,7 +229,7 @@ console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName'
               margin="normal"
               onChange={handleFirstNameChange}
               onKeyPress={handleKeyPress}
-              value = "100"
+              value = { context.user.firstName }
             /><TextField
               error={state.isError}
               fullWidth
@@ -234,19 +240,7 @@ console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName'
               margin="normal"
               onChange={handleLastNameChange}
               onKeyPress={handleKeyPress}
-              value = "100"
-            />
-            <TextField
-              error={state.isError}
-              fullWidth
-              id="username"
-              type="email"
-              label="Create Username"
-              placeholder="Username"
-              margin="normal"
-              onChange={handleUsernameChange}
-              onKeyPress={handleKeyPress}
-              value = "100"
+              value = { context.user.lastName }
             />
             <TextField
               error={state.isError}
@@ -283,8 +277,8 @@ console.log(    JSON.stringify({ 'ID':2,'FirstName': state.firstName, 'LastName'
             color="secondary"
             className={classes.loginBtn}
             onClick={handleRegister}
-            disabled={state.isButtonDisabled}>
-            Register
+            >
+            Save Changes
           </Button>
         </CardActions>
       </Card>

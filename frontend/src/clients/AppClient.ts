@@ -13,6 +13,8 @@ class AppClient implements IAppContext {
     this.user = {
       id: '5e8d8hg8h8h8q8faf8g8f8f',
       name: 'Guest',
+      firstName: '',
+      lastName: '',
       email: 'Krishna@gmail.com',
       createdAt: new Date(),
       updatedAt: new Date(),
