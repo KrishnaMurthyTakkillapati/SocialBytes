@@ -40,7 +40,7 @@ func init() {
 
 }
 
-func (e *Event) CreateEventstable() (*Event, error) {
+func (e *Event) CreateEventstable(username string) (*Event, error) {
 	if e == nil {
 		error := errors.New("Event is Empty")
 		return e, error
@@ -50,6 +50,11 @@ func (e *Event) CreateEventstable() (*Event, error) {
 		error := errors.New("Event details incorrect")
 		return e, error
 	}
+	if username == "" {
+		error := errors.New("Event details incorrect")
+		return e, error
+	}
+	e.Attendes = append(e.Attendes, username)
 	db.Create(&e)
 	return e, nil
 }
