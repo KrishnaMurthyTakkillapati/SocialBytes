@@ -9,6 +9,7 @@ export const eventService = {
     create,
     update,
     searchOp,
+    getUser,
     delete: _delete
 };
 
@@ -61,6 +62,15 @@ function get(url: any) {
     };
     return fetch(url, requestOptions).then(handleResponse);
 }
+
+function getUser(url: any) {
+    const requestOptions = {
+        method: 'GET',
+        withCredentials: true
+    };
+    return axios.get(url, {withCredentials: true}).then(handleResponse);
+}
+
 
 function handleResponse(response:any) {
     return response.text().then((text: string) => {

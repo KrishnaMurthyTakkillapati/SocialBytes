@@ -23,6 +23,8 @@ export type User = {
    * "John Smith"
    */
   name: string;
+  firstName: string;
+  lastName: string;
 
   /**
    * The user's email address
