@@ -15,4 +15,5 @@ var RegisterEventRoutes = func(router *mux.Router) {
 	router.HandleFunc("/api/login", Controllers.Login).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/logout", Controllers.Logout).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/getUser", Controllers.GetUser).Methods("GET", "OPTIONS")
+	router.HandleFunc("/api/joinevent", Controllers.JoinEvent).Methods("POST", "OPTIONS")
 }

@@ -34,6 +34,7 @@ func TestCreateEventsTableEmptyDescription(t *testing.T) {
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
 	e.Image = "adsfghjrehjhgrrtfg"
+
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -45,6 +46,7 @@ func TestCreateEventsTableEmptyName(t *testing.T) {
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
 	e.Image = "adsfghjrehjhgrrtfg"
+
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -56,6 +58,7 @@ func TestCreateEventsTableEmptyInterests(t *testing.T) {
 	e.Description = "UF"
 	e.Date = time.Now()
 	e.Image = "adsfghjrehjhgrrtfg"
+
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -67,6 +70,7 @@ func TestCreateEventsTableEmptyLocation(t *testing.T) {
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
 	e.Image = "adsfghjrehjhgrrtfg"
+
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -78,6 +82,7 @@ func TestCreateEventsTableEmptyDate(t *testing.T) {
 	e.Description = "UF"
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Image = "adsfghjrehjhgrrtfg"
+
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
@@ -88,9 +93,11 @@ func TestCreateEventsTableEmptyImage(t *testing.T) {
 	e.Description = "UF"
 	e.Interests = []string{"X", "Y", "Z"}
 	e.Date = time.Now()
+
 	_, err := e.CreateEventstable()
 	assert.Equal(t, err.Error(), "Event details incorrect")
 }
+
 func TestGetEventsTable(t *testing.T) {
 	res := GetAllEvents()
 	assert.NotEqual(t, len(res), 0)
@@ -133,6 +140,7 @@ func TestCreateUserwithEmptyEmail(t *testing.T) {
 	_, err := u.CreateUsers()
 	assert.Equal(t, err.Error(), "User details incorrect")
 }
+
 func TestCreateUserwithEmptyPassword(t *testing.T) {
 	var u Users
 	u.FirstName = "ABC"

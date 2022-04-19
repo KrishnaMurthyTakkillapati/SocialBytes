@@ -22,6 +22,7 @@ type Event struct {
 	Interests   pq.StringArray `gorm:"type:text[]"`
 	Date        time.Time
 	Image       string
+	Attendes    pq.StringArray `gorm:"type:text[]"`
 }
 
 type SearchEventStruct struct {
@@ -86,4 +87,22 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 		db.Where("Date BETWEEN ? AND ?", se.StartDate, se.EndDate).Find(&events)
 	}
 	return events
+}
+func (e *Event) JoinEvent(username string) (*Event, error) {
+	var event *Event
+	if e.ID == "" {
+		error := errors.New("User cannot be added to event without event id")
+		return nil, error
+	}
+	if username == "" {
+		error := errors.New("User Name is empty")
+		return nil, error
+	}
+	db.Find(&event, "ID = ?", e.ID)
+	event.Attendes = append(event.Attendes, username)
+	if err := db.Model(&event).Where("ID=?", e.ID).Update("Attendes", event.Attendes).Error; err != nil {
+		error := errors.New("User cannot join the event")
+		return nil, error
+	}
+	return event, nil
 }
