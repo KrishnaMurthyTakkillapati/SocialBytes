@@ -19,7 +19,6 @@ func JoinEvent(w http.ResponseWriter, r *http.Request) {
 	Utils.ParseBody(r, AddUser)
 	user, err := GetUserName(r)
 	username := user.FirstName + " " + user.LastName
-	fmt.Println(username)
 	event, err := AddUser.JoinEvent(username)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

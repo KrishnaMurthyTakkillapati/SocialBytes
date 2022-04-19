@@ -19,10 +19,15 @@ var NewEvent models.Event
 func CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 	Utils.AddCorsHeaders(w, r)
-
+	username, err := GetUserName(r)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response, _ := json.Marshal(map[string]string{"message": err.Error()})
+		w.Write(response)
+	}
 	CreateEvent := &models.Event{}
 	Utils.ParseBody(r, CreateEvent)
-	event, err := CreateEvent.CreateEventstable()
+	event, err := CreateEvent.CreateEventstable(username.FirstName + " " + username.LastName)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		response, _ := json.Marshal(CreateEvent)
