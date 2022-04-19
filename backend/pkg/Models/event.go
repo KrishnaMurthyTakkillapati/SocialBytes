@@ -22,7 +22,7 @@ type Event struct {
 	Interests   pq.StringArray `gorm:"type:text[]"`
 	Date        time.Time
 	Image       string
-	Attendes    string
+	Attendes    pq.StringArray `gorm:"type:text[]"`
 }
 
 type SearchEventStruct struct {
@@ -45,7 +45,7 @@ func (e *Event) CreateEventstable() (*Event, error) {
 		error := errors.New("Event is Empty")
 		return e, error
 	}
-	if e.Description == "" || e.Name == "" || e.Location == "" || e.Image == "" || len(e.Interests) <= 0 || e.Date.IsZero() || e.Attendes == "" {
+	if e.Description == "" || e.Name == "" || e.Location == "" || e.Image == "" || len(e.Interests) <= 0 || e.Date.IsZero() {
 
 		error := errors.New("Event details incorrect")
 		return e, error
@@ -90,6 +90,19 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 }
 func (e *Event) JoinEvent(username string) (*Event, error) {
 	var event *Event
-
+	if e.ID == "" {
+		error := errors.New("User cannot be added to event without event id")
+		return nil, error
+	}
+	if username == "" {
+		error := errors.New("User Name is empty")
+		return nil, error
+	}
+	db.Find(&event, "ID = ?", e.ID)
+	event.Attendes = append(event.Attendes, username)
+	if err := db.Model(&event).Where("ID=?", e.ID).Update("Attendes", event.Attendes).Error; err != nil {
+		error := errors.New("User cannot join the event")
+		return nil, error
+	}
 	return event, nil
 }
