@@ -175,3 +175,15 @@ func TestLoginwithIncorrectPassword(t *testing.T) {
 	_, err := us.Login()
 	assert.Equal(t, err.Error(), "Password is incorrect")
 }
+func TestCreateEventsTablewithEmptyUserName(t *testing.T) {
+	var e Event
+	e.Name = "ABC"
+	e.Location = "UF"
+	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	e.Image = "adsfghjrehjhgrrtfg"
+	username := ""
+	res, _ := e.CreateEventstable(username)
+	assert.NotEqual(t, res, nil)
+}
