@@ -37,7 +37,7 @@ func GetUserName(r *http.Request) (models.Users, error) {
 	var user models.Users
 	cookie, err := r.Cookie("jwt")
 	if err != nil {
-		error := errors.New("Event is Empty")
+		error := errors.New("Issue with the cookie ")
 		return user, error
 	}
 	token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(*jwt.Token) (interface{}, error) {
@@ -45,7 +45,7 @@ func GetUserName(r *http.Request) (models.Users, error) {
 	})
 
 	if err != nil {
-		error := errors.New("Event is Empty")
+		error := errors.New("Issue with JWT token")
 		return user, error
 	}
 
@@ -53,7 +53,7 @@ func GetUserName(r *http.Request) (models.Users, error) {
 	issuer64, err := strconv.ParseInt(claims.Issuer, 10, 64)
 
 	if err != nil {
-		error := errors.New("Event is Empty")
+		error := errors.New("Issue in extrating user information from the jwt cookie")
 		return user, error
 	}
 	issuer := strconv.FormatInt(issuer64, 10)
