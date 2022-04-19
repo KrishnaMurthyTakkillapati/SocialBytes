@@ -88,17 +88,8 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 	}
 	return events
 }
-func (e *Event) JoinEvent() (*Event, error) {
+func (e *Event) JoinEvent(username string) (*Event, error) {
 	var event *Event
-	if e.Attendes == "" {
-		error := errors.New("Empty user cannot join the event")
-		return nil, error
-	}
-	db.Find(&event, "ID = ?", e.ID)
-	event.Attendes += "," + e.Attendes
-	if err := db.Model(&event).Where("ID=?", e.ID).Update("Attendes", event.Attendes).Error; err != nil {
-		error := errors.New("User cannot join the event")
-		return nil, error
-	}
+
 	return event, nil
 }
