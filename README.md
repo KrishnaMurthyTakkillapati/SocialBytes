@@ -91,6 +91,9 @@ https://github.com/krish0307/SocialBytes/projects/4
 ```
 
 ## Application Demo
+### SignUp
+![signup](https://user-images.githubusercontent.com/17436125/164298219-d1a5e6bf-0a84-4f42-bb3c-055bf15cc968.gif)
+
 ### Create Event
 ![](gifs/createEvent.gif)
 
