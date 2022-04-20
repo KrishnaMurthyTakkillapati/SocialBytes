@@ -1,5 +1,5 @@
 # SocialBytes
-An interactive website for finding events/workshops within ones locality.
+Whatever you’re looking to do this year, SocialBytes can help. People have turned to SocialBytes to meet people, make friends, find support, grow a business, and explore their interests. Join new people who share your interests through SocialBytes events. Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking. It’s free to create an account. Thousands of events are happening every day—join the fun.
 
 # Tech Stack
 Front End - ReactJS
@@ -13,8 +13,7 @@ SNO | Name                          | Github username| Type of development|
 3   | Venkata Vynatheya Jangal                  | VenkataVynatheya         | Frontend(React)    |
 4   | Krishna Murthy Takkillapti               | krish0307 | Frontend (React)
 
-# Project Description
-Whatever you’re looking to do this year, SocialBytes can help. People have turned to SocialBytes to meet people, make friends, find support, grow a business, and explore their interests. Join new people who share your interests through SocialBytes events. Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking. It’s free to create an account. Thousands of events are happening every day—join the fun.
+# Project Info
 
 In the final version of this project, the functions we implemented are listed below.
 1. Registeration
@@ -46,6 +45,18 @@ npm install
 npm start
 ```
 2. open a browser and jump to http://127.0.0.1:3000
+
+## Frontend Info
+* frontend/src/pages/Home.tsx- Home page of the website which shows basic information about the website.
+* frontend/src/pages/CreateEvent.tsx- Page with a form of details required to create event. User must be logged in to create the event. Event details include- event name, description, image, location and interests of the event.
+* frontend/src/pages/LoginComponent.tsx- Login page of the website. Takes email and password to authenticate the user using JWT token.
+* frontend/src/pages/Register.tsx- Register page of the website. Takes details like email, password, confirm password and 
+* frontend/src/pages/SearchEvent.tsx- Page where all the events are shown by default. And if a user makes a query, based on the words, answering will be filtered out
+* frontend/src/service/eventService.ts- A service class with methods helping in making calls from frontend to backend. 
+* frontend/src/utils/EventCard.tsx- Material UI card to show the details of an event in a eye catching way with image on top and description and time on the bottom. 
+
+## Backend Info
+
 
 ## References
 
