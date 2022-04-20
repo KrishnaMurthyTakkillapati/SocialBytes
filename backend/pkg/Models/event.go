@@ -93,7 +93,7 @@ func (se *SearchEventStruct) SearchEvent() []Event {
 	}
 	return events
 }
-func (e *Event) JoinEvent(username string) (*Event, error) {
+func JoinEvent(username string, e Event) (*Event, error) {
 	var event *Event
 	if e.ID == "" {
 		error := errors.New("User cannot be added to event without event id")

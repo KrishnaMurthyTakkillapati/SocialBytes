@@ -11,16 +11,27 @@ import (
 	"socialbytes.com/main/pkg/Utils"
 )
 
+// @Summary Join an Event
+// @Description Endpoint used to add a user to an Event.
+// @Tags Events
+// @Success 200 {object} models.Event
+// @Failure 404 {object} object
+// @Router /api/joinevent [get]
 func JoinEvent(w http.ResponseWriter, r *http.Request) {
 	Utils.AddCorsHeaders(w, r)
-	AddUser := &models.Event{}
-	Utils.ParseBody(r, AddUser)
+
+	var eventData models.Event
+
 	user, err := GetUserName(r)
 	username := user.FirstName + " " + user.LastName
-	event, err := AddUser.JoinEvent(username)
+	if r.URL.Query().Has("id") {
+		id := r.URL.Query()["id"][0]
+		eventData = models.GetEventByID(id)
+	}
+	event, err := models.JoinEvent(username, eventData)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		response, _ := json.Marshal(AddUser)
+		response, _ := json.Marshal(event)
 		w.Write(response)
 	} else {
 
@@ -57,4 +68,20 @@ func GetUserName(r *http.Request) (models.Users, error) {
 	issuer := strconv.FormatInt(issuer64, 10)
 	result := models.GetUserByID(issuer)
 	return result, nil
+}
+
+// @Summary Get Attendees
+// @Description Endpoint used to get the list of all the attendees in an event.
+// @Tags Events
+// @Success 200 {object} models.Event
+// @Failure 404 {object} object
+// @Router /api/getAttendees [get]
+func GetAttendees(w http.ResponseWriter, r *http.Request) {
+	Utils.AddCorsHeaders(w, r)
+	var event models.Event
+	if r.URL.Query().Has("id") {
+		id := r.URL.Query()["id"][0]
+		event = models.GetEventByID(id)
+	}
+	json.NewEncoder(w).Encode(event.Attendes)
 }

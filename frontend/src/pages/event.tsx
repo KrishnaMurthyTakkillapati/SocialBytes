@@ -17,6 +17,7 @@ import moment from "moment";
 export const EventPage = () => {
     const { id }: { id: string } = useParams();//TODO:change to useEffect & add hostname
     const [thisEvent, setThisEvent] = useState<IFormInput>();
+    const [attendeesNames, setAttendees] = useState<Array<string>>();
     const context = useContext(AppContext)
     useEffect(() => {
         eventService.getById(id).then(response => {
@@ -26,33 +27,26 @@ export const EventPage = () => {
             console.log(thisEvent);
         })
 
+        eventService.getAttendees(id).then(response => {
+            setAttendees(response);
+        })
+
     }, [])
     console.log("Id" + id);
     const title = thisEvent?.Name;
     const hostPhotoURL = thisEvent?.Image;
-    const hostName = 'krishna';
+    const hostName = attendeesNames ? attendeesNames[0] : "hey";
     const date = moment(thisEvent?.Date).format("MMM-DD")
     const description = thisEvent?.Description
     //'TLorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo atque repellat eos aut maxime, incidunt voluptatem, animi impedit, exercitationem nihil neque! Facere sint vel, ratione deleniti est rem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, hic ducimus praesentium repellendus ipsum aspernatur architecto ut consequatur, velit dolorem cum placeat ab in maiores sint fugiat? Soluta, quos dolorem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis numquam quo atque. Saepe et neque ducimus laborum ea repellendus nisi, animi, cum optio, nesciunt velit! Obcaecati distinctio corrupti quod praesentium?';
 
-    const attendees: Array<AttInfo> = [
-        {
-            "id": "a1",
-            "name": "John Doe",
-            "photoURL": "https://randomuser.me/api/portraits/thumb/men/43.jpg"
-        },
-        {
-            "id": "a2",
-            "name": "Tanko Sani",
-            "photoURL": "https://randomuser.me/api/portraits/thumb/men/44.jpg"
-        },
-        {
-            "id": "a3",
-            "name": "Abu Jega",
-            "photoURL": "https://randomuser.me/api/portraits/thumb/men/45.jpg"
-        }
+    var attendees: Array<AttInfo> = [];
+    var joinEvent: boolean = attendeesNames ? attendeesNames.indexOf(context.user.name)>-1 : false;
 
-    ];
+    for(var i in attendeesNames){
+        var data = {"id":i, "name": attendeesNames[+i], "photoURL":"https://randomuser.me/api/portraits/thumb/men/"+(+i+1)+".jpg"}
+        attendees.push(data);
+    }
     const css = `/* ======General====== */
     .App{
         height: 100vh;
@@ -772,7 +766,7 @@ export const EventPage = () => {
             </div>
             {attendees &&
                 <div className="m-details-attendees">
-                    <AttendeesList props={attendees} />
+                    <AttendeesList props={attendees} joinEvent={joinEvent} id={id} />
                 </div>
             }
         </div>

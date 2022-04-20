@@ -10,6 +10,7 @@ export const eventService = {
     update,
     searchOp,
     getUser,
+    getAttendees,
     delete: _delete
 };
 
@@ -19,6 +20,10 @@ function getAll() {
 
 function getById(id: any):Promise<IFormInput> {
     return get(`${baseUrl}/getEvent?id=${id}`);
+}
+
+function getAttendees(id: any):Promise<Array<string>> {
+    return get(`${baseUrl}/getAttendees?id=${id}`);
 }
 
 function searchOp(name:any){
@@ -31,7 +36,7 @@ function create(params: any) {
         // headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(params)
     };
-    return axios.post(`${baseUrl}/createEvent`, JSON.stringify(params)).then(response=>{
+    return axios.post(`${baseUrl}/createEvent`, JSON.stringify(params), {withCredentials: true}).then(response=>{
         if (response.status!= 200) {
             // const error = (data && data.message) || response.statusText;
             return Promise.reject(response.statusText);
