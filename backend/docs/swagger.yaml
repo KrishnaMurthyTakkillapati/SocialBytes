@@ -10,6 +10,10 @@ definitions:
     type: object
   models.Event:
     properties:
+      attendes:
+        items:
+          type: string
+        type: array
       createdAt:
         type: string
       date:
@@ -95,6 +99,21 @@ paths:
       summary: Delete Event
       tags:
       - Events
+  /api/getAttendees:
+    get:
+      description: Endpoint used to get the list of all the attendees in an event.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get Attendees
+      tags:
+      - Events
   /api/getEvent:
     get:
       description: Endpoint used to get an events from db based on id.
@@ -140,6 +159,21 @@ paths:
       summary: Get User
       tags:
       - User
+  /api/joinevent:
+    get:
+      description: Endpoint used to add a user to an Event.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Event'
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Join an Event
+      tags:
+      - Events
   /api/login:
     post:
       description: Endpoint used to login an user by validating credentials and generating

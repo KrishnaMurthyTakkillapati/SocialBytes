@@ -62,6 +62,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/getAttendees": {
+            "get": {
+                "description": "Endpoint used to get the list of all the attendees in an event.",
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get Attendees",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Event"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/api/getEvent": {
             "get": {
                 "description": "Endpoint used to get an events from db based on id.",
@@ -120,6 +143,29 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.Users"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/joinevent": {
+            "get": {
+                "description": "Endpoint used to add a user to an Event.",
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Join an Event",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Event"
                         }
                     },
                     "404": {
@@ -240,6 +286,12 @@ const docTemplate = `{
         "models.Event": {
             "type": "object",
             "properties": {
+                "attendes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "createdAt": {
                     "type": "string"
                 },

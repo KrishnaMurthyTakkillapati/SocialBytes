@@ -1,5 +1,8 @@
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { AppContext } from "../contexts";
 
 export interface AttInfo {
   id: string,
@@ -7,30 +10,26 @@ export interface AttInfo {
   photoURL: string
 }
 
+const baseUrl = 'http://localhost:9010/api';
 
-const AttendeesList = ({ props }: { props: Array<AttInfo> }) => {
+const AttendeesList = ({ props, joinEvent, id }: { props: Array<AttInfo>, joinEvent: boolean, id: string}) => {
 
   console.log('Props in Attendees ', props);
+  const context = useContext(AppContext)
+  const history = useHistory();
 
   const handleJoin = () => {
     //send an api request to store id of user against id of the event
-    //   axios.post(`${baseUrl}/storeAttendes`, JSON.stringify("userId":userId,"eventId":id)).then(response=>{
-    //     if (response.status!= 200) {
-    //         // const error = (data && data.message) || response.statusText;
-    //         return Promise.reject(response.statusText);
-    //     }
-    //     return (response.status);
-    // });
-    // const newAtt: AttInfo = {
-    //   "id": "a4",
-    //   "name": "John Doe",
-    //   "photoURL": "https://randomuser.me/api/portraits/thumb/men/43.jpg"
-    // }
-
-    // props.push(newAtt);
-    // setvalues(props)
-    // console.log("New values " + values)
-    // renderAttendees()
+      axios.get(`${baseUrl}/joinevent?id=${id}`, {withCredentials: true}).then(response=>{
+        console.log(response)
+        if (response.status!= 200) {
+            return Promise.reject(response.statusText);
+        }
+        if (response.status == 200) {
+          history.push("/search-event")
+        }
+        return (response.status);
+    });
   }
 
   const renderAttendees = () => {
@@ -54,9 +53,9 @@ const AttendeesList = ({ props }: { props: Array<AttInfo> }) => {
         </ul>
       </div>
     }
-    <Button variant="outlined" color="secondary" onClick={handleJoin} style={{ maxWidth: '30px', maxHeight: '30px', minWidth: '200px', minHeight: '60px' }}>
+    {(!joinEvent) && <Button variant="outlined" color="secondary" onClick={handleJoin} style={{ maxWidth: '30px', maxHeight: '30px', minWidth: '200px', minHeight: '60px' }}>
       Join Event
-    </Button>
+    </Button>}
   </>
   )
 }
