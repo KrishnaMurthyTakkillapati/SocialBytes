@@ -97,6 +97,9 @@ https://github.com/krish0307/SocialBytes/projects/4
 ### Search Event
 ![search](https://user-images.githubusercontent.com/17436125/163258645-f659a877-87dd-423d-8afe-f54f3e9f306f.gif)
 
+### Light-Dark Theme
+![LightDarkMode](https://user-images.githubusercontent.com/17436125/164293199-b71dab89-4b70-4f98-97d6-eef7b558cc3b.gif)
+
 ## Issues Faced While Development
 1. Issue with CORS- Ensure CORS headers are enabled in the backend for the frontend URL
 2. Google API Key- Create .env file in frontend folder with key as 'REACT_APP_GOOGLE_API_KEY'
