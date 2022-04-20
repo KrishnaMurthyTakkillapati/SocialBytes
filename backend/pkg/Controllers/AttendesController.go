@@ -3,7 +3,6 @@ package Controllers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -13,7 +12,6 @@ import (
 )
 
 func JoinEvent(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("In join event")
 	Utils.AddCorsHeaders(w, r)
 	AddUser := &models.Event{}
 	Utils.ParseBody(r, AddUser)

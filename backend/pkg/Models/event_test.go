@@ -187,3 +187,30 @@ func TestCreateEventsTablewithEmptyUserName(t *testing.T) {
 	res, _ := e.CreateEventstable(username)
 	assert.NotEqual(t, res, nil)
 }
+
+func TestJoinEventsTablewithoutEventid(t *testing.T) {
+	var e Event
+	e.Name = ""
+	e.Location = "UF"
+	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	e.Image = "adsfghjrehjhgrrtfg"
+	username := "fgb"
+	res, _ := e.CreateEventstable(username)
+	assert.NotEqual(t, res, nil)
+}
+
+func TestJoinEventsTablewithUserName(t *testing.T) {
+	var e Event
+	e.ID = "gfbgfed"
+	e.Name = ""
+	e.Location = "UF"
+	e.Description = "UF"
+	e.Interests = []string{"X", "Y", "Z"}
+	e.Date = time.Now()
+	e.Image = "adsfghjrehjhgrrtfg"
+	username := ""
+	res, _ := e.CreateEventstable(username)
+	assert.NotEqual(t, res, nil)
+}
