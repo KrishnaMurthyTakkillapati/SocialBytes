@@ -8,13 +8,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateEvent(t *testing.T) {
+func TestCreateEventWithoutCookie(t *testing.T) {
 
 	var jsonstr = []byte(`{"Name":"Event 1","Description":"UF","Location":"UF","Interests":["a", "b"],"Date":"2014-01-01T23:28:56.782Z","Image":"ndffmfmbmgfm"}`)
 	w := httptest.NewRecorder()
 	response := httptest.NewRequest("POST", "localhost:9010/api/createEvent", bytes.NewBuffer(jsonstr))
 	CreateEvent(w, response)
-	assert.Equal(t, "200 OK", w.Result().Status)
+	assert.Equal(t, "400 Bad Request", w.Result().Status)
 }
 
 func TestCreateEventEmptyName(t *testing.T) {
