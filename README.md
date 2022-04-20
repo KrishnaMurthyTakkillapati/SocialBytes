@@ -47,6 +47,13 @@ npm start
 2. open a browser and jump to http://127.0.0.1:3000
 
 ## Frontend Info
+* frontend/src/pages/Home.tsx- Home page of the website which shows basic information about the website.
+* frontend/src/pages/CreateEvent.tsx- Page with a form of details required to create event. User must be logged in to create the event. Event details include- event name, description, image, location and interests of the event.
+* frontend/src/pages/LoginComponent.tsx- Login page of the website. Takes email and password to authenticate the user using JWT token.
+* frontend/src/pages/Register.tsx- Register page of the website. Takes details like email, password, confirm password and 
+* frontend/src/pages/SearchEvent.tsx- Page where all the events are shown by default. And if a user makes a query, based on the words, answering will be filtered out
+* frontend/src/service/eventService.ts- A service class with methods helping in making calls from frontend to backend. 
+* frontend/src/utils/EventCard.tsx- Material UI card to show the details of an event in a eye catching way with image on top and description and time on the bottom. 
 
 ## Backend Info
 
