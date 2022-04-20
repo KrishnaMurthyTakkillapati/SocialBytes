@@ -94,6 +94,10 @@ https://github.com/krish0307/SocialBytes/projects/4
 ### SignUp
 ![signup](https://user-images.githubusercontent.com/17436125/164298219-d1a5e6bf-0a84-4f42-bb3c-055bf15cc968.gif)
 
+### Login
+![LoginSignUp](https://user-images.githubusercontent.com/17436125/164298305-3341d787-c4f9-42ee-8a2e-fda290a9bd08.gif)
+
+
 ### Create Event
 ![](gifs/createEvent.gif)
 
