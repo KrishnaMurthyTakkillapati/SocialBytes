@@ -7,7 +7,7 @@ describe('Social Bytes', () => {
     
         
       })
-      it('Checks if SignUp button is clicked', function() {
+      it('Checks if LogIn button is clicked', function() {
 
 
 
@@ -36,7 +36,7 @@ describe('Social Bytes', () => {
 
 
 
-        cy.get('label').contains('Password').click({force: true}).type('Website123');
+        cy.get('label').contains('Password').click({force: true}).type('eshwar123');
         
         
     
@@ -46,6 +46,7 @@ describe('Social Bytes', () => {
 
 
             cy.get('button').contains('Login').click();
+            cy.wait(3000)
             
             
         

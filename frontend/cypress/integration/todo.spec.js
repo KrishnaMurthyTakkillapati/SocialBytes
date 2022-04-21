@@ -17,22 +17,27 @@ describe('Social Bytes', () => {
   it('Visits website', function() {
     
     cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/Login')
+        cy.get('label').contains('Username').click({force: true}).type('eshwar@gmail.com');
+        cy.get('label').contains('Password').click({force: true}).type('eshwar123');
+        cy.get('button').contains('Login').click();
+        cy.wait(3000)
     
     
 
     
   })
 
-  it('Check if we can route to login page', function() {
-    cy.get('a[href*="/Login"]').click();
-    cy.get('label').contains('Username').click({force: true}).type('Krishna');
-    cy.get('label').contains('Password').click({force: true}).type('Univerityofflorida');
-  })
+  // it('Check if we can route to login page', function() {
+  //   cy.get('a[href*="/Login"]').click();
+  //   cy.get('label').contains('Username').click({force: true}).type('Krishna');
+  //   cy.get('label').contains('Password').click({force: true}).type('Universityofflorida');
+  // })
 
-  it('Checks if Login button is clicked', function() {
-    cy.get('button').contains('Login').click();
-    cy.wait(2000)
-  })
+  // it('Checks if Login button is clicked', function() {
+  //   cy.get('button').contains('Login').click();
+  //   cy.wait(2000)
+  // })
 
 
   it('Checks if create a new event tab is clicked', function() {
@@ -56,7 +61,7 @@ describe('Social Bytes', () => {
   })
 
   it('Checks if Create event button is clicked', function() {
-    cy.get('button').contains('Create Event').click();
+    cy.get('button[type="submit"').click();
   })
 
 

@@ -20,7 +20,7 @@ describe('Social Bytes', () => {
 
 
 
-            cy.get('label').contains('First Name').click({force: true}).type('Krishna');
+            cy.get('label').contains('First Name').click({force: true}).type('Test');
             
             
         
@@ -29,7 +29,7 @@ describe('Social Bytes', () => {
 
 
 
-            cy.get('label').contains('Last Name').click({force: true}).type('Vamsi');
+            cy.get('label').contains('Last Name').click({force: true}).type('User');
             
             
         
@@ -52,15 +52,15 @@ describe('Social Bytes', () => {
             
         
         })
-        // it('Checks if password is retyped', function() {
+        it('Checks if password is retyped', function() {
 
 
 
-        //     cy.get('[id="password-label"]').click();
+            cy.get('label').contains('Retype Password').click({force: true}).type('123456789');
             
             
         
-        // })
+        })
 
         it('Checks if Register button is clicked', function() {
 
