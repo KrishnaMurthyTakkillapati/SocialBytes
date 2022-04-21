@@ -87,7 +87,7 @@ https://krish0307.github.io/SocialBytes/#/
 
 ### Link to Project board:
 ```
-https://github.com/krish0307/SocialBytes/projects
+https://github.com/krish0307/SocialBytes/projects?query=is%3Aclosed
 ```
 
 ### Link to Sprint4 deliverables:
