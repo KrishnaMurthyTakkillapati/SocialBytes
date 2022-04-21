@@ -1,1 +1,6 @@
-{}
+{"testFiles":[
+    "Login.js",
+    "Register.js",
+    "Leftbartest.spec.js",
+    "todo.spec.js"
+]}

@@ -275,10 +275,10 @@ console.log(JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.las
             <TextField
               error={state.isError}
               fullWidth
-              id="password"
+              id="passwordRetype"
               type="password"
               label="Retype Password"
-              placeholder="Password"
+              placeholder="Retype Password"
               margin="normal"
               helperText={state.helperText}
               onChange={handlePasswordChange}
