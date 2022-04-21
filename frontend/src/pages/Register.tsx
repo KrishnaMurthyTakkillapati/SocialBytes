@@ -158,7 +158,7 @@ console.log(JSON.stringify({ 'FirstName': state.firstName, 'LastName': state.las
           return Promise.reject(res.statusText);
         }
         context.user.isActive=true
-        context.user.name=state.firstName
+        context.user.name= state.firstName + " " + state.lastName;
         history.push("/")
       })
       return (response.status);

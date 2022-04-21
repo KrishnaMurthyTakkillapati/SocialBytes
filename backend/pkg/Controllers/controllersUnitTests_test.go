@@ -8,13 +8,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateEvent(t *testing.T) {
+func TestCreateEventWithoutCookie(t *testing.T) {
 
 	var jsonstr = []byte(`{"Name":"Event 1","Description":"UF","Location":"UF","Interests":["a", "b"],"Date":"2014-01-01T23:28:56.782Z","Image":"ndffmfmbmgfm"}`)
 	w := httptest.NewRecorder()
 	response := httptest.NewRequest("POST", "localhost:9010/api/createEvent", bytes.NewBuffer(jsonstr))
 	CreateEvent(w, response)
-	assert.Equal(t, "200 OK", w.Result().Status)
+	assert.Equal(t, "400 Bad Request", w.Result().Status)
 }
 
 func TestCreateEventEmptyName(t *testing.T) {
@@ -139,6 +139,27 @@ func TestLoginWithIncorrectPassword(t *testing.T) {
 	w1 := httptest.NewRecorder()
 	response1 := httptest.NewRequest("POST", "localhost:9010/api/login", bytes.NewBuffer(jsonstr1))
 	Login(w1, response1)
+	assert.Equal(t, "400 Bad Request", w1.Result().Status)
+
+}
+
+func TestJoinEventWithEmptyEventId(t *testing.T) {
+	var jsonstr = []byte(`{"FirstName":"hello","LastName":"brother","Email":"socialbytes@gmail.com","Password":"hello@brother123"}`)
+	w := httptest.NewRecorder()
+	response := httptest.NewRequest("POST", "localhost:9010/api/register", bytes.NewBuffer(jsonstr))
+	Register(w, response)
+	var jsonstr1 = []byte(`{"ID":"","Name":"vgbjhnkm","Description":"UF","Location":"UF","Interests":["a", "b"],"Date":"\"2014-01-01T23:28:56.782Z\"","Image":""}`)
+	w1 := httptest.NewRecorder()
+	response1 := httptest.NewRequest("POST", "localhost:9010/api/joinevent", bytes.NewBuffer(jsonstr1))
+	JoinEvent(w1, response1)
+	assert.Equal(t, "400 Bad Request", w1.Result().Status)
+}
+func TestJoinEventWithoutLogin(t *testing.T) {
+
+	var jsonstr1 = []byte(`{"ID":"","Name":"vgbjhnkm","Description":"UF","Location":"UF","Interests":["a", "b"],"Date":"\"2014-01-01T23:28:56.782Z\"","Image":""}`)
+	w1 := httptest.NewRecorder()
+	response1 := httptest.NewRequest("POST", "localhost:9010/api/joinevent", bytes.NewBuffer(jsonstr1))
+	JoinEvent(w1, response1)
 	assert.Equal(t, "400 Bad Request", w1.Result().Status)
 
 }
