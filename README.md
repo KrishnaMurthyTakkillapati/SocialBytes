@@ -56,7 +56,12 @@ npm start
 * frontend/src/utils/EventCard.tsx- Material UI card to show the details of an event in a eye catching way with image on top and description and time on the bottom. 
 
 ## Backend Info
-
+Some of the major Endpoints
+* /api/createEvent - Endpoint to Create an Event
+* /api/searchEvent - Endpoint to search for a Event
+* /api/getEvents - Endpoint to get all Events
+* /api/login - Endpoint to login an User
+* /api/register - Endpoint to register an User
 
 ## References
 
