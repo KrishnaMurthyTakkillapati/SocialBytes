@@ -62,17 +62,13 @@ npm start
 
 ### Demo Functionality Video:
 
-
-
 https://user-images.githubusercontent.com/30830508/164345727-b8d61bfa-6b54-4268-a3b7-bcc931ec744c.mp4
 
 
-
-
 ### Cypress Test Video:
-```
 
-```
+https://user-images.githubusercontent.com/43582641/164355967-67ca7a8c-290c-4810-be4b-d0103d01eec1.mov
+
 
 ### Backend Unit Test Video:
 ```
